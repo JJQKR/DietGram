@@ -7,17 +7,16 @@ export const Post = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #d9d9d9;
-  padding: 20px;
+  padding: 15px;
   border-radius: 10px;
 `;
 
 export const PostList = styled.div`
   width: 100%;
-  height: 100px;
+  height: 70px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
 `;
 
 export const UserData = styled.div`
@@ -35,6 +34,7 @@ export const UserImage = styled.img`
 
 export const PostTimeCalorie = styled.div`
   font-size: 15px;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
 `;
