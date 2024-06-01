@@ -26,13 +26,16 @@ const SignUpForm = () => {
     const [emailSpanMessage, setEmailSpanMessage] = useState("");
     const [nickNameSpanMessage, setNickNameSpanMessage] = useState("");
 
-    const handleSubmitForm = (event) => {
+    const handleSubmitSignUpForm = (event) => {
         event.preventDefault();
         setIsEmailValid(true);
         setIsPasswordValid(true);
         setIsPasswordConfirmValid(true);
         setIsNickNameValid(true);
 
+
+        // 유효성 검사
+        // 실패 시 설정한 문구가 인풋 아래에 나타남
         if (!email.trim()) {
             setEmailSpanMessage("이메일을 입력해주세요!");
             return setIsEmailValid(false);
@@ -54,12 +57,15 @@ const SignUpForm = () => {
             nickName,
         };
 
+        // 이메일과 닉네임은 유니크한 값으로 정했으므로
+        // 입력한 이메일과 기존에 저장되어있던 이메일 검사
         const prevUserEmail = loadUsers().find(user => user.email === newUser.email);
         if (prevUserEmail) {
             setEmailSpanMessage("이미 존재하는 이메일입니다!");
             return setIsEmailValid(false);
         }
 
+        // 입력한 닉네임과 기존에 저장되어있던 닉네임 검사
         const prevUserNickName = loadUsers().find(user => user.nickName === newUser.nickName);
         if (prevUserNickName) {
             setNickNameSpanMessage("이미 존재하는 닉네임입니다!");
@@ -73,6 +79,7 @@ const SignUpForm = () => {
         setPasswordConfirm("");
         setNickName("");
 
+        // 회원가입 성공하면 로그인 페이지로?
         alert(`${nickName}님 환영합니다!`);
     };
 
@@ -82,12 +89,11 @@ const SignUpForm = () => {
 
     return (
         <>
-            <S.Form onSubmit={handleSubmitForm}>
+            <S.Form onSubmit={handleSubmitSignUpForm}>
                 <S.InputBox>
                     <label htmlFor="email">이메일</label>
                     <S.Input
                         id="email"
-                        name="email"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -98,7 +104,6 @@ const SignUpForm = () => {
                     <label htmlFor="password">비밀번호</label>
                     <S.Input
                         id="password"
-                        name="password"
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -109,7 +114,6 @@ const SignUpForm = () => {
                     <label htmlFor="passwordConfirm">비밀번호 확인</label>
                     <S.Input
                         id="passwordConfirm"
-                        name="passwordConfirm"
                         type="password"
                         value={passwordConfirm}
                         onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -120,7 +124,6 @@ const SignUpForm = () => {
                     <label htmlFor="nickName">닉네임</label>
                     <S.Input
                         id="nickName"
-                        name="nickName"
                         type="text"
                         value={nickName}
                         onChange={(e) => setNickName(e.target.value)}
