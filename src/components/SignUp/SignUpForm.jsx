@@ -20,7 +20,7 @@ const SignUpForm = () => {
 
     const [isEmailValid, setIsEmailValid] = useState(true);
     const [isPasswordValid, setIsPasswordValid] = useState(true);
-    const [IsPassWordConfirmValid, setIsPasswordConfirmValid] = useState(true);
+    const [isPassWordConfirmValid, setIsPasswordConfirmValid] = useState(true);
     const [isNickNameValid, setIsNickNameValid] = useState(true);
 
     const [emailSpanMessage, setEmailSpanMessage] = useState("");
@@ -115,7 +115,7 @@ const SignUpForm = () => {
                         onChange={(e) => setPasswordConfirm(e.target.value)}
                     />
                 </S.InputBox>
-                <S.Span $display={IsPassWordConfirmValid}>비밀번호와 동일하게 입력해주세요!</S.Span>
+                <S.Span $display={isPassWordConfirmValid}>비밀번호와 동일하게 입력해주세요!</S.Span>
                 <S.InputBox>
                     <label htmlFor="nickName">닉네임</label>
                     <S.Input
