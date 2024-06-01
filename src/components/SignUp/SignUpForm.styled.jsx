@@ -4,6 +4,9 @@ export const Form = styled.form`
     width: 1280px;
     margin: 100px auto;
     background-color: #E7E7E7;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px gray;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,6 +28,7 @@ export const Input = styled.input`
     height: 60px;
     background-color: #D9D9D9;
     border-radius: 10px;
+    box-shadow: 3px 3px 3px gray;
 `;
 
 export const Button = styled.button`
@@ -32,11 +36,11 @@ export const Button = styled.button`
     background-color: #0084FD;
     color: white;
     border: none;
-    border-radius: 15px;
+    border-radius: 10px;
     padding: 10px 20px;
 `;
 
 export const Span = styled.span`
     color: red;
-    display: block;
+    display: ${props => props.$display ? "none" : "block"};
 `;
