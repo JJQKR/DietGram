@@ -38,6 +38,10 @@ export const Button = styled.button`
     border: none;
     border-radius: 10px;
     padding: 10px 20px;
+    cursor: pointer;
+    &:hover{
+        filter:brightness(0.8);
+    }
 `;
 
 export const Span = styled.span`
