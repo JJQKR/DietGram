@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const supabase = createClient(
   "https://mtddrulacypyulwcwtsh.supabase.co",
@@ -9,10 +9,13 @@ const supabase = createClient(
 function SupabaseTest() {
   const [posts, setPosts] = useState([]);
   const [signIn, setSignIn] = useState(false);
+  const [profileUrl, setProfileUrl] = useState("");
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     getPosts();
-
+    checkSignIn();
+    checkProfile();
     // insertPost();
   }, []);
 
@@ -90,10 +93,28 @@ function SupabaseTest() {
     checkSignIn();
   }
 
-  useEffect(() => {
-    getPosts();
-    checkSignIn();
-  }, []);
+  function checkProfile() {
+    const { data } = supabase.storage
+      .from("avatars")
+      .getPublicUrl("default-profile.jpg");
+    console.log("data", data);
+    setProfileUrl(data.publicUrl);
+  }
+  async function handleFileInputChange(files) {
+    const [file] = files;
+
+    if (!file) {
+      return;
+    }
+
+    const { data } = await supabase.storage
+      .from("avatars")
+      .upload(`avatar_${Date.now()}.png`, file);
+
+    setProfileUrl(
+      `https://rsiksyqynpeghzcecoys.supabase.co/storage/v1/object/public/avatars/${data.path}`
+    );
+  }
 
   return (
     <main>
@@ -107,7 +128,22 @@ function SupabaseTest() {
         ))}
       </ul>
       {signIn ? (
-        <SignInBtn text="로그아웃" onClick={signOut} />
+        <>
+          <input
+            onChange={(e) => handleFileInputChange(e.target.files)}
+            type="file"
+            ref={fileInputRef}
+            className="hidden"
+          />
+          <img
+            width={45}
+            height={45}
+            src={profileUrl}
+            alt="profile"
+            onClick={() => fileInputRef.current.click()}
+          />
+          <SignInBtn text="로그아웃" onClick={signOut} />
+        </>
       ) : (
         <SignInBtn text="로그인" onClick={signInWithGithub} />
       )}
