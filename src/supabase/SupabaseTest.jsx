@@ -12,6 +12,8 @@ function SupabaseTest() {
 
   useEffect(() => {
     getPosts();
+
+    // insertPost();
   }, []);
 
   async function getPosts() {
@@ -21,16 +23,51 @@ function SupabaseTest() {
 
   // insertlogic - insert({column : data})
   // async function insertPost() {
-  //      const { data } = await supabase
-  //   .from('posts')
-  //   .insert({
-  //     menu: prompt('메뉴를 입력해주세요.'),
-  //     content: prompt('내용을 입력해주세요.'),
-  //   })
-  //   .select('*');
-
-  // setPosts((prev) => [...prev, ...data]);
+  //   const { data } = await supabase
+  //     .from("dietgram")
+  //     .insert({
+  //       menu: prompt("메뉴를 입력해주세요."),
+  //       content: prompt("내용을 입력해주세요."),
+  //     })
+  //     .select("*");
+  //   setPosts((prev) => [...prev, ...data]);
   // }
+
+  // 해당 포스트의 id를 넣어줘야함.
+  // async function deletePost(id) {
+  //   const { data } = await supabase
+  //     .from("dietgram")
+  //     .delete()
+  //     .eq("id", id)
+  //     .select();
+
+  //   console.log("id", id);
+  //   console.log("data", data);
+  //   const [deletedPost] = data;
+  //   const filteredList = posts.filter((post) => post.id !== deletedPost.id);
+
+  //   setPosts(filteredList);
+  // }
+
+  // post의 id값을 넣어줘야함
+  async function updatePost(id) {
+    const { data } = await supabase
+      .from("dietgram")
+      .update({
+        menu: prompt("수정할 제목을 입력해주세요."),
+        content: prompt("수정할 내용을 입력해주세요."),
+      })
+      .eq("id", id)
+      .select();
+
+    console.log("data", data);
+    const [updatedPost] = data;
+    const updatedList = posts.map((post) =>
+      post.id === updatedPost.id ? updatedPost : post
+    );
+
+    setPosts(updatedList);
+  }
 
   async function signInWithGithub() {
     await supabase.auth.signInWithOAuth({
@@ -65,6 +102,7 @@ function SupabaseTest() {
           <li key={post.id}>
             <h2>{post.title}</h2>
             <p>{post.content}</p>
+            <button onClick={() => updatePost(post.id)}>수정</button>
           </li>
         ))}
       </ul>
