@@ -6,6 +6,10 @@ ${reset}
 
 body {
   font-family: 'SUITE-Regular';
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  //background-color:black;
 }
 `;
 
