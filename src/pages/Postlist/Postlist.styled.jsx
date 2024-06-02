@@ -23,9 +23,10 @@ export const Boxes = styled.div`
 
 export const Post = styled.div`
   width: 350px;
-  height: 500px;
+  height: 510px;
   border-radius: 20px;
   background-color: #f4f4f4;
+  box-shadow: 0px 0px 5px #b5b5b5;
 `;
 
 export const ProfileBox = styled.div`
@@ -42,16 +43,77 @@ export const ProfileImage = styled.img`
   height: 45px;
   border-radius: 50%;
   margin-left: 15px;
-  background-color: black;
+  background-color: white;
 `;
 
 export const Nickname = styled.p`
   text-indent: 10px;
   font-size: 18px;
+  //font-weight: 600;
 `;
 
-export const FoodImage = styled.img`
+export const FoodFile = styled.img`
   width: 350px;
   height: 350px;
   border-bottom: 1px solid #e5e5e5;
+`;
+
+export const ContextBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+`;
+
+export const TopBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0px 10px 0px;
+`;
+
+export const Fooditem = styled.p`
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 20px;
+  width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+`;
+
+export const FoodAverage = styled.p`
+  font-size: 18px;
+  margin-right: 20px;
+`;
+
+export const MiddleBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 5px;
+`;
+
+export const FoodKcal = styled.p`
+  margin-left: 20px;
+`;
+
+export const ButtonBox = styled.div`
+  display: flex;
+  gap: 7px;
+  margin-right: 20px;
+`;
+
+export const Button = styled.button`
+  width: 40px;
+  height: 25px;
+  border-radius: 10px;
+  border: none;
+  background-color: #dcdcdc;
+  font-size: 13px;
+  font-family: "SUITE-Regular";
+  &:hover {
+    background-color: #b1b1b1;
+    transition: 0.3s;
+    cursor: pointer;
+  }
 `;
