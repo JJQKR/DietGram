@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import * as S from "./Postlist.styled";
 import { v4 as uuidv4 } from "uuid";
+import DeleteModal from "../../components/DeleteModal/DeleteModal";
+import { Background } from "../../components/DeleteModal/DeleteModal.styled";
 
 const Postlist = () => {
+  const [selectedPostId, setSelectedPostId] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const modalBackground = useRef(null);
+  //console.log(modalBackground.current);
+
   const [posts, setPosts] = useState([
     {
       id: uuidv4(),
@@ -58,6 +65,11 @@ const Postlist = () => {
   // 수정버튼 누르면 게시물 수정 페이지로 이동
   // 삭제 버튼 누르면 삭제 모달 띄우기 ?
 
+  const handleDeleteButtonClick = (id) => {
+    setSelectedPostId(id);
+    setDeleteModalOpen(true);
+  };
+
   return (
     <>
       <div>
@@ -81,13 +93,32 @@ const Postlist = () => {
                   <S.FoodKcal>{post.kcal} </S.FoodKcal>
                   <S.ButtonBox>
                     <S.Button>수정</S.Button>
-                    <S.Button>삭제</S.Button>
+                    <S.Button onClick={() => handleDeleteButtonClick(post.id)}>
+                      삭제
+                    </S.Button>
                   </S.ButtonBox>
                 </S.MiddleBox>
               </S.ContextBox>
             </S.Post>
           );
         })}
+        {deleteModalOpen && (
+          <Background
+            ref={modalBackground}
+            onClick={(e) => {
+              if (e.target === modalBackground.current) {
+                setDeleteModalOpen(false);
+              }
+            }}
+          >
+            <DeleteModal
+              posts={posts}
+              setPosts={setPosts}
+              selectedPostId={selectedPostId}
+              setDeleteModalOpen={setDeleteModalOpen}
+            />
+          </Background>
+        )}
       </S.Boxes>
     </>
   );
