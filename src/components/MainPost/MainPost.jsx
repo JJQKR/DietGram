@@ -89,7 +89,7 @@ const MainPost = () => {
         return (
           <Post key={postCard.id}>
             <PostList>
-              <UserData>
+              <UserData onClick={() => alert('유저 입니다.')}>
                 <UserImage src={postCard.userImage} alt="닉네임 사진" />
                 <UserName>{postCard.userName}</UserName>
               </UserData>

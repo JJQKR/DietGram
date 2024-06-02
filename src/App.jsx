@@ -1,10 +1,12 @@
+import DetailPost from './pages/Detail';
 import Home from './pages/Home';
 
 const App = () => {
   return (
-    <div>
+    <main>
       <Home />
-    </div>
+      <DetailPost />
+    </main>
   );
 };
 
