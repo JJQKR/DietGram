@@ -8,7 +8,6 @@ const Postlist = () => {
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const modalBackground = useRef(null);
-  //console.log(modalBackground.current);
 
   const [posts, setPosts] = useState([
     {
@@ -63,7 +62,7 @@ const Postlist = () => {
 
   // 본인 페이지가 아니면 수정, 삭제 버튼 안 보이게
   // 수정버튼 누르면 게시물 수정 페이지로 이동
-  // 삭제 버튼 누르면 삭제 모달 띄우기 ?
+  // 삭제 버튼 누르면 삭제 모달 띄우기
 
   const handleDeleteButtonClick = (id) => {
     setSelectedPostId(id);
