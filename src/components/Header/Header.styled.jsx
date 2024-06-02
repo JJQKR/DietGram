@@ -45,7 +45,7 @@ export const LeftSection = styled.ul`
   //margin-right: 30px;
 `;
 
-export const BackBtn = styled.button`
+export const BackBtn = styled.img`
   width: 50px;
   height: 50px;
   display: flex;
