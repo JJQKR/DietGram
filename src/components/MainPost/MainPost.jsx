@@ -58,7 +58,7 @@ const MainPost = () => {
       userName: 'user4',
       userImage:
         'https://thumbnail.10x10.co.kr/webimage/image/basic600/411/B004111612.jpg?cmd=thumb&w=400&h=400&fit=true&ws=false',
-      date: '2025-05-4',
+      date: '2025-05-04',
       menu: '음식4',
       calorie: '100',
       grade: 5,
@@ -89,7 +89,7 @@ const MainPost = () => {
         return (
           <Post key={postCard.id}>
             <PostList>
-              <UserData onClick={() => alert('유저 입니다.')}>
+              <UserData>
                 <UserImage src={postCard.userImage} alt="닉네임 사진" />
                 <UserName>{postCard.userName}</UserName>
               </UserData>

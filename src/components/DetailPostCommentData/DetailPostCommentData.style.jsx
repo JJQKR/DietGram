@@ -7,31 +7,6 @@ export const DetailPostComment = styled.div`
   width: 100%;
 `;
 
-export const DetailPostUser = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border-bottom: 1px solid lightgray;
-  padding: 15px;
-`;
-
-export const DetailPostUserName = styled.div`
-  display: flex;
-`;
-
-export const DetailPostUserImage = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-position: center;
-  background-size: cover;
-  margin-right: 10px;
-`;
-
-export const PostUser = styled.p`
-  margin-top: 30px;
-`;
-
 export const DetailPostUserComment = styled.div`
   display: flex;
   flex-direction: column;
@@ -58,19 +33,19 @@ export const PostLikeButton = styled.p`
   }
 `;
 
-export const DetailCommentUserName = styled.div`
+export const DetailCommentUserBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 15px;
 `;
 
-export const DetailCommentUserBox = styled.div`
+export const DetailCommentUserName = styled.div`
   display: flex;
   flex-direction: row;
 `;
 
-export const EditButton = styled.button`
+export const CommentButton = styled.button`
   height: 20px;
   background-color: transparent;
   border: none;
@@ -79,8 +54,9 @@ export const EditButton = styled.button`
 `;
 
 export const DetailUserImage = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid lightgray;
   border-radius: 50%;
   background-position: center;
   background-size: cover;
@@ -92,7 +68,7 @@ export const PostGuest = styled.div`
 `;
 
 export const CommentDate = styled.span`
-  font-size: 13px;
+  font-size: 10px;
   color: gray;
 `;
 
@@ -119,6 +95,8 @@ export const CommentInput = styled.input`
 
 export const CommentAddButton = styled.button`
   cursor: pointer;
+  background-color: transparent;
+  border: none;
   width: 80px;
   height: 30px;
   margin-right: 10px;

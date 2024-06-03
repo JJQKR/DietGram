@@ -27,6 +27,7 @@ export const UserData = styled.div`
 export const UserImage = styled.img`
   width: 50px;
   height: 50px;
+  border: 1px solid lightgray;
   background-size: cover;
   background-position: center;
   border-radius: 50%;

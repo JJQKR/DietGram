@@ -4,11 +4,11 @@ import AddPostButton from '../components/AddPostButton/AddPostButton';
 
 const Home = () => {
   return (
-    <div>
+    <main>
       <SortButton />
       <AddPostButton />
       <MainPost />
-    </div>
+    </main>
   );
 };
 

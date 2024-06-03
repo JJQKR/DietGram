@@ -1,9 +1,6 @@
+import DetailPostUser from '../DetailPostUser/DetailPostUser';
 import {
   DetailPostComment,
-  DetailPostUser,
-  DetailPostUserName,
-  DetailPostUserImage,
-  PostUser,
   DetailPostUserComment,
   DetailCommentUserName,
   DetailUserImage,
@@ -14,26 +11,18 @@ import {
   CommentAddButton,
   CommentDate,
   DetailCommentUserBox,
-  EditButton,
   PostLikeButton,
   PostLikeBox,
+  CommentButton,
 } from './DetailPostCommentData.style';
 
 const DetailPostCommentData = () => {
   return (
     <DetailPostComment>
-      <DetailPostUser>
-        <DetailPostUserName>
-          <DetailPostUserImage
-            src="https://m.rainbow-tree.co.kr/web/product/big/rainbowtree81_2117.jpg"
-            alt=""
-          />
-          <PostUser>닉네임</PostUser>
-        </DetailPostUserName>
-      </DetailPostUser>
+      <DetailPostUser />
       <DetailPostUserComment>
-        <DetailCommentUserName>
-          <DetailCommentUserBox>
+        <DetailCommentUserBox>
+          <DetailCommentUserName>
             <DetailUserImage
               src="https://m.rainbow-tree.co.kr/web/product/big/rainbowtree81_2117.jpg"
               alt="유저 사진"
@@ -42,9 +31,12 @@ const DetailPostCommentData = () => {
               유저닉네임 <CommentDate>댓글 시간</CommentDate>
               <PostComment>댓글 내용</PostComment>
             </PostGuest>
-          </DetailCommentUserBox>
-          <EditButton>수정</EditButton>
-        </DetailCommentUserName>
+          </DetailCommentUserName>
+          <div>
+            <CommentButton>수정</CommentButton>
+            <CommentButton>삭제</CommentButton>
+          </div>
+        </DetailCommentUserBox>
       </DetailPostUserComment>
       <PostLikeBox>
         <PostLikeButton>♥︎ ♡</PostLikeButton>
