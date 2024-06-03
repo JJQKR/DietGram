@@ -29,6 +29,17 @@ const formSlice = createSlice({
       console.log("action.payload", action.payload);
       state[action.payload.type] = action.payload.content;
     },
+    selectPost: (state, action) => {
+      const selectedPost = state.recordList.filter(
+        (item) => item.id === action.payload
+      )[0];
+      state.menu = selectedPost.menu;
+      state.content = selectedPost.content;
+      state.kcal = selectedPost.kcal;
+      state.rating = selectedPost.rating;
+      state.price = selectedPost.price;
+      state.place = selectedPost.place;
+    },
   },
 });
 
