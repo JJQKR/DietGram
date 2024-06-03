@@ -14,8 +14,9 @@ export const Button = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  border-bottom: ${(props) => (props.$active ? '1px solid black' : 'none')};
 
   &:hover {
-    border-bottom: 1px solid black;
+    border-bottom: ${(props) => (props.$active ? '1px solid black' : 'none')};
   }
 `;
