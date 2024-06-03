@@ -17,24 +17,21 @@ const Supabase = {
       .insert({
         menu: prompt("메뉴를 입력해주세요."),
         content: prompt("내용을 입력해주세요."),
-        kcal: prompt("asdasd"), //변수명
       })
       .select("*");
 
     return data;
   },
 
-  async deletePost(id, posts) {
+  async deletePost(id) {
     const { data } = await supabase
       .from("posts")
       .delete()
       .eq("id", id)
       .select();
-
     const [deletedPost] = data;
-    const filteredList = posts.filter((post) => post.id !== deletedPost.id);
 
-    return filteredList;
+    return deletedPost;
   },
 
   async updatePost(id, posts) {
@@ -73,13 +70,13 @@ const Supabase = {
     this.checkSignIn();
   },
 
-  checkProfile() {
-    const { data } = supabase.storage
-      .from("posts-images")
-      .getPublicUrl("default-profile.jpg");
+  // checkProfile() {
+  //   const { data } = supabase.storage
+  //     .from("posts-images")
+  //     .getPublicUrl("default-profile.jpg");
 
-    return data.publicUrl;
-  },
+  //   return data.publicUrl;
+  // },
 
   async handleFileInputChange(files) {
     const [file] = files;
