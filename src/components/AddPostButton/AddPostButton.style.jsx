@@ -15,4 +15,8 @@ export const NewPostButton = styled.button`
   &:hover {
     background-color: gray;
   }
+
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
 `;
