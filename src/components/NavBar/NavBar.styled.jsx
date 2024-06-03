@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 1440px;
+  width: 100%;
   height: 100px;
+  //margin-top: 10px;
   display: flex;
+  //position: fixed;
   justify-content: space-between;
   align-items: center;
   background-color: #ffbf9c;
@@ -26,6 +28,27 @@ export const BackBtn = styled.img`
   justify-content: center;
   align-items: center;
   margin-left: 30px;
+  cursor: pointer;
+`;
+
+export const TitleSection = styled.div`
+  width: 540px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Title = styled.h1`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  color: white;
+  font-size: 65px;
+  font-weight: 100;
+  font-family: "BagelFatOne-Regular";
+  text-shadow: 0px 3px 10px #c57950;
   cursor: pointer;
 `;
 

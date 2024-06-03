@@ -5,6 +5,8 @@ import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import { Background } from "../../components/DeleteModal/DeleteModal.styled";
 
 const Postlist = () => {
+  // protected route 알아보기
+  // 메인페이지 redirect
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const modalBackground = useRef(null);

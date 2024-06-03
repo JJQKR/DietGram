@@ -5,10 +5,11 @@ const GlobalStyle = createGlobalStyle`
 ${reset}
 
 body {
+  width: 100%;
   font-family: 'SUITE-Regular';
-  display:flex;
+  /* display:flex;
   justify-content:center;
-  align-items: center;
+  align-items: center; */
   //background-color:black;
 }
 `;
