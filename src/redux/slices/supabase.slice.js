@@ -1,4 +1,4 @@
-import getPosts from "../../supabase/Supabase";
+import getPosts from "../../supabase/supabase";
 
 const initialState = {
   dataList: getPosts(),
