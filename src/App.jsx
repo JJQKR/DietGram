@@ -2,9 +2,9 @@ import Home from './pages/Home';
 
 const App = () => {
   return (
-    <div>
+    <main>
       <Home />
-    </div>
+    </main>
   );
 };
 
