@@ -11,12 +11,16 @@ const SupabaseFunc = {
     return data;
   },
 
-  async insertPost() {
+  async insertPost(formData) {
     const { data } = await supabase
       .from("posts")
       .insert({
-        menu: prompt("메뉴를 입력해주세요."),
-        content: prompt("내용을 입력해주세요."),
+        menu: formData.menu,
+        content: formData.content,
+        kcal: formData.kcal,
+        raiting: formData.rating,
+        price: formData.price,
+        place: formData.place,
       })
       .select("*");
 
@@ -34,12 +38,16 @@ const SupabaseFunc = {
     return deletedPost;
   },
 
-  async updatePost(id) {
+  async updatePost(id, formData) {
     const { data } = await supabase
       .from("posts")
       .update({
-        menu: prompt("수정할 제목을 입력해주세요."),
-        content: prompt("수정할 내용을 입력해주세요."),
+        menu: formData.menu,
+        content: formData.content,
+        kcal: formData.kcal,
+        raiting: formData.rating,
+        price: formData.price,
+        place: formData.place,
       })
       .eq("id", id)
       .select();
