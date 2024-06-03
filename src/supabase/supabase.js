@@ -7,16 +7,17 @@ const supabase = createClient(
 
 const Supabase = {
   async getPosts() {
-    const { data } = await supabase.from("dietgram").select();
+    const { data } = await supabase.from("posts").select();
     return data;
   },
 
   async insertPost() {
     const { data } = await supabase
-      .from("dietgram")
+      .from("posts")
       .insert({
         menu: prompt("메뉴를 입력해주세요."),
         content: prompt("내용을 입력해주세요."),
+        kcal: prompt("asdasd"), //변수명
       })
       .select("*");
 
@@ -25,7 +26,7 @@ const Supabase = {
 
   async deletePost(id, posts) {
     const { data } = await supabase
-      .from("dietgram")
+      .from("posts")
       .delete()
       .eq("id", id)
       .select();
@@ -38,7 +39,7 @@ const Supabase = {
 
   async updatePost(id, posts) {
     const { data } = await supabase
-      .from("dietgram")
+      .from("posts")
       .update({
         menu: prompt("수정할 제목을 입력해주세요."),
         content: prompt("수정할 내용을 입력해주세요."),
@@ -74,7 +75,7 @@ const Supabase = {
 
   checkProfile() {
     const { data } = supabase.storage
-      .from("avatars")
+      .from("posts-images")
       .getPublicUrl("default-profile.jpg");
 
     return data.publicUrl;
@@ -88,8 +89,8 @@ const Supabase = {
     }
 
     const { data } = await supabase.storage
-      .from("avatars")
-      .upload(`avatar_${Date.now()}.png`, file);
+      .from("posts")
+      .upload(`posts_${Date.now()}.png`, file);
 
     return `https://rsiksyqynpeghzcecoys.supabase.co/storage/v1/object/public/avatars/${data.path}`;
   },

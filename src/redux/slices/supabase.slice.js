@@ -1,7 +1,7 @@
 import getPosts from "../../supabase/supabase";
 
 const initialState = {
-  dataList: getPosts(),
+  dataList: getPosts() ?? [],
 };
 
 console.log("initialState", initialState);
