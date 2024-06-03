@@ -17,8 +17,15 @@ import axios from 'axios';
 //예시
 //http://openapi.foodsafetykorea.go.kr/api/sample/I2790/xml/1/5/DESC_KOR=값 &RESEARCH_YEAR=값 &MAKER_NAME=값 &FOOD_CD=값 &CHNG_DT=값
 
-//http://openapi.foodsafetykorea.go.kr/api/ca47080538bd4c6dbd83/I2790/JSON/시작행인덱스(숫자)/끝행인덱스(숫자)/DESC_KOR=값&NUTR_CONT1=값2
+//http://openapi.foodsafetykorea.go.kr/api/ca47080538bd4c6dbd83/I2790/JSON/시작행인덱스(숫자)/끝행인덱스(숫자)/DESC_KOR={}&NUTR_CONT1={}
 //근데 왜 중간에서 물음표로 안 시작하지?
+
+
+메뉴명을 정확히 입력해서 칼로리 안에 데이터 받아오기
+fetch해서 결과물 console.log
+axios 
+요청시작부터 음식이름 적어서 요청 보내기 때문에
+const userInput
 
 const apiKey = 'ca47080538bd4c6dbd83';
 const serviceName = 'I2790';

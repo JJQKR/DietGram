@@ -6,8 +6,18 @@ import { current } from '@reduxjs/toolkit';
 
 export default function EditProfile() {
 
+  const data = {
+    
+  }
+  
   const 
   return (
+    1. 업로드 눌렀을 때 내 컴퓨터 사진 올라가는지(type=file)
+    2. 
+
+    이미지가 들어갈
+    localStorage 사용 보다는 dummy data로
+    
     <>
       <Section>
         <Left>
