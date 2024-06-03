@@ -1,7 +1,7 @@
 import "./App.css";
 
-async function App() {
-  return <>123</>;
+function App() {
+  return <div>123</div>;
 }
 
 export default App;
