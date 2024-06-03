@@ -6,8 +6,33 @@ import {
   PostDate,
   PostGrade,
 } from './DetailPostData.style';
+import { initDataList } from '../../redux/slices/supabase.slice';
+import SupabaseFunc from '../../redux/slices/supabase.slice';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const DetailPostData = () => {
+  // const supabase = SupabaseFunc;
+  // const dispatch = useDispatch();
+  // const posts = useSelector((state) => state.supabase.dataList);
+  // // get posts = App에서 useEffect로 받아서 => initialState 할당
+  // // 이외 db 다루는 함수 사용 후 redux에 payload로 전달
+  // console.log('posts', posts);
+  // useEffect(() => {
+  //   const getPosts = async () => {
+  //     const posts = await SupabaseFunc.getPosts();
+  //     const action = initDataList(posts);
+  //     dispatch(action);
+  //     return posts;
+  //   };
+  //   getPosts();
+  // }, []);
+
+  const supabase = SupabaseFunc;
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.supabase.dataList);
+  console.log('posts', posts);
+
   return (
     <DetailPostDataList>
       <DetailPostImage
