@@ -1,12 +1,8 @@
-import DetailComments from '../\bDetailComment/DetailComments';
+import DetailComments from '../DetailComment/DetailComments';
+import DetailCommentAdd from '../DetailCommentAdd/DetailCommentAdd';
 import DetailPostUser from '../DetailPostUser/DetailPostUser';
 import PostLike from '../PsotLike/PostLike';
-import {
-  DetailPostComment,
-  DetailPostCommentInput,
-  CommentInput,
-  CommentAddButton,
-} from './DetailPostCommentData.style';
+import { DetailPostComment } from './DetailPostCommentData.style';
 
 const DetailPostCommentData = () => {
   return (
@@ -14,10 +10,7 @@ const DetailPostCommentData = () => {
       <DetailPostUser />
       <DetailComments />
       <PostLike />
-      <DetailPostCommentInput>
-        <CommentInput placeholder="댓글 달기" type="text" />
-        <CommentAddButton>게시</CommentAddButton>
-      </DetailPostCommentInput>
+      <DetailCommentAdd />
     </DetailPostComment>
   );
 };
