@@ -44,8 +44,6 @@ function SupabaseTest() {
   //     .eq("id", id)
   //     .select();
 
-  //   console.log("id", id);
-  //   console.log("data", data);
   //   const [deletedPost] = data;
   //   const filteredList = posts.filter((post) => post.id !== deletedPost.id);
 
@@ -63,7 +61,6 @@ function SupabaseTest() {
       .eq("id", id)
       .select();
 
-    console.log("data", data);
     const [updatedPost] = data;
     const updatedList = posts.map((post) =>
       post.id === updatedPost.id ? updatedPost : post
@@ -84,7 +81,6 @@ function SupabaseTest() {
   async function checkSignIn() {
     const session = await supabase.auth.getSession();
     const isSignIn = !!session.data.session;
-    console.log(session);
     setSignIn(isSignIn);
   }
 
@@ -97,7 +93,6 @@ function SupabaseTest() {
     const { data } = supabase.storage
       .from("avatars")
       .getPublicUrl("default-profile.jpg");
-    console.log("data", data);
     setProfileUrl(data.publicUrl);
   }
   async function handleFileInputChange(files) {
