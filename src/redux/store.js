@@ -5,7 +5,7 @@ import supabaseSlice from "./slices/supabase.slice";
 const store = configureStore({
   reducer: {
     supabase: supabaseSlice,
-    form: formSlice,
+    formData: formSlice,
   },
 });
 
