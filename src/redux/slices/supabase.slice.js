@@ -9,7 +9,8 @@ const supabaseSlice = createSlice({
   initialState,
   reducers: {
     insertPost: (state, action) => {
-      state.dataList.push(action.payload);
+      console.log("action.payload", action.payload);
+      state.dataList.push(action.payload[0]);
     },
 
     deletePost: (state, action) => {

@@ -25,7 +25,19 @@ function App() {
 
   const onclickHandler = async (e) => {
     e.preventDefault();
-    // const data = await supabase.insertPost();
+    // supabase.signUp();
+
+    // const formData = {
+    //   menu: "짜장면",
+    //   content: "간짜장",
+    //   kcal: 200,
+    //   raiting: 3.5,
+    //   price: 12000,
+    //   place: "신창동 짜장집",
+    // };
+    // const data = await supabase.insertPost(formData);
+    // const action = insertPost(data);
+    // dispatch(action);
 
     //deletePost 예시
     // const data = await supabase.deletePost(24);

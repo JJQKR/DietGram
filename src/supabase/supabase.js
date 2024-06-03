@@ -56,7 +56,12 @@ const SupabaseFunc = {
 
     return updatedPost;
   },
-
+  async signUp() {
+    await supabase.auth.signUp({
+      email: "0dytpq0@naver.com",
+      password: `0121`,
+    });
+  },
   async signInWithGithub() {
     await supabase.auth.signInWithOAuth({
       provider: "github",
@@ -66,13 +71,14 @@ const SupabaseFunc = {
   async checkSignIn() {
     const session = await supabase.auth.getSession();
     const isSignIn = !!session.data.session;
-
+    console.log("isSignIn", isSignIn);
+    console.log("session", session);
     return isSignIn;
   },
 
-  async signOut() {
+  signOut: async () => {
+    await SupabaseFunc.checkSignIn();
     await supabase.auth.signOut();
-    this.checkSignIn();
   },
 
   // checkProfile() {
