@@ -43,6 +43,11 @@ export const PostComment = styled.p`
   font-size: 15px;
 `;
 
+export const CommentButtonBox = styled.div`
+  max-width: 71px;
+  width: 100%;
+`;
+
 export const CommentButton = styled.button`
   height: 20px;
   background-color: transparent;

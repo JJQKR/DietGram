@@ -7,6 +7,7 @@ import {
   CommentDate,
   DetailCommentUserBox,
   CommentButton,
+  CommentButtonBox,
 } from './DetailComments.style';
 
 const DetailComments = () => {
@@ -20,13 +21,13 @@ const DetailComments = () => {
           />
           <PostGuest>
             유저닉네임 <CommentDate>댓글 시간</CommentDate>
-            <PostComment>댓글 내용</PostComment>
+            <PostComment>댓글 내용댓글</PostComment>
           </PostGuest>
         </DetailCommentUserName>
-        <div>
+        <CommentButtonBox>
           <CommentButton>수정</CommentButton>
           <CommentButton>삭제</CommentButton>
-        </div>
+        </CommentButtonBox>
       </DetailCommentUserBox>
     </DetailPostUserComment>
   );
