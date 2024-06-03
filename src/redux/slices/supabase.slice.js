@@ -22,8 +22,17 @@ const supabaseSlice = createSlice({
     initDataList: (state, action) => {
       state.dataList = action.payload;
     },
+    updatePost: (state, action) => {
+      const index = state.dataList.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.dataList[index] = action.payload;
+      }
+    },
   },
 });
 
-export const { insertPost, deletePost, initDataList } = supabaseSlice.actions;
+export const { insertPost, deletePost, initDataList, updatePost } =
+  supabaseSlice.actions;
 export default supabaseSlice.reducer;

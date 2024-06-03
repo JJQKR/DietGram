@@ -5,7 +5,7 @@ const supabase = createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10ZGRydWxhY3lweXVsd2N3dHNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTczMTAzMDMsImV4cCI6MjAzMjg4NjMwM30.HKqvWjgecPZcdv1xI5MQDY4F-4aKDOQIlPv0VG4wCBY"
 );
 
-const Supabase = {
+const SupabaseFunc = {
   async getPosts() {
     const { data } = await supabase.from("posts").select();
     return data;
@@ -34,7 +34,7 @@ const Supabase = {
     return deletedPost;
   },
 
-  async updatePost(id, posts) {
+  async updatePost(id) {
     const { data } = await supabase
       .from("posts")
       .update({
@@ -43,13 +43,10 @@ const Supabase = {
       })
       .eq("id", id)
       .select();
-
+    console.log("data", id);
     const [updatedPost] = data;
-    const updatedList = posts.map((post) =>
-      post.id === updatedPost.id ? updatedPost : post
-    );
 
-    return updatedList;
+    return updatedPost;
   },
 
   async signInWithGithub() {
@@ -93,4 +90,4 @@ const Supabase = {
   },
 };
 
-export default Supabase;
+export default SupabaseFunc;
