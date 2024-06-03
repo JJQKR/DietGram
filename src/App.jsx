@@ -1,9 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./App.css";
+//import "./App.css";
 import { changeValue } from "./redux/slices/form.slice";
-import { initDataList } from "./redux/slices/supabase.slice";
+import {
+  deletePost,
+  initDataList,
+  insertPost,
+} from "./redux/slices/supabase.slice";
 import SupabaseFunc from "./supabase/supabase";
+import NavBar from "./components/NavBar/NavBar";
+import Postlist from "./pages/Postlist/Postlist";
 
 function App() {
   const supabase = SupabaseFunc;
@@ -52,29 +58,34 @@ function App() {
   };
 
   return (
-    <div>
-      {posts.map((item) => {
-        return (
-          <>
-            <h1>{item.menu}</h1>
-            <p>{item.content}</p>
-            <p>{item.id}</p>
-          </>
-        );
-      })}
-      <button onClick={supabase.signInWithGithub}>로그인</button>
-      <button onClick={onclickHandler}>삭제</button>
-      <input
-        onChange={(e) => {
-          const action = changeValue({
-            content: e.target.value,
-            type: "menu",
-          });
-          dispatch(action);
-          console.log("formData", formData);
-        }}
-      />
-    </div>
+    <>
+      {/* <div>
+        {posts.map((item) => {
+          return (
+            <>
+              <h1>{item.menu}</h1>
+              <p>{item.content}</p>
+              <p>{item.id}</p>
+            </>
+          );
+        })}
+        <button onClick={supabase.signInWithGithub}>로그인</button>
+        <button onClick={onclickHandler}>삭제</button>
+        <input
+          onChange={(e) => {
+            const action = changeValue({
+              content: e.target.value,
+              type: "menu",
+            });
+            dispatch(action);
+            console.log("formData", formData);
+          }}
+        />
+      </div> */}
+
+      <NavBar />
+      <Postlist />
+    </>
   );
 }
 

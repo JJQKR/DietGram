@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+export const PostsNumberBox = styled.div`
+  display: flex;
+`;
+
 export const PostsNumber = styled.h1`
   width: 500px;
   height: 120px;
