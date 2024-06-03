@@ -4,6 +4,8 @@ export const ButtonList = styled.button`
   max-width: 300px;
   width: 100%;
   margin: 0 auto;
+  position: relative;
+  left: 380px;
   border: none;
   background-color: transparent;
 `;
