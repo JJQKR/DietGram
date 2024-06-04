@@ -1,17 +1,23 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar/NavBar";
 import { checkLogin } from "../redux/slices/user.slice";
 import { supabase } from "../supabase/supabase";
 
 function DefaultLayout() {
-  // 로그인 검사
-  const isSignIn = async () => await supabase.login.checkSignIn();
   const dispatch = useDispatch();
-  const action = checkLogin(isSignIn());
-  const selector = useSelector((state) => state.currentUser);
-  console.log("selector", selector);
-  dispatch(action);
+
+  useEffect(() => {
+    const checkSignInStatus = async () => {
+      const isSignIn = await supabase.login.checkSignIn();
+      console.log("isSignIn", isSignIn);
+      const action = checkLogin(isSignIn);
+      dispatch(action);
+    };
+
+    checkSignInStatus();
+  }, []);
 
   return (
     <div id="default-layout">
