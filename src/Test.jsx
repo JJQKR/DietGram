@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeValue } from "./redux/slices/form.slice";
-import {
-  initCommentList,
-  initPostList,
-  updateData,
-} from "./redux/slices/supabase.slice";
+import { initCommentList, initPostList } from "./redux/slices/supabase.slice";
 import { supabase } from "./supabase/supabase";
 
 function Test() {
   const dispatch = useDispatch();
+  // const selector = useSelector((state) => state);
   // 스테이트에 초기값으로 줘야대낭
 
   const [posts, setPosts] = useState(
@@ -20,7 +17,7 @@ function Test() {
   );
   // const posts = useSelector((state) => state.supabase.postList) ?? [];
   // const comments = useSelector((state) => state.supabase.commentList) ?? [];
-  const formData = useSelector((state) => state.formData.menu);
+  // const formData = useSelector((state) => state.formData.menu);
 
   useEffect(() => {
     const getPosts = async () => {
@@ -42,14 +39,10 @@ function Test() {
   const onclickHandler = async (e) => {
     e.preventDefault();
 
-    const data = await supabase.comment.updateComment(19);
-    const newComments = comments.map((item) =>
-      item.id === data.id ? data : item
-    );
-
-    setComments(newComments);
-    const action = updateData(data);
-    dispatch(action);
+    // const data = await supabase.post.isLike(7);
+    // const action = setMyLikes(data);
+    // dispatch(action);
+    // console.log("selector", selector.user.myLikes);
   };
 
   return (
@@ -85,7 +78,6 @@ function Test() {
             type: "menu",
           });
           dispatch(action);
-          console.log("formData", formData);
         }}
       />
     </div>

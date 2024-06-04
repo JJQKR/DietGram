@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../../redux/slices/currentUser.slice";
+import { setCurrentUser } from "../../redux/slices/user.slice";
 import supabaseLogin from "../../supabase/supabaseLogin";
 import * as S from "./LoginForm.styled";
 
