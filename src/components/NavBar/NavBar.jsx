@@ -1,11 +1,43 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import * as S from "./NavBar.styled";
+import { useEffect, useState } from "react";
+import { supabase } from "../../supabase/supabase";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const handleBackBtn = (e) => {
     e.preventDefault();
     navigate(-1);
+  };
+  const [isLogIn, setIsLogIn] = useState(false);
+  useEffect(() => {
+    const checkIsLogin = async () => {
+      const check = await supabase.login.checkSignIn();
+      check ? setIsLogIn(true) : setIsLogIn(false);
+      console.log("check", check);
+    };
+    checkIsLogin();
+  }, []);
+  console.log("isLogIn", isLogIn);
+  const logInItem = () => {
+    if (isLogIn) {
+      return (
+        <S.Menu
+          onClick={async () => {
+            await supabase.login.signOut();
+            setIsLogIn(false);
+          }}
+        >
+          LogOut
+        </S.Menu>
+      );
+    }
+    setIsLogIn(true);
+    return (
+      <Link to="/login">
+        <S.Menu>LogIn</S.Menu>
+      </Link>
+    );
   };
 
   return (
@@ -19,9 +51,7 @@ const NavBar = () => {
           <Link to="/signup" style={{ textDecoration: "none" }}>
             <S.Menu>Sign Up</S.Menu>
           </Link>
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            <S.Menu>Login</S.Menu>
-          </Link>
+          {logInItem()}
         </S.LeftSection>
         <Link to="/" style={{ textDecoration: "none" }}>
           <S.Title>살과 칼로리의 행방불명</S.Title>
