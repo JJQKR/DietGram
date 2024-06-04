@@ -2,7 +2,6 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
-
 export const Button = styled.button`
   border-radius: 10px;
   background-color: green;
@@ -29,7 +28,6 @@ export const ImageInput = styled.input`
   background-color: red;
   border-radius: 50%;
 `;
-
 
 const Container = styled.div`
   display: flex;
