@@ -66,9 +66,6 @@ class Post {
       .update({ like: data[0].like })
       .eq("user_id", "3f79941c-4b6c-4137-87c9-f2d6a40d6be7")
       .select();
-    console.log("data", data);
-    console.log("updatedData", updatedData.data);
-    // return data[0].like;
     return updatedData.data[0];
   }
 }

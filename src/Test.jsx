@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeValue } from "./redux/slices/form.slice";
-import { initCommentList, initPostList } from "./redux/slices/supabase.slice";
+import { initCommentList, initPostList } from "./redux/slices/posts.slice";
 import { supabase } from "./supabase/supabase";
 
 function Test() {
