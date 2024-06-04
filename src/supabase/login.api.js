@@ -37,8 +37,6 @@ class Login {
   async checkSignIn() {
     const session = await this.#client.auth.getSession();
     const isSignIn = !!session.data.session;
-    console.log("isSignIn", isSignIn);
-    console.log("session", session);
     return isSignIn;
   }
 

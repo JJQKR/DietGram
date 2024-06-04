@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentUser } from "../../redux/slices/currentUser.slice";
+import { useNavigate } from "react-router-dom";
+import { changeValue } from "../../redux/slices/form.slice";
+import { getCurrentUser } from "../../redux/slices/user.slice";
 import { supabase } from "../../supabase/supabase";
 import * as S from "./LoginForm.styled";
-import { changeValue } from "../../redux/slices/form.slice";
-import { checkLengthValidation, checkEqualValidation } from "../SignUp/signUpValidation";
 
 const LoginForm = () => {
+  const navigator = useNavigate();
   const dispatch = useDispatch();
-  const { currentUser } = useSelector(state => state.currentUser);
-  const { formData } = useSelector(state => state);
+  const { currentUser } = useSelector((state) => state.user);
+  const { formData } = useSelector((state) => state);
   console.log(formData);
   console.log(currentUser);
 
@@ -24,11 +25,15 @@ const LoginForm = () => {
     const { email, password } = formData;
 
     try {
-      const { data, error } = await supabase.login.signInWithPassword(email, password);
+      const { data, error } = await supabase.login.signInWithPassword(
+        email,
+        password
+      );
       if (error) {
         alert("이메일과 비밀번호를 확인해주세요!");
       } else {
         alert("로그인 되었습니다!");
+        navigator("/");
         console.log(data);
         const { user } = data;
         dispatch(getCurrentUser(user));
@@ -48,7 +53,10 @@ const LoginForm = () => {
             id="email"
             type="email"
             onChange={(e) => {
-              const action = changeValue({ type: "email", content: e.target.value })
+              const action = changeValue({
+                type: "email",
+                content: e.target.value,
+              });
               dispatch(action);
             }}
           />
@@ -62,7 +70,10 @@ const LoginForm = () => {
             id="password"
             type="password"
             onChange={(e) => {
-              const action = changeValue({ type: "password", content: e.target.value })
+              const action = changeValue({
+                type: "password",
+                content: e.target.value,
+              });
               dispatch(action);
             }}
           />

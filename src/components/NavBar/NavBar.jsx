@@ -1,38 +1,39 @@
-import { Link, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { supabase } from "../../supabase/supabase";
 import * as S from "./NavBar.styled";
 
 const NavBar = () => {
-  // const navigate = useNavigate();
-
-  // const handleBackBtn = (e) => {
-  //   e.preventDefault();
-  //   navigate(-1);
-  // };
-
-  // const handleSignupBtn = (e) => {
-  //   e.preventDefault();
-  //   navigate("/signup");
-  // };
-
-  // const handleLoginBtn = (e) => {
-  //   e.preventDefault();
-  //   navigate("/login");
-  // };
-
-  // const handleTitleCick = (e) => {
-  //   e.preventDefault();
-  //   navigate("/");
-  // };
-
-  // const handleMypostsBtn = (e) => {
-  //   e.preventDefault();
-  //   navigate("/myposts");
-  // };
-
-  // const handleMypageBtn = (e) => {
-  //   e.preventDefault();
-  //   navigate("/mypage");
-  // };
+  const [isLogIn, setIsLogIn] = useState(false);
+  useEffect(() => {
+    const checkIsLogin = async () => {
+      const check = await supabase.login.checkSignIn();
+      check ? setIsLogIn(true) : setIsLogIn(false);
+      console.log("check", check);
+    };
+    checkIsLogin();
+  }, []);
+  console.log("isLogIn", isLogIn);
+  const logInItem = () => {
+    if (isLogIn) {
+      return (
+        <S.Menu
+          onClick={async () => {
+            await supabase.login.signOut();
+            setIsLogIn(false);
+          }}
+        >
+          LogOut
+        </S.Menu>
+      );
+    }
+    setIsLogIn(true);
+    return (
+      <Link to="/login">
+        <S.Menu>LogIn</S.Menu>
+      </Link>
+    );
+  };
 
   return (
     <>
@@ -42,9 +43,7 @@ const NavBar = () => {
           <Link to="/signup">
             <S.Menu>Sign Up</S.Menu>
           </Link>
-          <Link to="/login">
-            <S.Menu>Login</S.Menu>
-          </Link>
+          {logInItem()}
         </S.LeftSection>
         <Link to="/">
           <S.Title>살과 칼로리의 행방불명</S.Title>
