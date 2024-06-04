@@ -2,37 +2,36 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import * as S from "./NavBar.styled";
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabase/supabase";
+import { useDispatch, useSelector } from "react-redux";
+import { checkLogin } from "../../redux/slices/user.slice";
 
 const NavBar = () => {
-  const navigate = useNavigate();
-  const handleBackBtn = (e) => {
-    e.preventDefault();
-    navigate(-1);
-  };
-  const [isLogIn, setIsLogIn] = useState(false);
+  const dispatch = useDispatch();
+  const loginState = useSelector(state => state.user.isLogin);
+
   useEffect(() => {
     const checkIsLogin = async () => {
       const check = await supabase.login.checkSignIn();
-      check ? setIsLogIn(true) : setIsLogIn(false);
-      console.log("check", check);
+      check ? dispatch(checkLogin(true)) : dispatch(checkLogin(false));
     };
     checkIsLogin();
   }, []);
-  console.log("isLogIn", isLogIn);
+
+
   const logInItem = () => {
-    if (isLogIn) {
+    if (loginState) {
       return (
         <S.Menu
           onClick={async () => {
             await supabase.login.signOut();
-            setIsLogIn(false);
+            dispatch(checkLogin(false));
+            alert("로그아웃 되었습니다!");
           }}
         >
           LogOut
         </S.Menu>
       );
     }
-    setIsLogIn(true);
     return (
       <Link to="/login">
         <S.Menu>LogIn</S.Menu>

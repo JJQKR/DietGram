@@ -45,6 +45,7 @@ class Login {
     await this.#client.auth.signOut();
   }
 
+
   async insertUser(id) {
     const { data, error } = await this.#client
       .from("users")

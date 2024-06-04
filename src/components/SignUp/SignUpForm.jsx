@@ -4,10 +4,12 @@ import { checkLengthValidation, checkEqualValidation } from "./signUpValidation"
 import * as S from "./SignUpForm.styled";
 import { changeUserInfo, changeValue } from "../../redux/slices/form.slice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
+  const navigator = useNavigate();
   const formData = useSelector(state => state.formData);
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const spanRef = useRef([]);
@@ -50,7 +52,7 @@ const SignUpForm = () => {
         const { user } = data;
         supabase.login.insertUser(user.id);
         alert("환영합니다 로그인 하실래요?");
-        // 회원가입 성공하면 로그인 페이지로?
+        navigator("/login")
       }
     } catch (error) {
       console.error(error);
