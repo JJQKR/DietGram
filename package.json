@@ -19,6 +19,7 @@
     "redux": "^5.0.1",
     "styled-components": "^6.1.11",
     "uuid": "^9.0.1",
+    "uuid.v4": "^1.0.0",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
