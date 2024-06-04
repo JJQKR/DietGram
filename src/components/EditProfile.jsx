@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Boxes, Left, Right } from "./GlobalStyle";
+import InputEmojiWithRef from "react-input-emoji";
+import Emoji from "./Emoji";
 
 export default function EditProfile() {
   const [initialProfile, setInitialProfile] = useState([
@@ -52,7 +54,15 @@ export default function EditProfile() {
               프로필 이미지 src로 바로 변경
             </button>
           </div>
-          <p>이미지 미리 보기</p>
+          <div>
+            <Emoji
+              symbol="👀"
+              label="eyes"
+              padding={"6px 0px 0px 0px"}
+              emojiSize={"20px"}
+            />
+            이미지 미리보기
+          </div>
           <img src={newPostImage} img="img/" />
           {/* 못생긴 파일선택 버튼 자동생성,
           label태그로 감싸고 스타일 따로 준 뒤 input버튼은 안 보이게 */}
