@@ -111,6 +111,8 @@ export const ButtonBox = styled.div`
 export const Button = styled.button`
   width: 40px;
   height: 25px;
+  display: ${({ postUserId, currentUserId }) =>
+    postUserId === currentUserId ? "block" : "none"};
   border-radius: 10px;
   border: none;
   background-color: #dcdcdc;

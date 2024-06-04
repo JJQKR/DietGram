@@ -10,9 +10,22 @@ import { deletePost } from "../../redux/slices/supabase.slice";
 const Postlist = () => {
   // protected route 알아보기
   // 메인페이지 redirect
+  // user_id 갖다쓰기
 
   const datalist = useSelector((state) => state.supabase.dataList);
   console.log(datalist);
+  const userData = JSON.parse(
+    // 로컬스토리지 로그인 정보에서 가져온 데이터.. 테스트용
+    // 나중에 supabase 유저 테이블에서 가져오는 방식으로 수정하기
+    localStorage.getItem("sb-mtddrulacypyulwcwtsh-auth-token")
+  );
+  const nickName = userData.user.user_metadata.user_name;
+  const currentUserId = userData.user.id;
+
+  const filteredDataList = datalist.filter(
+    (data) => data.user_id === currentUserId
+  );
+  console.log(filteredDataList);
 
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -85,7 +98,9 @@ const Postlist = () => {
   return (
     <>
       <div>
-        <S.PostsNumber>어쩌구 님의 포스트 {posts.length}건</S.PostsNumber>
+        <S.PostsNumber>
+          {nickName} 님의 포스트 {posts.length + filteredDataList.length}건
+        </S.PostsNumber>
       </div>
       <S.Boxes>
         {posts.map((post) => {
@@ -114,7 +129,7 @@ const Postlist = () => {
             </S.Post>
           );
         })}
-        {datalist.map((data) => {
+        {filteredDataList.map((data) => {
           return (
             <S.Post key={data.id}>
               <S.ProfileBox>
@@ -130,8 +145,17 @@ const Postlist = () => {
                 <S.MiddleBox>
                   <S.FoodKcal>{data.kcal} </S.FoodKcal>
                   <S.ButtonBox>
-                    <S.Button>수정</S.Button>
-                    <S.Button onClick={() => handleDeleteButtonClick(data.id)}>
+                    <S.Button
+                      postUserId={data.user_id}
+                      currentUserId={currentUserId}
+                    >
+                      수정
+                    </S.Button>
+                    <S.Button
+                      postUserId={data.user_id}
+                      currentUserId={currentUserId}
+                      onClick={() => handleDeleteButtonClick(data.id)}
+                    >
                       삭제
                     </S.Button>
                   </S.ButtonBox>

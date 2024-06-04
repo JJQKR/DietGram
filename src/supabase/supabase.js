@@ -7,6 +7,7 @@ const supabase = createClient(
 
 const SupabaseFunc = {
   async getPosts() {
+    //"*, users ( id )"
     const { data } = await supabase.from("posts").select();
     return data;
   },
