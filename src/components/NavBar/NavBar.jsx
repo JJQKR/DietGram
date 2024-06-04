@@ -26,6 +26,7 @@ const NavBar = () => {
           onClick={async () => {
             await supabase.login.signOut();
             dispatch(checkLogin(false));
+            alert("로그아웃 되었습니다!");
           }}
         >
           LogOut
