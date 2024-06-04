@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import DeleteModal from '../../components/DeleteModal/DeleteModal';
 import { Background } from '../../components/DeleteModal/DeleteModal.styled';
-import * as S from './Postlist.styled';
-import { useDispatch, useSelector } from 'react-redux';
+import { selectPost, selectUser } from '../../redux/slices/posts.slice';
 import { supabase } from '../../supabase/supabase';
-import { deleteData, selectUser } from '../../redux/slices/posts.slice';
-import { selectPost } from '../../redux/slices/posts.slice';
+import * as S from './Postlist.styled';
 const Postlist = () => {
   const dispatch = useDispatch();
   const [selectedPostId, setSelectedPostId] = useState(null);
@@ -34,7 +33,6 @@ const Postlist = () => {
   };
 
   const currentUserId = useSelector((state) => state.posts.currentUserId);
-
   const showPosts = (postlist) => {
     {
       return postlist.map((data) => {
