@@ -7,7 +7,7 @@ const store = configureStore({
   reducer: {
     supabase: supabaseSlice,
     formData: formSlice,
-    currentUer: currentUserSlice,
+    currentUser: currentUserSlice,
   },
 });
 
