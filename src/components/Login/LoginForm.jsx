@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../../redux/slices/currentUser.slice";
-import supabaseLogin from "../../supabase/supabaseLogin";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUser } from "../../redux/slices/currentUser.slice";
+import { supabase } from "../../supabase/supabase";
 import * as S from "./LoginForm.styled";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const { currentUser } = useSelector(state => state.currentUser);
+  console.log(currentUser);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,21 +21,18 @@ const LoginForm = () => {
     setIsPasswordValid(true);
 
     try {
-      const { data, error } = await supabaseLogin.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const { data, error } = await supabase.login.signInWithPassword(email, password);
       if (error) {
-        console.error(error);
         alert("이메일과 비밀번호를 확인해주세요!");
       } else {
         alert("로그인 되었습니다!");
+        console.log(data);
         const { user } = data;
-        console.log(user);
-        dispatch(setCurrentUser(user));
+        dispatch(getCurrentUser(user));
+        console.log(currentUser);
       }
     } catch (error) {
-      console.error(error);
+      alert("네트워크 이슈");
     }
   };
 
