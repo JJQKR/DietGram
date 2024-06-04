@@ -14,7 +14,7 @@ export default function EditPost() {
   const selectedPost = posts.find((element) => element.id === id);
   //근데 selectedPost를 정하는 게, 상세페이지에서 넘어올 때도 필요한가?
 
-  const [postImage, setPostImage] = useState(selectedPost.postImage);
+  // const [postImage, setPostImage] = useState(selectedPost.postImage);
   const [menu, setMenu] = useState(selectedPost.menu);
   const [description, setDescription] = useState(selectedPost.description);
   const [date, setDate] = useState(selectedPost.date);
@@ -36,7 +36,7 @@ export default function EditPost() {
     }
     const newPost = {
       id,
-      postImage,
+      // postImage,
       menu,
       description,
       date,
@@ -84,7 +84,7 @@ export default function EditPost() {
       ))}
       <Boxes>
         <form onSubmit={handleChangePost}>
-          <form>
+          {/* <form>
             <ImageLabel htmlFor="postImage" className="postImageLabel">
               사진 불러오기
             </ImageLabel>
@@ -96,7 +96,7 @@ export default function EditPost() {
               onChange={saveImageFile}
               ref={imageRef}
             />
-            <button></button>
+            <button></button> */}
           </form>
           {/* api데이터 */}
           <label htmlFor="postMenu">메뉴</label>

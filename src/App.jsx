@@ -1,12 +1,12 @@
-import "./App.css";
-import Test from "./Test";
+import './App.css';
+import EditPost from './components/EditPost';
 
 function App() {
   return (
     <div>
-      <Test />
+      <EditPost></EditPost>
     </div>
   );
 }
 
-export default App
+export default App;
