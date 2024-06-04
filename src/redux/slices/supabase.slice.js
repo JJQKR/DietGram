@@ -1,39 +1,60 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initPost = {
+  menu: "초기값",
+  content: "입니다",
+  kcal: 0,
+  rating: 0.0,
+  price: 0,
+  place: "초기장소",
+};
+
 const initialState = {
-  dataList: [],
+  postList: [initPost],
+  commentList: [],
 };
 
 const supabaseSlice = createSlice({
   name: 'supabase',
   initialState,
   reducers: {
-    insertPost: (state, action) => {
-      console.log('action.payload', action.payload);
-      state.dataList.push(action.payload[0]);
+
+    insertData: (state, action) => {
+      state.postList.push(action.payload[0]);
     },
 
-    deletePost: (state, action) => {
-      const idx = state.dataList.findIndex(
+    deleteData: (state, action) => {
+      const idx = state.postList.findIndex(
         (item) => item.id !== action.payload.id
       );
-      state.dataList.splice(idx, 0);
-      console.log('state.dataList.length', state.dataList.length);
+
+
+      state.postList.splice(idx, 1);
+
     },
-    initDataList: (state, action) => {
-      state.dataList = action.payload;
-    },
-    updatePost: (state, action) => {
-      const index = state.dataList.findIndex(
+    updateData: (state, action) => {
+      const index = state.postList.findIndex(
         (item) => item.id === action.payload.id
       );
       if (index !== -1) {
-        state.dataList[index] = action.payload;
+        state.postList[index] = action.payload;
       }
+    },
+
+    initPostList: (state, action) => {
+      state.postList = action.payload;
+    },
+    initCommentList: (state, action) => {
+      state.commentList = action.payload;
     },
   },
 });
 
-export const { insertPost, deletePost, initDataList, updatePost } =
-  supabaseSlice.actions;
+export const {
+  insertData,
+  deleteData,
+  updateData,
+  initCommentList,
+  initPostList,
+} = supabaseSlice.actions;
 export default supabaseSlice.reducer;
