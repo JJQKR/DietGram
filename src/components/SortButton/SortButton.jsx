@@ -1,16 +1,13 @@
-import { useState } from 'react';
-import { Button, ButtonList } from './SortButton.style';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { initDataList } from '../../redux/slices/supabase.slice';
-import SupabaseFunc from '../../supabase/supabase';
-import { useEffect } from 'react';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setActiveIndex,
   setData,
   setSortType,
   sortData,
-} from '../../redux/slices/sortslice';
+} from "../../redux/slices/sortslice";
+import { initDataList } from "../../redux/slices/supabase.slice";
+import { Button, ButtonList } from "./SortButton.style";
 
 const SortButton = () => {
   const activeIndex = useSelector((state) => state.activeIndex.value);
@@ -22,18 +19,17 @@ const SortButton = () => {
     dispatch(sortData());
   };
 
-  const supabase = SupabaseFunc;
-  const posts = useSelector((state) => state.supabase.dataList);
-  const formData = useSelector((state) => state.formData.menu);
+  // const posts = useSelector((state) => state.supabase.dataList);
+  // const formData = useSelector((state) => state.formData.menu);
   // get posts = App에서 useEffect로 받아서 => initialState 할당
   // 이외 db 다루는 함수 사용 후 redux에 payload로 전달
   // console.log('posts', posts);
   useEffect(() => {
     const getPosts = async () => {
-      const posts = await SupabaseFunc.getPosts();
+      const posts = await supabase.posts.getPosts();
       const action = initDataList(posts);
       dispatch(action);
-      dispatch(setSortType('latest'));
+      dispatch(setSortType("latest"));
       dispatch(setData(posts));
       dispatch(sortData());
       return posts;
@@ -43,14 +39,14 @@ const SortButton = () => {
 
   return (
     <ButtonList>
-      {['최신순', '최고 칼로리', '최저 칼로리'].map((button, index) => {
+      {["최신순", "최고 칼로리", "최저 칼로리"].map((button, index) => {
         return (
           <Button
             $active={activeIndex === index}
             onClick={() =>
               handleSortButton(
                 index,
-                ['latest', 'highCalories', 'lowCalories'][index]
+                ["latest", "highCalories", "lowCalories"][index]
               )
             }
             key={index}
