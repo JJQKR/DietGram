@@ -1,7 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initPost = {
+  menu: "초기값",
+  content: "입니다",
+  kcal: 0,
+  rating: 0.0,
+  price: 0,
+  place: "초기장소",
+};
+
 const initialState = {
-  postList: [],
+  postList: [initPost],
   commentList: [],
 };
 
@@ -18,7 +27,7 @@ const supabaseSlice = createSlice({
         (item) => item.id !== action.payload.id
       );
 
-      state.postList.splice(idx, 0);
+      state.postList.splice(idx, 1);
     },
     updateData: (state, action) => {
       const index = state.postList.findIndex(

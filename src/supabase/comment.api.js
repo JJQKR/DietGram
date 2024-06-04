@@ -37,7 +37,7 @@ class Comment {
     const { data } = await this.#client
       .from("comments")
       .update({
-        comment: "업데이트 테스트",
+        comment: "야미야미야미",
       })
       .eq("id", id)
       .select();
