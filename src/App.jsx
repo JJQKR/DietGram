@@ -1,9 +1,12 @@
-import React from 'react';
+import "./App.css";
+import Test from "./Test";
 
-export default function App() {
+function App() {
   return (
-    <>
-      <EditPost></EditPost>
-    </>
+    <div>
+      <Test />
+    </div>
   );
 }
+
+export default App

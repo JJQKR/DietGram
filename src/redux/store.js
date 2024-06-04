@@ -1,10 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
-import postsReducer from './slices/postsSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import formSlice from "./slices/form.slice";
+import supabaseSlice from "./slices/supabase.slice";
 
 const store = configureStore({
   reducer: {
-    posts: postsReducer
-  }
+    supabase: supabaseSlice,
+    formData: formSlice,
+  },
 });
 
 export default store;
