@@ -15,7 +15,6 @@ class Supabase {
 
   constructor() {
     this.#client = createClient(SUPABASE_PROJECT_URL, SUPABASE_ANON_KEY);
-
     this.post = new Post(this.#client);
     this.comment = new Comment(this.#client);
     this.login = new Login(this.#client);
