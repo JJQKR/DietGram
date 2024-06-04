@@ -1,5 +1,10 @@
+import LoginForm from "./components/Login/LoginForm";
+import SignUpForm from "./components/SignUp/SignUpForm";
+
 function App() {
-  return <></>;
+  return <>
+    <SignUpForm />
+  </>;
 }
 
 export default App;
