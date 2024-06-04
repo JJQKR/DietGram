@@ -58,9 +58,6 @@ const NavBar = () => {
           </Link>
         </S.RightSection>
       </S.Container>
-      <main>
-        <Outlet />
-      </main>
     </>
   );
 };
