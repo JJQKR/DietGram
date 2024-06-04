@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { changePost, deletePost } from '../redux/slices/postsSlice';
-import { Section } from './UploadPost';
+import { Boxes } from '../GlobalStyle';
 
 export default function EditPost() {
   const navigate = useNavigate();
@@ -82,7 +82,7 @@ export default function EditPost() {
           }}
         ></li>
       ))}
-      <Section>
+      <Boxes>
         <form onSubmit={handleChangePost}>
           <form>
             <ImageLabel htmlFor="postImage" className="postImageLabel">
@@ -142,7 +142,7 @@ export default function EditPost() {
           <Button onClick={() => navigate('/')}>취소</Button>
           {/* 취소하면 홈으로 이동*/}
         </form>
-      </Section>
+      </Boxes>
       ;
     </>
   );

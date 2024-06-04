@@ -1,4 +1,3 @@
-
 import React, { useState, useEffecect } from 'react';
 import axios from 'axios';
 
@@ -25,20 +24,16 @@ const serviceName = 'I2790';
 const requestType = 'JSON';
 const startIndex = '요청시작위치';
 const endIndex = '요청종료위치';
-const queryString = 
-`http://openapi.foodsafetykorea.go.kr/api/${apiKey}/${serviceName}/${requestType}/${startIndex}/${endIndex}
+const queryString = `http://openapi.foodsafetykorea.go.kr/api/${apiKey}/${serviceName}/${requestType}/${startIndex}/${endIndex}
 DESC_KOR=${userInput}&NUTR_CONT1=${userInput}`;
 
-
 const inputField = document.getElementById('inputField');
-matchingItems.forEach(item => {
+matchingItems.forEach((item) => {
   const option = document.createElement('option');
   option.value = item.descKor; // 또는 item.nutrientContent1
   option.text = item.descKor;
   inputField.add(option);
 });
-
-
 
 const Nutrient = () => {
   const [food, setFood] = useState('');
@@ -53,18 +48,12 @@ const Nutrient = () => {
     setkcal(event.target.value);
   };
 
-  const getNutrient () =>{
+  const getNutrien = () => {
+    let url = `http://openapi.foodsafetykorea.go.kr/api/ca47080538bd4c6dbd83/I2790/JSON/시작행인덱스(숫자)/끝행인덱스(숫자)/DESC_KOR=값&NUTR_CONT1=값2
+    `;
 
-
-    let url =`http://openapi.foodsafetykorea.go.kr/api/ca47080538bd4c6dbd83/I2790/JSON/시작행인덱스(숫자)/끝행인덱스(숫자)/DESC_KOR=값&NUTR_CONT1=값2
-    `
-
-    axios
-    .et(url)
-    .then(res => {
-
-    })
-  }
+    axios.get(url).then((res) => {});
+  };
 };
 
 export default Nutrient;
