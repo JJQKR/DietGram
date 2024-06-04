@@ -1,11 +1,8 @@
 import { useRef, useState } from "react";
-import * as S from "./Postlist.styled";
 import { v4 as uuidv4 } from "uuid";
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import { Background } from "../../components/DeleteModal/DeleteModal.styled";
-import { useDispatch, useSelector } from "react-redux";
-import SupabaseFunc from "../../supabase/supabase";
-import { deletePost } from "../../redux/slices/supabase.slice";
+import * as S from "./Postlist.styled";
 
 const Postlist = () => {
   // protected route 알아보기

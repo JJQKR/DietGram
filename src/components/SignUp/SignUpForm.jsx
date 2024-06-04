@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import supabaseLogin from "../../supabase/supabaseLogin";
 import * as S from "./SignUpForm.styled";
 
