@@ -1,107 +1,25 @@
 import { createClient } from "@supabase/supabase-js";
+import Comment from "./comment.api";
+import Login from "./login.api";
+import Post from "./post.api";
 
-const supabase = createClient(
-  "https://mtddrulacypyulwcwtsh.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10ZGRydWxhY3lweXVsd2N3dHNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTczMTAzMDMsImV4cCI6MjAzMjg4NjMwM30.HKqvWjgecPZcdv1xI5MQDY4F-4aKDOQIlPv0VG4wCBY"
-);
+const SUPABASE_PROJECT_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_API_KEY;
 
-const SupabaseFunc = {
-  async getPosts() {
-    const { data } = await supabase.from("posts").select();
-    return data;
-  },
+class Supabase {
+  #client;
 
-  async insertPost(formData) {
-    const { data } = await supabase
-      .from("posts")
-      .insert({
-        menu: formData.menu,
-        content: formData.content,
-        kcal: formData.kcal,
-        raiting: formData.rating,
-        price: formData.price,
-        place: formData.place,
-      })
-      .select("*");
+  post;
+  comment;
+  login;
 
-    return data;
-  },
+  constructor() {
+    this.#client = createClient(SUPABASE_PROJECT_URL, SUPABASE_ANON_KEY);
 
-  async deletePost(id) {
-    const { data } = await supabase
-      .from("posts")
-      .delete()
-      .eq("id", id)
-      .select();
-    const [deletedPost] = data;
+    this.post = new Post(this.#client);
+    this.comment = new Comment(this.#client);
+    this.login = new Login(this.#client);
+  }
+}
 
-    return deletedPost;
-  },
-
-  async updatePost(id, formData) {
-    const { data } = await supabase
-      .from("posts")
-      .update({
-        menu: formData.menu,
-        content: formData.content,
-        kcal: formData.kcal,
-        raiting: formData.rating,
-        price: formData.price,
-        place: formData.place,
-      })
-      .eq("id", id)
-      .select();
-    console.log("data", id);
-    const [updatedPost] = data;
-
-    return updatedPost;
-  },
-  async signUp() {
-    await supabase.auth.signUp({
-      email: "0dytpq0@naver.com",
-      password: `0121`,
-    });
-  },
-  async signInWithGithub() {
-    await supabase.auth.signInWithOAuth({
-      provider: "github",
-    });
-  },
-
-  async checkSignIn() {
-    const session = await supabase.auth.getSession();
-    const isSignIn = !!session.data.session;
-    console.log("isSignIn", isSignIn);
-    console.log("session", session);
-    return isSignIn;
-  },
-
-  signOut: async () => {
-    await SupabaseFunc.checkSignIn();
-    await supabase.auth.signOut();
-  },
-
-  // checkProfile() {
-  //   const { data } = supabase.storage
-  //     .from("posts-images")
-  //     .getPublicUrl("default-profile.jpg");
-
-  //   return data.publicUrl;
-  // },
-
-  async handleFileInputChange(files) {
-    const [file] = files;
-
-    if (!file) {
-      return;
-    }
-
-    const { data } = await supabase.storage
-      .from("posts")
-      .upload(`posts_${Date.now()}.png`, file);
-
-    return `https://rsiksyqynpeghzcecoys.supabase.co/storage/v1/object/public/avatars/${data.path}`;
-  },
-};
-
-export default SupabaseFunc;
+export const supabase = new Supabase();

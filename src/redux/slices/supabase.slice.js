@@ -9,7 +9,6 @@ const supabaseSlice = createSlice({
   initialState,
   reducers: {
     insertPost: (state, action) => {
-      console.log("action.payload", action.payload);
       state.dataList.push(action.payload[0]);
     },
 
@@ -17,12 +16,14 @@ const supabaseSlice = createSlice({
       const idx = state.dataList.findIndex(
         (item) => item.id !== action.payload.id
       );
+
       state.dataList.splice(idx, 0);
-      console.log("state.dataList.length", state.dataList.length);
     },
+
     initDataList: (state, action) => {
       state.dataList = action.payload;
     },
+
     updatePost: (state, action) => {
       const index = state.dataList.findIndex(
         (item) => item.id === action.payload.id
