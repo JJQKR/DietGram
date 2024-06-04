@@ -1,14 +1,17 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../../redux/slices/user.slice";
-import supabaseLogin from "../../supabase/supabaseLogin";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUser } from "../../redux/slices/currentUser.slice";
+import { supabase } from "../../supabase/supabase";
 import * as S from "./LoginForm.styled";
+import { changeValue } from "../../redux/slices/form.slice";
+import { checkLengthValidation, checkEqualValidation } from "../SignUp/signUpValidation";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { currentUser } = useSelector(state => state.currentUser);
+  const { formData } = useSelector(state => state);
+  console.log(formData);
+  console.log(currentUser);
 
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
@@ -18,22 +21,21 @@ const LoginForm = () => {
     setIsEmailValid(true);
     setIsPasswordValid(true);
 
+    const { email, password } = formData;
+
     try {
-      const { data, error } = await supabaseLogin.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const { data, error } = await supabase.login.signInWithPassword(email, password);
       if (error) {
-        console.error(error);
         alert("이메일과 비밀번호를 확인해주세요!");
       } else {
         alert("로그인 되었습니다!");
+        console.log(data);
         const { user } = data;
-        console.log(user);
-        dispatch(setCurrentUser(user));
+        dispatch(getCurrentUser(user));
+        console.log(currentUser);
       }
     } catch (error) {
-      console.error(error);
+      alert("네트워크 이슈");
     }
   };
 
@@ -45,8 +47,10 @@ const LoginForm = () => {
           <S.Input
             id="email"
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              const action = changeValue({ type: "email", content: e.target.value })
+              dispatch(action);
+            }}
           />
         </S.InputBox>
         <S.Span $display={isEmailValid}>
@@ -57,8 +61,10 @@ const LoginForm = () => {
           <S.Input
             id="password"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              const action = changeValue({ type: "password", content: e.target.value })
+              dispatch(action);
+            }}
           />
         </S.InputBox>
         <S.Span $display={isPasswordValid}>비밀번호를 확인해주세요!</S.Span>

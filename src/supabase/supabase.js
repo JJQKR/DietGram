@@ -9,7 +9,6 @@ const SUPABASE_ANON_KEY = import.meta.env.VITE_API_KEY;
 class Supabase {
   #client;
 
-
   post;
   comment;
   login;
