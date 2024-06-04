@@ -1,18 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import * as S from './SignUpForm.styled'
+import supabaseLogin from "../../supabase/supabaseLogin";
 
 const SignUpForm = () => {
-    const loadUsers = () => {
-        const loadedUsers = JSON.parse(localStorage.getItem("users"));
-        if (loadedUsers) {
-            return loadedUsers;
-        }
-        if (!loadedUsers) {
-            return [];
-        }
-    };
-    const [users, setUsers] = useState(loadUsers());
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -26,13 +16,12 @@ const SignUpForm = () => {
     const [emailSpanMessage, setEmailSpanMessage] = useState("");
     const [nickNameSpanMessage, setNickNameSpanMessage] = useState("");
 
-    const handleSubmitSignUpForm = (event) => {
+    const handleSubmitSignUpForm = async (event) => {
         event.preventDefault();
         setIsEmailValid(true);
         setIsPasswordValid(true);
         setIsPasswordConfirmValid(true);
         setIsNickNameValid(true);
-
 
         // 유효성 검사
         // 실패 시 설정한 문구가 인풋 아래에 나타남
@@ -51,41 +40,35 @@ const SignUpForm = () => {
             return setIsNickNameValid(false);
         }
 
-        const newUser = {
-            email,
-            password,
-            nickName,
-        };
-
-        // 이메일과 닉네임은 유니크한 값으로 정했으므로
-        // 입력한 이메일과 기존에 저장되어있던 이메일 검사
-        const prevUserEmail = loadUsers().find(user => user.email === newUser.email);
-        if (prevUserEmail) {
-            setEmailSpanMessage("이미 존재하는 이메일입니다!");
-            return setIsEmailValid(false);
+        try {
+            const { data, error } = await supabaseLogin.auth.signUp({
+                email,
+                password,
+                options: {
+                    data: {
+                        nickName,
+                        avatarUrl: "https://sngxevhlxxzjbwdbherl.supabase.co/storage/v1/object/public/avatars/dafalut_image2-removebg-preview.png",
+                    }
+                }
+            });
+            console.log(data);
+            if (error) {
+                console.error(error);
+            } else {
+                setEmail("");
+                setPassword("");
+                setPasswordConfirm("");
+                setNickName("");
+                alert(`${data.user_metadata.nickName}`);
+                alert("환영합니다 로그인 하실래요?");
+                console.log("signup: ", { data, error });
+            }
+        } catch (error) {
+            console.error(error);
         }
-
-        // 입력한 닉네임과 기존에 저장되어있던 닉네임 검사
-        const prevUserNickName = loadUsers().find(user => user.nickName === newUser.nickName);
-        if (prevUserNickName) {
-            setNickNameSpanMessage("이미 존재하는 닉네임입니다!");
-            return setIsNickNameValid(false);
-        }
-
-        setUsers(prevUsers => [...prevUsers, newUser]);
-
-        setEmail("");
-        setPassword("");
-        setPasswordConfirm("");
-        setNickName("");
-
         // 회원가입 성공하면 로그인 페이지로?
-        alert(`${nickName}님 환영합니다!`);
-    };
 
-    useEffect(() => {
-        localStorage.setItem("users", JSON.stringify(users))
-    }, [users])
+    };
 
     return (
         <>
