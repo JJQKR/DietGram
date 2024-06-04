@@ -56,9 +56,20 @@ class Post {
     return updatedPost;
   }
 
-  async isLike() {
+  async isLike(id) {
+    // 유저에 like id를 넣어줘야해
     const { data } = await this.#client.from("users").select("like");
+    const likeIdx = data[0].like.findIndex((item) => item === id);
+    likeIdx !== -1 ? data[0].like.splice(likeIdx, 1) : data[0].like.push(id);
+    const updatedData = await this.#client
+      .from("users")
+      .update({ like: data[0].like })
+      .eq("user_id", "3f79941c-4b6c-4137-87c9-f2d6a40d6be7")
+      .select();
     console.log("data", data);
+    console.log("updatedData", updatedData.data);
+    // return data[0].like;
+    return updatedData.data[0];
   }
 }
 

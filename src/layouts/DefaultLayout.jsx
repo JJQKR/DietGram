@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar/NavBar";
-import { checkLogin } from "../redux/slices/currentUser.slice";
+import { checkLogin } from "../redux/slices/user.slice";
 import { supabase } from "../supabase/supabase";
 
 function DefaultLayout() {
