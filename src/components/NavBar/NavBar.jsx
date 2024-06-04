@@ -46,7 +46,9 @@ const NavBar = () => {
             <S.Menu>Login</S.Menu>
           </Link>
         </S.LeftSection>
-        <S.Title>살과 칼로리의 행방불명</S.Title>
+        <Link to="/">
+          <S.Title>살과 칼로리의 행방불명</S.Title>
+        </Link>
         <S.RightSection>
           <Link to="/mypost">
             <S.Menu>My Posts</S.Menu>
