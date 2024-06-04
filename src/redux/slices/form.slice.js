@@ -1,32 +1,32 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initializeFormData = (state) => {
-  state.menu = "";
-  state.content = "";
+  state.menu = '';
+  state.content = '';
   state.kcal = 0;
   state.rating = 0.0;
   state.price = 0;
-  state.place = "";
+  state.place = '';
 };
 
 const initialState = {
-  menu: "",
-  content: "",
+  menu: '',
+  content: '',
   kcal: 0,
   rating: 0.0,
   price: 0,
-  place: "",
+  place: '',
 };
 
 const formSlice = createSlice({
-  name: "form",
+  name: 'form',
   initialState,
   reducers: {
     initFormData: (state) => {
       initializeFormData(state);
     },
     changeValue: (state, action) => {
-      console.log("action.payload", action.payload);
+      console.log('action.payload', action.payload);
       state[action.payload.type] = action.payload.content;
     },
     selectPost: (state, action) => {

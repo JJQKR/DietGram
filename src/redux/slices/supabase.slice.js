@@ -1,15 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   dataList: [],
 };
 
 const supabaseSlice = createSlice({
-  name: "supabase",
+  name: 'supabase',
   initialState,
   reducers: {
     insertPost: (state, action) => {
-      console.log("action.payload", action.payload);
+      console.log('action.payload', action.payload);
       state.dataList.push(action.payload[0]);
     },
 
@@ -18,7 +18,7 @@ const supabaseSlice = createSlice({
         (item) => item.id !== action.payload.id
       );
       state.dataList.splice(idx, 0);
-      console.log("state.dataList.length", state.dataList.length);
+      console.log('state.dataList.length', state.dataList.length);
     },
     initDataList: (state, action) => {
       state.dataList = action.payload;

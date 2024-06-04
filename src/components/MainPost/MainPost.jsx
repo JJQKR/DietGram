@@ -7,30 +7,11 @@ import {
   UserImage,
   UserName,
 } from './MainPost.styled';
-import { initDataList } from '../../redux/slices/supabase.slice';
-import SupabaseFunc from '../../supabase/supabase';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const MainPost = () => {
-  const supabase = SupabaseFunc;
-  const dispatch = useDispatch();
-  const posts = useSelector((state) => state.supabase.dataList);
-  const formData = useSelector((state) => state.formData.menu);
-  // get posts = App에서 useEffect로 받아서 => initialState 할당
-  // 이외 db 다루는 함수 사용 후 redux에 payload로 전달
-  // console.log('posts', posts);
-  useEffect(() => {
-    const getPosts = async () => {
-      const posts = await SupabaseFunc.getPosts();
-      const action = initDataList(posts);
-      dispatch(action);
-      return posts;
-    };
-    getPosts();
-  }, []);
-
-  console.log(posts);
+  const data = useSelector((state) => state.activeIndex.data);
+  console.log(data);
 
   const defaultUserImage =
     'https://w7.pngwing.com/pngs/682/203/png-transparent-account-user-person-profile-avatar-basic-interface-icon.png';
@@ -39,7 +20,7 @@ const MainPost = () => {
 
   return (
     <>
-      {posts.map((post) => {
+      {data.map((post) => {
         return (
           <Post key={post.id}>
             <PostList>
