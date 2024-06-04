@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import * as S from "./DeleteModal.styled";
 
 const DeleteModal = ({
@@ -6,9 +7,10 @@ const DeleteModal = ({
   selectedPostId,
   setDeleteModalOpen,
 }) => {
-  const handleDeletePost = () => {
-    const updatedPosts = posts.filter((post) => post.id !== selectedPostId);
-    setPosts(updatedPosts);
+  const dispatch = useDispatch();
+  const handleDeletePost = (id) => {
+    const action = selectedPostId(id);
+    dispatch(action);
     setDeleteModalOpen(false);
   };
 

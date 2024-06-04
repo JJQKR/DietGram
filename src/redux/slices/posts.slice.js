@@ -12,6 +12,8 @@ const initPost = {
 
 const initialState = {
   postList: [initPost],
+  currentUserId: "",
+  currentPostId: "",
 };
 
 const postsSlice = createSlice({
@@ -41,6 +43,14 @@ const postsSlice = createSlice({
     initPostList: (state, action) => {
       state.postList = action.payload;
     },
+
+    selectUser: (state, action) => {
+      state.currentUserId = action.payload;
+    },
+
+    selectPost: (state, action) => {
+      state.currentPostId = action.payload;
+    },
   },
 });
 
@@ -50,5 +60,7 @@ export const {
   updateData,
   initCommentList,
   initPostList,
+  selectUser,
+  selectPost,
 } = postsSlice.actions;
 export default postsSlice.reducer;

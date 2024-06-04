@@ -11,7 +11,6 @@ function DefaultLayout() {
   useEffect(() => {
     const checkSignInStatus = async () => {
       const isSignIn = await supabase.login.checkSignIn();
-      console.log("isSignIn", isSignIn);
       const action = checkLogin(isSignIn);
       dispatch(action);
     };
