@@ -1,8 +1,6 @@
 import { useState } from 'react';
-
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { Boxes, Left, Right } from './GlobalStyle';
 
 export const Button = styled.button`
   border-radius: 10px;
@@ -30,6 +28,33 @@ export const ImageInput = styled.input`
   background-color: red;
   border-radius: 50%;
 `;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 1440px;
+  width: 100%;
+  background-color: red;
+`;
+
+const Left = styled.div`
+  margin: 30px 0 30px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 35%;
+  align-items: center;
+  background-color: green;
+`;
+
+const Right = styled.div`
+  margin: 30px 0 30px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 35%;
+  background-color: blue;
 
 const reader = new FileReader();
 
@@ -97,7 +122,7 @@ export default function UploadPost() {
 
   return (
     <>
-      <Boxes>
+      <Container>
         <form onSubmit={handleAddPost}>
           <Left>
             <img src={newPostImage} img="img/" />
@@ -149,7 +174,7 @@ export default function UploadPost() {
             <Button type="submit">저장</Button>
           </Right>
         </form>
-      </Boxes>
+      </Container>
     </>
   );
 }
