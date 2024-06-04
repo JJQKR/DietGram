@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { changeValue, initFormData } from "../../redux/slices/form.slice";
+import { changeValue } from "../../redux/slices/form.slice";
 import {
   CommentAddButton,
   CommentInput,
@@ -14,10 +14,10 @@ const DetailCommentAdd = () => {
     dispatch(action);
   };
 
-  const completeChange = () => {
-    const action = initFormData();
-    dispatch(action);
-  };
+  // const completeChange = () => {
+  //   const action = initFormData();
+  //   dispatch(action);
+  // };
 
   return (
     <DetailPostCommentInput>

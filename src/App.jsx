@@ -1,10 +1,8 @@
-import LoginForm from "./components/Login/LoginForm";
-import SignUpForm from "./components/SignUp/SignUpForm";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes/router";
 
 function App() {
-  return <>
-    <SignUpForm />
-  </>;
+  return <RouterProvider router={router} />;
 }
 
 export default App;

@@ -1,6 +1,6 @@
-import DetailPost from '../components/DetailPost/DetailPost';
+import DetailPost from "../components/DetailPost/DetailPost";
 
-const Detail = () => {
+const DetailPage = () => {
   return (
     <main>
       <DetailPost />
@@ -8,4 +8,4 @@ const Detail = () => {
   );
 };
 
-export default Detail;
+export default DetailPage;

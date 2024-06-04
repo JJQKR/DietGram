@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import * as S from "./NavBar.styled";
 
 const NavBar = () => {
@@ -39,13 +39,23 @@ const NavBar = () => {
       <S.Container>
         <S.LeftSection>
           <S.BackBtn src={"/img/back-arrow-navigation.png"} />
-          <S.Menu>Sign Up</S.Menu>
-          <S.Menu>Login</S.Menu>
+          <Link to="/signup">
+            <S.Menu>Sign Up</S.Menu>
+          </Link>
+          <Link to="/login">
+            <S.Menu>Login</S.Menu>
+          </Link>
         </S.LeftSection>
-        <S.Title>살과 칼로리의 행방불명</S.Title>
+        <Link to="/">
+          <S.Title>살과 칼로리의 행방불명</S.Title>
+        </Link>
         <S.RightSection>
-          <S.Menu>My Posts</S.Menu>
-          <S.Menu>My Page</S.Menu>
+          <Link to="/mypost">
+            <S.Menu>My Posts</S.Menu>
+          </Link>
+          <Link to="/profile">
+            <S.Menu>My Page</S.Menu>
+          </Link>
         </S.RightSection>
       </S.Container>
       <main>
