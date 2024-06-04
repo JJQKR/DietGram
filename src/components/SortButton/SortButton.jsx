@@ -6,7 +6,7 @@ import {
   setSortType,
   sortData,
 } from "../../redux/slices/sortslice";
-import { initDataList } from "../../redux/slices/supabase.slice";
+import { supabase } from "../../supabase/supabase";
 import { Button, ButtonList } from "./SortButton.style";
 
 const SortButton = () => {
@@ -26,9 +26,7 @@ const SortButton = () => {
   // console.log('posts', posts);
   useEffect(() => {
     const getPosts = async () => {
-      const posts = await supabase.posts.getPosts();
-      const action = initDataList(posts);
-      dispatch(action);
+      const posts = await supabase.post.getPosts();
       dispatch(setSortType("latest"));
       dispatch(setData(posts));
       dispatch(sortData());
