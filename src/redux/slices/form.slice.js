@@ -26,7 +26,6 @@ const formSlice = createSlice({
       initializeFormData(state);
     },
     changeValue: (state, action) => {
-      console.log("action.payload", action.payload);
       state[action.payload.type] = action.payload.content;
     },
     selectPost: (state, action) => {
