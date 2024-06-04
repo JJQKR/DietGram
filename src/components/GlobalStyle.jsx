@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-export const PostsNumberBox = styled.div`
-  display: flex;
-  width: 1440px;
-  margin: 0 auto;
-`;
-
 export const PostsNumber = styled.h1`
   width: 500px;
   height: 120px;
@@ -13,21 +7,33 @@ export const PostsNumber = styled.h1`
   justify-content: left;
   align-items: center;
   text-indent: 50px;
-  //padding-left: 40px;
   //background-color: #353535;
   font-size: 30px;
   font-weight: 500;
 `;
 
 export const Boxes = styled.div`
-  width: 1440px;
+  background-color: #ffbf9c;
+  max-width: 1440px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  margin: 0 auto;
-  gap: 60px;
 `;
+//24.06.03 임의로 수정
+
+export const Left = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+//24.06.03 임의로 수정
+export const Right = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+//24.06.03 임의로 수정
 
 export const Post = styled.div`
   width: 350px;
@@ -114,7 +120,6 @@ export const ButtonBox = styled.div`
 export const Button = styled.button`
   width: 40px;
   height: 25px;
-  display: ${({ dataId, userId }) => (dataId === userId ? 'none' : 'block')};
   border-radius: 10px;
   border: none;
   background-color: #dcdcdc;

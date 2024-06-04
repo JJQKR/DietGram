@@ -10,12 +10,18 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setCurrentUser: (state, action) => {
+    getCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
     checkLogin: (state, action) => {
       action.payload ? (state.isLogin = true) : (state.isLogin = false);
     },
+
+    // NOTE post.api.js 의 isLike 함수의 반환값인 배열을 사용
+    // const data = await supabase.post.isLike(7);
+    // const action = setMyLikes(data);
+    // dispatch(action);
+    // console.log("selector", selector.user.myLikes);
 
     setMyLikes: (state, action) => {
       state.myLikes = action.payload.like;
@@ -24,5 +30,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setCurrentUser, checkLogin, setMyLikes } = userSlice.actions;
+export const { getCurrentUser, checkLogin, setMyLikes } = userSlice.actions;
 export default userSlice.reducer;

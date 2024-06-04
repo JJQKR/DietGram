@@ -1,5 +1,11 @@
+import Postlist from "../components/Postlist/Postlist";
+
 function MyPostPage() {
-  return <div>MyPostPage</div>;
+  return (
+    <>
+      <Postlist />
+    </>
+  );
 }
 
 export default MyPostPage;

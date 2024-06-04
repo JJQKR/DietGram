@@ -1,14 +1,17 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../../redux/slices/user.slice";
-import supabaseLogin from "../../supabase/supabaseLogin";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { changeValue } from "../../redux/slices/form.slice";
+import { checkLogin, getCurrentUser } from "../../redux/slices/user.slice";
+import { supabase } from "../../supabase/supabase";
 import * as S from "./LoginForm.styled";
 
 const LoginForm = () => {
+  const navigator = useNavigate();
   const dispatch = useDispatch();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { currentUser } = useSelector((state) => state.user);
+  const formData = useSelector((state) => state.formData);
+  console.log(formData);
 
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
@@ -18,22 +21,26 @@ const LoginForm = () => {
     setIsEmailValid(true);
     setIsPasswordValid(true);
 
+    const { email, password } = formData;
+
     try {
-      const { data, error } = await supabaseLogin.auth.signInWithPassword({
+      const { data, error } = await supabase.login.signInWithPassword(
         email,
-        password,
-      });
+        password
+      );
       if (error) {
-        console.error(error);
         alert("이메일과 비밀번호를 확인해주세요!");
       } else {
         alert("로그인 되었습니다!");
+        navigator("/");
+        console.log(data);
         const { user } = data;
-        console.log(user);
-        dispatch(setCurrentUser(user));
+        dispatch(getCurrentUser(user));
+        dispatch(checkLogin(true));
+        console.log(currentUser);
       }
     } catch (error) {
-      console.error(error);
+      alert("네트워크 이슈");
     }
   };
 
@@ -45,8 +52,13 @@ const LoginForm = () => {
           <S.Input
             id="email"
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              const action = changeValue({
+                type: "email",
+                content: e.target.value,
+              });
+              dispatch(action);
+            }}
           />
         </S.InputBox>
         <S.Span $display={isEmailValid}>
@@ -57,18 +69,21 @@ const LoginForm = () => {
           <S.Input
             id="password"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              const action = changeValue({
+                type: "password",
+                content: e.target.value,
+              });
+              dispatch(action);
+            }}
           />
         </S.InputBox>
         <S.Span $display={isPasswordValid}>비밀번호를 확인해주세요!</S.Span>
         <S.ButtonDiv>
           <S.Button type="submit">로그인</S.Button>
-          {/* 로그인 성공 시 메인 페이지로 이동? */}
-          <S.Button $color="green" type="button">
+          <S.Button $color="green" type="button" onClick={() => navigator("/signup")}>
             회원가입
           </S.Button>
-          {/* 회원가입 버튼 클릭 시 회원가입 페이지로 이동 */}
         </S.ButtonDiv>
       </S.Form>
     </>
