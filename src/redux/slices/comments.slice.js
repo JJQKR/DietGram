@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initComment = {
-  comment: "",
+  comment: '',
   post_id: 0,
 };
 
@@ -10,7 +10,7 @@ const initialState = {
 };
 
 const commentsSlice = createSlice({
-  name: "comments",
+  name: 'comments',
   initialState,
   reducers: {
     insertData: (state, action) => {

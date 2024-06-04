@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initializeFormData = (state) => {
-  state.menu = "";
-  state.content = "";
+  state.menu = '';
+  state.content = '';
   state.kcal = 0;
   state.rating = 0.0;
   state.price = 0;
@@ -13,8 +13,8 @@ const initializeFormData = (state) => {
 };
 
 const initialState = {
-  menu: "",
-  content: "",
+  menu: '',
+  content: '',
   kcal: 0,
   rating: 0.0,
   price: 0,
@@ -25,7 +25,7 @@ const initialState = {
 };
 
 const formSlice = createSlice({
-  name: "form",
+  name: 'form',
   initialState,
   reducers: {
     initFormData: (state) => {

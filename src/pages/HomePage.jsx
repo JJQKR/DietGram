@@ -1,6 +1,6 @@
-import Button from "../components/Button/Button";
-import MainPost from "../components/MainPost/MainPost";
-import SortButton from "../components/SortButton/SortButton";
+import Button from '../components/Button/Button';
+import MainPost from '../components/MainPost/MainPost';
+import SortButton from '../components/SortButton/SortButton';
 
 const HomePage = () => {
   return (
