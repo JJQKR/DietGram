@@ -12,20 +12,20 @@ const Postlist = () => {
   // 메인페이지 redirect
   // user_id 갖다쓰기
 
-  const datalist = useSelector((state) => state.supabase.dataList);
-  console.log(datalist);
-  const userData = JSON.parse(
-    // 로컬스토리지 로그인 정보에서 가져온 데이터.. 테스트용
-    // 나중에 supabase 유저 테이블에서 가져오는 방식으로 수정하기
-    localStorage.getItem("sb-mtddrulacypyulwcwtsh-auth-token")
-  );
-  const nickName = userData.user.user_metadata.user_name;
-  const currentUserId = userData.user.id;
+  //const datalist = useSelector((state) => state.supabase.dataList);
+  // console.log(datalist);
+  //const userData = JSON.parse(
+  // 로컬스토리지 로그인 정보에서 가져온 데이터.. 테스트용
+  // 나중에 supabase 유저 테이블에서 가져오는 방식으로 수정하기
+  //localStorage.getItem("sb-mtddrulacypyulwcwtsh-auth-token")
+  //);
+  // const nickName = userData.user.user_metadata.user_name;
+  //const currentUserId = userData.user.id;
 
-  const filteredDataList = datalist.filter(
-    (data) => data.user_id === currentUserId
-  );
-  console.log(filteredDataList);
+  //const filteredDataList = datalist.filter(
+  //(data) => data.user_id === currentUserId
+  //);
+  //console.log(filteredDataList);
 
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -85,22 +85,56 @@ const Postlist = () => {
   // 본인 페이지가 아니면 수정, 삭제 버튼 안 보이게
   // 수정버튼 누르면 게시물 수정 페이지로 이동
   // 삭제 버튼 누르면 삭제 모달 띄우기
-  const supabase = SupabaseFunc;
-  const dispatch = useDispatch();
+  //const supabase = SupabaseFunc;
+  //const dispatch = useDispatch();
 
   const handleDeleteButtonClick = async (id) => {
-    //setSelectedPostId(id);
-    const data = await supabase.deletePost(id);
-    dispatch(deletePost(data));
-    setDeleteModalOpen(true);
+    setSelectedPostId(id);
+    // const data = await supabase.deletePost(id);
+    // dispatch(deletePost(data));
+    // setDeleteModalOpen(true);
   };
+
+  // {filteredDataList.map((data) => {
+  //   return (
+  //     <S.Post key={data.id}>
+  //       <S.ProfileBox>
+  //         {/*<S.ProfileImage src={post.profileImage} alt="Profile Image" />*/}
+  //         <S.Nickname>{data.id}</S.Nickname>
+  //       </S.ProfileBox>
+  //       {/*<S.FoodFile src={post.file} alt="Food Image" />*/}
+  //       <S.ContextBox>
+  //         <S.TopBox>
+  //           <S.Fooditem>{data.menu}</S.Fooditem>
+  //           <S.FoodAverage>★ {data.rating}</S.FoodAverage>
+  //         </S.TopBox>
+  //         <S.MiddleBox>
+  //           <S.FoodKcal>{data.kcal} </S.FoodKcal>
+  //           <S.ButtonBox>
+  //             <S.Button
+  //               postUserId={data.user_id}
+  //               currentUserId={currentUserId}
+  //             >
+  //               수정
+  //             </S.Button>
+  //             <S.Button
+  //               postUserId={data.user_id}
+  //               currentUserId={currentUserId}
+  //               onClick={() => handleDeleteButtonClick(data.id)}
+  //             >
+  //               삭제
+  //             </S.Button>
+  //           </S.ButtonBox>
+  //         </S.MiddleBox>
+  //       </S.ContextBox>
+  //     </S.Post>
+  //   );
+  // })}
 
   return (
     <>
       <div>
-        <S.PostsNumber>
-          {nickName} 님의 포스트 {posts.length + filteredDataList.length}건
-        </S.PostsNumber>
+        <S.PostsNumber>어쩌구 님의 포스트 {posts.length}건</S.PostsNumber>
       </div>
       <S.Boxes>
         {posts.map((post) => {
@@ -129,41 +163,7 @@ const Postlist = () => {
             </S.Post>
           );
         })}
-        {filteredDataList.map((data) => {
-          return (
-            <S.Post key={data.id}>
-              <S.ProfileBox>
-                {/*<S.ProfileImage src={post.profileImage} alt="Profile Image" />*/}
-                <S.Nickname>{data.id}</S.Nickname>
-              </S.ProfileBox>
-              {/*<S.FoodFile src={post.file} alt="Food Image" />*/}
-              <S.ContextBox>
-                <S.TopBox>
-                  <S.Fooditem>{data.menu}</S.Fooditem>
-                  <S.FoodAverage>★ {data.rating}</S.FoodAverage>
-                </S.TopBox>
-                <S.MiddleBox>
-                  <S.FoodKcal>{data.kcal} </S.FoodKcal>
-                  <S.ButtonBox>
-                    <S.Button
-                      postUserId={data.user_id}
-                      currentUserId={currentUserId}
-                    >
-                      수정
-                    </S.Button>
-                    <S.Button
-                      postUserId={data.user_id}
-                      currentUserId={currentUserId}
-                      onClick={() => handleDeleteButtonClick(data.id)}
-                    >
-                      삭제
-                    </S.Button>
-                  </S.ButtonBox>
-                </S.MiddleBox>
-              </S.ContextBox>
-            </S.Post>
-          );
-        })}
+
         {deleteModalOpen && (
           <Background
             ref={modalBackground}
