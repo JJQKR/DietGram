@@ -12,29 +12,6 @@ export const PostsNumber = styled.h1`
   font-weight: 500;
 `;
 
-export const Boxes = styled.div`
-  background-color: #ffbf9c;
-  max-width: 1440px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-`;
-//24.06.03 임의로 수정
-
-export const Left = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-//24.06.03 임의로 수정
-export const Right = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-//24.06.03 임의로 수정
-
 export const Post = styled.div`
   width: 350px;
   height: 510px;
