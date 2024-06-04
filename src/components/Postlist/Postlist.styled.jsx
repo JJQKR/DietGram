@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const PostsNumberBox = styled.div`
   display: flex;
+  width: 1440px;
+  margin: 0 auto;
 `;
 
 export const PostsNumber = styled.h1`
@@ -11,6 +13,7 @@ export const PostsNumber = styled.h1`
   justify-content: left;
   align-items: center;
   text-indent: 50px;
+  //padding-left: 40px;
   //background-color: #353535;
   font-size: 30px;
   font-weight: 500;
@@ -111,8 +114,7 @@ export const ButtonBox = styled.div`
 export const Button = styled.button`
   width: 40px;
   height: 25px;
-  display: ${({ postUserId, currentUserId }) =>
-    postUserId === currentUserId ? "block" : "none"};
+  display: ${({ dataId, userId }) => (dataId === userId ? "block" : "none")};
   border-radius: 10px;
   border: none;
   background-color: #dcdcdc;

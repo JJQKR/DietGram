@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { supabase } from "../../supabase/supabase";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import * as S from "./NavBar.styled";
+import { useEffect, useState } from "react";
+import { supabase } from "../../supabase/supabase";
 import { useDispatch, useSelector } from "react-redux";
 import { checkLogin } from "../../redux/slices/user.slice";
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const loginState = useSelector(state => state.user.isLogin);
-  console.log(loginState);
 
   useEffect(() => {
     const checkIsLogin = async () => {
@@ -44,20 +43,23 @@ const NavBar = () => {
     <>
       <S.Container>
         <S.LeftSection>
-          <S.BackBtn src={"/img/back-arrow-navigation.png"} />
-          <Link to="/signup">
+          <S.BackBtn
+            src={"/img/back-arrow-navigation.png"}
+            onClick={handleBackBtn}
+          />
+          <Link to="/signup" style={{ textDecoration: "none" }}>
             <S.Menu>Sign Up</S.Menu>
           </Link>
           {logInItem()}
         </S.LeftSection>
-        <Link to="/">
+        <Link to="/" style={{ textDecoration: "none" }}>
           <S.Title>살과 칼로리의 행방불명</S.Title>
         </Link>
         <S.RightSection>
-          <Link to="/mypost">
+          <Link to="/mypost" style={{ textDecoration: "none" }}>
             <S.Menu>My Posts</S.Menu>
           </Link>
-          <Link to="/profile">
+          <Link to="/profile" style={{ textDecoration: "none" }}>
             <S.Menu>My Page</S.Menu>
           </Link>
         </S.RightSection>
