@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const PostsNumberBox = styled.div`
   display: flex;
+  width: 1440px;
+  margin: 0 auto;
 `;
 
 export const PostsNumber = styled.h1`
@@ -11,6 +13,7 @@ export const PostsNumber = styled.h1`
   justify-content: left;
   align-items: center;
   text-indent: 50px;
+  //padding-left: 40px;
   //background-color: #353535;
   font-size: 30px;
   font-weight: 500;

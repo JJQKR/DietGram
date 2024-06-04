@@ -130,9 +130,9 @@ const Postlist = () => {
 
   return (
     <>
-      <div>
+      <S.PostsNumberBox>
         <S.PostsNumber>어쩌구 님의 포스트 {posts.length}건</S.PostsNumber>
-      </div>
+      </S.PostsNumberBox>
       <S.Boxes>
         {posts.map((post) => {
           return (
