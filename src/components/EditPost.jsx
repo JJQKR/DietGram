@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { changePost, deletePost } from '../redux/slices/postsSlice';
-import { Boxes } from '../GlobalStyle';
+import { Boxes } from './GlobalStyle';
 
 export default function EditPost() {
   const navigate = useNavigate();
