@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import {
   Post,
   PostImage,
@@ -6,16 +7,15 @@ import {
   UserData,
   UserImage,
   UserName,
-} from './MainPost.styled';
-import { useSelector } from 'react-redux';
+} from "./MainPost.styled";
 
 const MainPost = () => {
   const data = useSelector((state) => state.activeIndex.data);
 
   const defaultUserImage =
-    'https://w7.pngwing.com/pngs/682/203/png-transparent-account-user-person-profile-avatar-basic-interface-icon.png';
+    "https://w7.pngwing.com/pngs/682/203/png-transparent-account-user-person-profile-avatar-basic-interface-icon.png";
   const DefaultMenuImage =
-    'https://jmagazine.joins.com/_data/photo/2019/02/838745483_xbF6yINr_2.jpg';
+    "https://jmagazine.joins.com/_data/photo/2019/02/838745483_xbF6yINr_2.jpg";
 
   return (
     <>
@@ -31,7 +31,7 @@ const MainPost = () => {
                 <UserName>{post.id}</UserName>
               </UserData>
               <PostTimeCalorie>
-                <p>{post.created_at.split('T')[0]}</p>
+                <p>{post.created_at.split("T")[0]}</p>
                 <p>{post.kcal} kcal</p>
               </PostTimeCalorie>
             </PostList>

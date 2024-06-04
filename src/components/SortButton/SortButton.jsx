@@ -6,8 +6,9 @@ import {
   setSortType,
   sortData,
 } from '../../redux/slices/sortslice';
-import { initDataList } from '../../redux/slices/supabase.slice';
+import { supabase } from '../../supabase/supabase';
 import { Button, ButtonList } from './SortButton.style';
+import { initPostList } from '../../redux/slices/posts.slice';
 
 const SortButton = () => {
   const activeIndex = useSelector((state) => state.activeIndex.value);
@@ -19,17 +20,17 @@ const SortButton = () => {
     dispatch(sortData());
   };
 
-  // const posts = useSelector((state) => state.supabase.dataList);
-  // const formData = useSelector((state) => state.formData.menu);
+  const posts = useSelector((state) => state.posts.postList);
+  const formData = useSelector((state) => state.formData.menu);
   // get posts = App에서 useEffect로 받아서 => initialState 할당
   // 이외 db 다루는 함수 사용 후 redux에 payload로 전달
-  // console.log('posts', posts);
   useEffect(() => {
     const getPosts = async () => {
-      const posts = await supabase.posts.getPosts();
-      const action = initDataList(posts);
+      const posts = await supabase.post.getPosts();
+      const action = initPostList(posts);
       dispatch(action);
       dispatch(setSortType('latest'));
+
       dispatch(setData(posts));
       dispatch(sortData());
       return posts;

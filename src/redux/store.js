@@ -1,18 +1,20 @@
-import activeIndexSilce from './slices/sortslice';
+// import supabaseSlice from './slices/supabase.slice';
+// import currentUserSlice from './slices/currentUser.slice';
 import { configureStore } from '@reduxjs/toolkit';
+import commentsSlice from './slices/comments.slice';
 import formSlice from './slices/form.slice';
-import supabaseSlice from './slices/supabase.slice';
-import currentUserSlice from './slices/currentUser.slice';
-import commentSlice from './slices/comment.slice';
+import postsSlice from './slices/posts.slice';
+import activeIndexSilce from './slices/sortslice';
+import userSlice from './slices/user.slice';
 
 const store = configureStore({
   reducer: {
-    supabase: supabaseSlice,
+    posts: postsSlice,
+    comments: commentsSlice,
     formData: formSlice,
-    commentData: commentSlice,
     activeIndex: activeIndexSilce,
-
-    currentUser: currentUserSlice,
+    // currentUser: currentUserSlice,
+    user: userSlice,
   },
 });
 
