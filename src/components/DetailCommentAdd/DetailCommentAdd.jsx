@@ -1,22 +1,24 @@
-import { useDispatch } from "react-redux";
-import { changeValue, initFormData } from "../../redux/slices/form.slice";
+import { useDispatch } from 'react-redux';
+import { addComment, changeValue } from '../../redux/slices/comment.slice';
 import {
   CommentAddButton,
   CommentInput,
   DetailPostCommentInput,
-} from "./DetailCommentAdd.style";
+} from './DetailCommentAdd.style';
+import { useSelector } from 'react-redux';
 
 const DetailCommentAdd = () => {
   const dispatch = useDispatch();
+  const inPutValue = useSelector((state) => state.inPutValue);
 
   const handleInputChange = (e) => {
-    const action = changeValue({ type: "menu", content: e.target.value });
+    const action = changeValue({ type: 'inputValue', content: e.target.value });
     dispatch(action);
   };
 
   const completeChange = () => {
-    const action = initFormData();
-    dispatch(action);
+    dispatch(addComment(inPutValue));
+    dispatch(changeValue({ type: 'inputValue', content: '' }));
   };
 
   return (
@@ -24,9 +26,10 @@ const DetailCommentAdd = () => {
       <CommentInput
         placeholder="댓글 달기"
         type="text"
+        value={inPutValue}
         onChange={handleInputChange}
       />
-      <CommentAddButton>게시</CommentAddButton>
+      <CommentAddButton onClick={completeChange}>게시</CommentAddButton>
     </DetailPostCommentInput>
   );
 };

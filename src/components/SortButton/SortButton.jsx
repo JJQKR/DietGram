@@ -1,13 +1,13 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   setActiveIndex,
   setData,
   setSortType,
   sortData,
-} from "../../redux/slices/sortslice";
-import { initDataList } from "../../redux/slices/supabase.slice";
-import { Button, ButtonList } from "./SortButton.style";
+} from '../../redux/slices/sortslice';
+import { initDataList } from '../../redux/slices/supabase.slice';
+import { Button, ButtonList } from './SortButton.style';
 
 const SortButton = () => {
   const activeIndex = useSelector((state) => state.activeIndex.value);
@@ -29,7 +29,7 @@ const SortButton = () => {
       const posts = await supabase.posts.getPosts();
       const action = initDataList(posts);
       dispatch(action);
-      dispatch(setSortType("latest"));
+      dispatch(setSortType('latest'));
       dispatch(setData(posts));
       dispatch(sortData());
       return posts;
@@ -39,14 +39,14 @@ const SortButton = () => {
 
   return (
     <ButtonList>
-      {["최신순", "최고 칼로리", "최저 칼로리"].map((button, index) => {
+      {['최신순', '최고 칼로리', '최저 칼로리'].map((button, index) => {
         return (
           <Button
             $active={activeIndex === index}
             onClick={() =>
               handleSortButton(
                 index,
-                ["latest", "highCalories", "lowCalories"][index]
+                ['latest', 'highCalories', 'lowCalories'][index]
               )
             }
             key={index}

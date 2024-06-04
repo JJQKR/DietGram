@@ -1,8 +1,8 @@
-import Button from "../components/Button/Button";
-import MainPost from "../components/MainPost/MainPost";
-import SortButton from "../components/SortButton/SortButton";
+import Button from '../components/Button/Button';
+import MainPost from '../components/MainPost/MainPost';
+import SortButton from '../components/SortButton/SortButton';
 
-const Home = () => {
+const HomePage = () => {
   return (
     <main>
       <SortButton />
@@ -12,4 +12,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

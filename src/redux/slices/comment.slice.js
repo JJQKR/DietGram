@@ -1,31 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initializeFormData = (state) => {
-  state.menu = '';
-  state.content = '';
-  state.kcal = 0;
-  state.rating = 0.0;
-  state.price = 0;
-  state.place = '';
-};
-
 const initialState = {
-  menu: '',
-  content: '',
-  kcal: 0,
-  rating: 0.0,
-  price: 0,
-  place: '',
+  comments: [],
+  inputValue: '',
 };
 
-const formSlice = createSlice({
-  name: 'form',
+const commentSlice = createSlice({
+  name: 'comment',
   initialState,
   reducers: {
-    initFormData: (state) => {
-      initializeFormData(state);
+    addComment: (state, action) => {
+      state.comments = [...state.comments, action.payload];
     },
-
     changeValue: (state, action) => {
       state[action.payload.type] = action.payload.content;
     },
@@ -44,6 +30,6 @@ const formSlice = createSlice({
   },
 });
 
-export const { initFormData, changeValue, selectPost } = formSlice.actions;
+export const { changeValue, selectPost, addComment } = commentSlice.actions;
 
-export default formSlice.reducer;
+export default commentSlice.reducer;

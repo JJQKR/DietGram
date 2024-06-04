@@ -6,10 +6,10 @@ import {
   PostDate,
   PostGrade,
 } from './DetailPostData.style';
-import { initDataList } from '../../redux/slices/supabase.slice';
-import SupabaseFunc from '../../redux/slices/supabase.slice';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+// import { initDataList } from '../../redux/slices/supabase.slice';
+// import SupabaseFunc from '../../redux/slices/supabase.slice';
+// import { useEffect } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
 
 const DetailPostData = () => {
   // const supabase = SupabaseFunc;
@@ -28,10 +28,10 @@ const DetailPostData = () => {
   //   getPosts();
   // }, []);
 
-  const supabase = SupabaseFunc;
-  const dispatch = useDispatch();
-  const posts = useSelector((state) => state.supabase.dataList);
-  console.log('posts', posts);
+  // const supabase = SupabaseFunc;
+  // const dispatch = useDispatch();
+  // const posts = useSelector((state) => state.supabase.dataList);
+  // console.log('posts', posts);
 
   return (
     <DetailPostDataList>
