@@ -1,13 +1,13 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import * as S from "./NavBar.styled";
-import { useEffect, useState } from "react";
-import { supabase } from "../../supabase/supabase";
-import { useDispatch, useSelector } from "react-redux";
-import { checkLogin } from "../../redux/slices/user.slice";
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import * as S from './NavBar.styled';
+import { useEffect, useState } from 'react';
+import { supabase } from '../../supabase/supabase';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkLogin } from '../../redux/slices/user.slice';
 
 const NavBar = () => {
   const dispatch = useDispatch();
-  const loginState = useSelector(state => state.user.isLogin);
+  const loginState = useSelector((state) => state.user.isLogin);
 
   useEffect(() => {
     const checkIsLogin = async () => {
@@ -17,7 +17,6 @@ const NavBar = () => {
     checkIsLogin();
   }, []);
 
-
   const logInItem = () => {
     if (loginState) {
       return (
@@ -25,7 +24,7 @@ const NavBar = () => {
           onClick={async () => {
             await supabase.login.signOut();
             dispatch(checkLogin(false));
-            alert("로그아웃 되었습니다!");
+            alert('로그아웃 되었습니다!');
           }}
         >
           LogOut
@@ -43,23 +42,20 @@ const NavBar = () => {
     <>
       <S.Container>
         <S.LeftSection>
-          <S.BackBtn
-            src={"/img/back-arrow-navigation.png"}
-            onClick={handleBackBtn}
-          />
-          <Link to="/signup" style={{ textDecoration: "none" }}>
+          <S.BackBtn src={'/img/back-arrow-navigation.png'} />
+          <Link to="/signup" style={{ textDecoration: 'none' }}>
             <S.Menu>Sign Up</S.Menu>
           </Link>
           {logInItem()}
         </S.LeftSection>
-        <Link to="/" style={{ textDecoration: "none" }}>
+        <Link to="/" style={{ textDecoration: 'none' }}>
           <S.Title>살과 칼로리의 행방불명</S.Title>
         </Link>
         <S.RightSection>
-          <Link to="/mypost" style={{ textDecoration: "none" }}>
+          <Link to="/mypost" style={{ textDecoration: 'none' }}>
             <S.Menu>My Posts</S.Menu>
           </Link>
-          <Link to="/profile" style={{ textDecoration: "none" }}>
+          <Link to="/profile" style={{ textDecoration: 'none' }}>
             <S.Menu>My Page</S.Menu>
           </Link>
         </S.RightSection>

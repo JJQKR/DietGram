@@ -1,23 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-const initPost = {
-  menu: "초기값",
-  content: "입니다",
-  kcal: 0,
-  rating: 0.0,
-  price: 0,
-  like: 0,
-  place: "초기장소",
-};
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  postList: [initPost],
-  currentUserId: "",
-  currentPostId: "",
+  postList: [],
+  currentUserId: '',
+  currentPostId: ''
 };
 
 const postsSlice = createSlice({
-  name: "posts",
+  name: 'posts',
   initialState,
   reducers: {
     insertData: (state, action) => {
@@ -25,16 +15,12 @@ const postsSlice = createSlice({
     },
 
     deleteData: (state, action) => {
-      const idx = state.postList.findIndex(
-        (item) => item.id !== action.payload.id
-      );
-
+      const idx = state.postList.findIndex((item) => item.id !== action.payload);
+      console.log(idx);
       state.postList.splice(idx, 1);
     },
     updateData: (state, action) => {
-      const index = state.postList.findIndex(
-        (item) => item.id === action.payload.id
-      );
+      const index = state.postList.findIndex((item) => item.id === action.payload.id);
       if (index !== -1) {
         state.postList[index] = action.payload;
       }
@@ -50,17 +36,11 @@ const postsSlice = createSlice({
 
     selectPost: (state, action) => {
       state.currentPostId = action.payload;
-    },
-  },
+      console.log(action.payload);
+    }
+  }
 });
 
-export const {
-  insertData,
-  deleteData,
-  updateData,
-  initCommentList,
-  initPostList,
-  selectUser,
-  selectPost,
-} = postsSlice.actions;
+export const { insertData, deleteData, updateData, initCommentList, initPostList, selectUser, selectPost } =
+  postsSlice.actions;
 export default postsSlice.reducer;

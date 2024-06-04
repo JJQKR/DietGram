@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const PostsNumberBox = styled.div`
   display: flex;
@@ -114,12 +114,12 @@ export const ButtonBox = styled.div`
 export const Button = styled.button`
   width: 40px;
   height: 25px;
-  display: ${({ dataId, userId }) => (dataId === userId ? "block" : "none")};
+  display: ${({ dataId, userId }) => (dataId === userId ? 'none' : 'block')};
   border-radius: 10px;
   border: none;
   background-color: #dcdcdc;
   font-size: 13px;
-  font-family: "SUITE-Regular";
+  font-family: 'SUITE-Regular';
   &:hover {
     background-color: #b1b1b1;
     transition: 0.3s;
