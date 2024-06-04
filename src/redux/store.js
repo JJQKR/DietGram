@@ -1,11 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
+import commentsSlice from "./slices/comments.slice";
 import formSlice from "./slices/form.slice";
-import supabaseSlice from "./slices/supabase.slice";
+import postsSlice from "./slices/posts.slice";
+import activeIndexSilce from "./slices/sortslice";
+import userSlice from "./slices/user.slice";
 
 const store = configureStore({
   reducer: {
-    supabase: supabaseSlice,
+    posts: postsSlice,
+    comments: commentsSlice,
     formData: formSlice,
+    activeIndex: activeIndexSilce,
+    user: userSlice,
   },
 });
 
