@@ -25,11 +25,13 @@ function Test() {
   useEffect(() => {
     const getPosts = async () => {
       const initPosts = await supabase.post.getPosts();
+      setPosts(initPosts);
       const action = initPostList(initPosts);
       dispatch(action);
     };
     const getComments = async () => {
       const initComments = await supabase.comment.getComments();
+      setComments(initComments);
       const action = initCommentList(initComments);
       dispatch(action);
     };
