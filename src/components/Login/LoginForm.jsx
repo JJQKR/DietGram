@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { changeValue } from "../../redux/slices/form.slice";
-import { getCurrentUser } from "../../redux/slices/user.slice";
+import { checkLogin, getCurrentUser } from "../../redux/slices/user.slice";
 import { supabase } from "../../supabase/supabase";
 import * as S from "./LoginForm.styled";
 
@@ -10,9 +10,8 @@ const LoginForm = () => {
   const navigator = useNavigate();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
-  const { formData } = useSelector((state) => state);
+  const formData = useSelector((state) => state.formData);
   console.log(formData);
-  console.log(currentUser);
 
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
@@ -37,6 +36,7 @@ const LoginForm = () => {
         console.log(data);
         const { user } = data;
         dispatch(getCurrentUser(user));
+        dispatch(checkLogin(true));
         console.log(currentUser);
       }
     } catch (error) {
@@ -81,11 +81,9 @@ const LoginForm = () => {
         <S.Span $display={isPasswordValid}>비밀번호를 확인해주세요!</S.Span>
         <S.ButtonDiv>
           <S.Button type="submit">로그인</S.Button>
-          {/* 로그인 성공 시 메인 페이지로 이동? */}
-          <S.Button $color="green" type="button">
+          <S.Button $color="green" type="button" onClick={() => navigator("/signup")}>
             회원가입
           </S.Button>
-          {/* 회원가입 버튼 클릭 시 회원가입 페이지로 이동 */}
         </S.ButtonDiv>
       </S.Form>
     </>
