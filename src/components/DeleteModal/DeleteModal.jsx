@@ -1,12 +1,7 @@
 import { useDispatch } from "react-redux";
 import * as S from "./DeleteModal.styled";
 
-const DeleteModal = ({
-  posts,
-  setPosts,
-  selectedPostId,
-  setDeleteModalOpen,
-}) => {
+const DeleteModal = ({ selectedPostId, setDeleteModalOpen }) => {
   const dispatch = useDispatch();
   const handleDeletePost = (id) => {
     const action = selectedPostId(id);

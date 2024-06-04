@@ -56,7 +56,6 @@ const formSlice = createSlice({
   },
 });
 
-export const { initFormData, changeValue, selectPost, changeUserInfo } =
-  formSlice.actions;
+export const { initFormData, changeValue, changeUserInfo } = formSlice.actions;
 
 export default formSlice.reducer;
