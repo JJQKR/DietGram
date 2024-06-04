@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Boxes, Left, Right } from "./GlobalStyle";
+// import { Boxes, Left, Right } from "./GlobalStyle";
 
 export default function EditProfile() {
   const [initialProfile, setInitialProfile] = useState([
