@@ -41,8 +41,6 @@ const SortButton = () => {
     getPosts();
   }, [dispatch]);
 
-  console.log(posts);
-
   return (
     <ButtonList>
       {['최신순', '최고 칼로리', '최저 칼로리'].map((button, index) => {

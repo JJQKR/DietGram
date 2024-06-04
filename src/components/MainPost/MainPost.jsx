@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 
 const MainPost = () => {
   const data = useSelector((state) => state.activeIndex.data);
-  console.log(data);
 
   const defaultUserImage =
     'https://w7.pngwing.com/pngs/682/203/png-transparent-account-user-person-profile-avatar-basic-interface-icon.png';
