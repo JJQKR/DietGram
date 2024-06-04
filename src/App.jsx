@@ -1,12 +1,11 @@
-import DetailPost from './pages/Detail';
-import './App.css';
 
-const App = () => {
+
+function App() {
   return (
-    <main>
-      <DetailPost />
-    </main>
-  );
-};
+    <>
+
+    </>
+
+}
 
 export default App;
