@@ -30,6 +30,14 @@ const formSlice = createSlice({
       state[action.payload.type] = action.payload.content;
     },
 
+    changePost: (state, action) => {
+      state.menu = action.payload.menu;
+      state.content = action.payload.content;
+      state.rating = action.payload.rating;
+      state.kcal = action.payload.kcal;
+      state.id = action.payload.kcal;
+    },
+
     // selectPost: (state, action) => {
     //   const selectedPost = state.recordList.filter(
     //     (item) => item.id === action.payload
@@ -44,6 +52,7 @@ const formSlice = createSlice({
   },
 });
 
-export const { initFormData, changeValue, selectPost } = formSlice.actions;
+export const { initFormData, changeValue, selectPost, changePost } =
+  formSlice.actions;
 
 export default formSlice.reducer;
