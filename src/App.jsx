@@ -1,17 +1,9 @@
-// import './App.css'
-
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "./components/Header/Header";
+import NavBar from "./components/NavBar/NavBar";
 
 function App() {
   return (
     <>
-      <Header />
-      <BrowserRouter>
-        <Routes>
-          <Route></Route>
-        </Routes>
-      </BrowserRouter>
+      <NavBar />
     </>
   );
 }

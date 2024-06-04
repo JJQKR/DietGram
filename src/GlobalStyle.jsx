@@ -5,11 +5,8 @@ const GlobalStyle = createGlobalStyle`
 ${reset}
 
 body {
+  width: 100%;
   font-family: 'SUITE-Regular';
-  display:flex;
-  justify-content:center;
-  align-items: center;
-  //background-color:black;
 }
 `;
 
