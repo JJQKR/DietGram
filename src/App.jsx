@@ -2,7 +2,6 @@ import Home from './pages/Home';
 // import { useEffect } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // import { changeValue } from './redux/slices/form.slice';
 // import { initDataList } from './redux/slices/supabase.slice';
 // import SupabaseFunc from './supabase/supabase';
@@ -39,11 +38,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
+    <main>
+      <Home />
+    </main>
   );
 };
 
