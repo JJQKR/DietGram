@@ -16,6 +16,7 @@ const userSlice = createSlice({
     checkLogin: (state, action) => {
       action.payload ? (state.isLogin = true) : (state.isLogin = false);
     },
+
     setMyLikes: (state, action) => {
       state.myLikes = action.payload.like;
       console.log(action.payload.like);
