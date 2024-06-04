@@ -6,16 +6,16 @@ const initPost = {
   kcal: 0,
   rating: 0.0,
   price: 0,
+  like: 0,
   place: "초기장소",
 };
 
 const initialState = {
   postList: [initPost],
-  commentList: [],
 };
 
-const supabaseSlice = createSlice({
-  name: "supabase",
+const postsSlice = createSlice({
+  name: "posts",
   initialState,
   reducers: {
     insertData: (state, action) => {
@@ -41,9 +41,6 @@ const supabaseSlice = createSlice({
     initPostList: (state, action) => {
       state.postList = action.payload;
     },
-    initCommentList: (state, action) => {
-      state.commentList = action.payload;
-    },
   },
 });
 
@@ -53,5 +50,5 @@ export const {
   updateData,
   initCommentList,
   initPostList,
-} = supabaseSlice.actions;
-export default supabaseSlice.reducer;
+} = postsSlice.actions;
+export default postsSlice.reducer;
