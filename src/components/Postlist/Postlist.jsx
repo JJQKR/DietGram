@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import DeleteModal from "../../components/DeleteModal/DeleteModal";
-import { Background } from "../../components/DeleteModal/DeleteModal.styled";
-import * as S from "./Postlist.styled";
-import { useDispatch, useSelector } from "react-redux";
-import { supabase } from "../../supabase/supabase";
-import { deleteData, selectUser } from "../../redux/slices/posts.slice";
-import { selectPost } from "../../redux/slices/form.slice";
+import { useEffect, useRef, useState } from 'react';
+import DeleteModal from '../../components/DeleteModal/DeleteModal';
+import { Background } from '../../components/DeleteModal/DeleteModal.styled';
+import * as S from './Postlist.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { supabase } from '../../supabase/supabase';
+import { deleteData, selectUser } from '../../redux/slices/posts.slice';
+import { selectPost } from '../../redux/slices/posts.slice';
 const Postlist = () => {
   const dispatch = useDispatch();
   const [selectedPostId, setSelectedPostId] = useState(null);
@@ -24,6 +24,8 @@ const Postlist = () => {
 
   const myPostList = rawData.filter((data) => data.user_id === userId);
   const otherPostList = rawData.filter((data) => data.user_id !== userId);
+  // const postlist = useSelector((state) => state.posts.postList);
+  // console.log(postlist);
 
   const handleDeleteButtonClick = (id) => {
     const action = selectPost(id);
@@ -59,11 +61,7 @@ const Postlist = () => {
                   <S.Button dataId={data.id} userId={userId}>
                     수정
                   </S.Button>
-                  <S.Button
-                    dataId={data.id}
-                    userId={userId}
-                    onClick={() => handleDeleteButtonClick(data.id)}
-                  >
+                  <S.Button dataId={data.id} userId={userId} onClick={() => handleDeleteButtonClick(data.id)}>
                     삭제
                   </S.Button>
                 </S.ButtonBox>
@@ -81,10 +79,7 @@ const Postlist = () => {
         <S.PostsNumber>ddd 님의 포스트 건</S.PostsNumber>
       </S.PostsNumberBox>
       <S.Boxes>
-        {currentUserId === userId
-          ? showPosts(myPostList)
-          : showPosts(otherPostList)}
-        ;
+        {currentUserId === userId ? showPosts(myPostList) : showPosts(otherPostList)};
         {deleteModalOpen && (
           <Background
             ref={modalBackground}
@@ -94,10 +89,7 @@ const Postlist = () => {
               }
             }}
           >
-            <DeleteModal
-              selectedPostId={selectedPostId}
-              setDeleteModalOpen={setDeleteModalOpen}
-            />
+            <DeleteModal selectedPostId={selectedPostId} setDeleteModalOpen={setDeleteModalOpen} />
           </Background>
         )}
       </S.Boxes>
