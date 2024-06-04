@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initPost = {
   menu: "초기값",
@@ -15,9 +15,10 @@ const initialState = {
 };
 
 const supabaseSlice = createSlice({
-  name: "supabase",
+  name: 'supabase',
   initialState,
   reducers: {
+
     insertData: (state, action) => {
       state.postList.push(action.payload[0]);
     },
@@ -27,7 +28,9 @@ const supabaseSlice = createSlice({
         (item) => item.id !== action.payload.id
       );
 
+
       state.postList.splice(idx, 1);
+
     },
     updateData: (state, action) => {
       const index = state.postList.findIndex(
