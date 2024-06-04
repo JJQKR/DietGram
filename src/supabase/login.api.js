@@ -46,6 +46,22 @@ class Login {
     await this.checkSignIn();
     await this.#client.auth.signOut();
   }
+
+  async insertUser(id) {
+    const { data, error } = await this.#client
+      .from("users")
+      .insert({
+        user_id: id,
+        like: [],
+      })
+      .select("*");
+    if (error) {
+      console.error("error => ", error);
+    } else {
+      console.log("insertUser => ", data);
+      return data;
+    }
+  }
 }
 
 export default Login;
