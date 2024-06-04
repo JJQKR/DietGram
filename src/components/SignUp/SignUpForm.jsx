@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import supabaseLogin from "../../supabase/supabaseLogin";
+import { supabase } from "../../supabase/supabase";
 import * as S from "./SignUpForm.styled";
 
 const SignUpForm = () => {
@@ -41,33 +41,17 @@ const SignUpForm = () => {
     }
 
     try {
-      const { data, error } = await supabaseLogin.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            nickName,
-            avatarUrl:
-              "https://sngxevhlxxzjbwdbherl.supabase.co/storage/v1/object/public/avatars/dafalut_image2-removebg-preview.png",
-          },
-        },
-      });
+      const { data, error } = await supabase.login.signUp(email, password, nickName);
       console.log(data);
       if (error) {
         console.error(error);
       } else {
-        setEmail("");
-        setPassword("");
-        setPasswordConfirm("");
-        setNickName("");
-        alert(`${data.user_metadata.nickName}`);
         alert("환영합니다 로그인 하실래요?");
-        console.log("signup: ", { data, error });
+        // 회원가입 성공하면 로그인 페이지로?
       }
     } catch (error) {
       console.error(error);
     }
-    // 회원가입 성공하면 로그인 페이지로?
   };
 
   return (
