@@ -1,33 +1,41 @@
 import React, { useState } from 'react'
 import * as S from './LoginForm.styled'
+import supabaseLogin from '../../supabase/supabaseLogin';
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from '../../redux/slices/currentUser.slice';
 
 const LoginForm = () => {
+    const dispatch = useDispatch();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const [isEmailValid, setIsEmailValid] = useState(true);
     const [isPasswordValid, setIsPasswordValid] = useState(true);
 
-    const handleSubmitLoginForm = (event) => {
+    const handleSubmitLoginForm = async (event) => {
         event.preventDefault();
         setIsEmailValid(true);
         setIsPasswordValid(true);
 
-        const loadedUsers = JSON.parse(localStorage.getItem("users"));
-        const validUser = loadedUsers.find(user => user.email === email);
+        try {
+            const { data, error } = await supabaseLogin.auth.signInWithPassword({
+                email,
+                password,
+            })
+            if (error) {
+                console.error(error);
+                alert("이메일과 비밀번호를 확인해주세요!");
+            } else {
+                alert("로그인 되었습니다!");
+                const { user } = data;
+                console.log(user);
+                dispatch(setCurrentUser(user));
+            }
 
-        // 해당 이메일의 user가 있는지 검사
-        // 없다면 확인 span이 나타남
-        if (!validUser) {
-            return setIsEmailValid(false);
+        } catch (error) {
+            console.error(error);
         }
-        // user의 비밀번호가 일치하는지 검사
-        // 일치하지 않는다면 확인 span이 나타남
-        if (validUser.password !== password) {
-            return setIsPasswordValid(false);
-        }
-        // 로그인 성공
-        alert(`${validUser.nickName}님 반갑습니다!`);
     };
 
     return (
