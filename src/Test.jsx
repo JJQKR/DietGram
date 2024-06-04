@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeValue } from "./redux/slices/form.slice";
-import {
-  initCommentList,
-  initPostList,
-  updateData,
-} from "./redux/slices/supabase.slice";
+import { initCommentList, initPostList } from "./redux/slices/supabase.slice";
 import { supabase } from "./supabase/supabase";
 
 function Test() {
@@ -41,15 +37,17 @@ function Test() {
 
   const onclickHandler = async (e) => {
     e.preventDefault();
+    const data = await supabase.post.isLike();
+    console.log("data", data);
+    // const data = await supabase.post.isLike(1,true)
+    // const data = await supabase.comment.updateComment(19);
+    // const newComments = comments.map((item) =>
+    //   item.id === data.id ? data : item
+    // );
 
-    const data = await supabase.comment.updateComment(19);
-    const newComments = comments.map((item) =>
-      item.id === data.id ? data : item
-    );
-
-    setComments(newComments);
-    const action = updateData(data);
-    dispatch(action);
+    // setComments(newComments);
+    // const action = updateData(data);
+    // dispatch(action);
   };
 
   return (

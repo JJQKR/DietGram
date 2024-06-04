@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import Test from "../Test";
 import DefaultLayout from "../layouts/DefaultLayout";
 import DetailPage from "../pages/DetailPage";
 import HomePage from "../pages/HomePage";
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       { path: "/signup", element: <SignUpPage /> },
       { path: "/update", element: <UpdatePage /> },
       { path: "/upload", element: <UploadPage /> },
+      { path: "/test", element: <Test /> },
     ],
   },
 ]);

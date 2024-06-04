@@ -55,6 +55,11 @@ class Post {
 
     return updatedPost;
   }
+
+  async isLike() {
+    const { data } = await this.#client.from("users").select("like");
+    console.log("data", data);
+  }
 }
 
 export default Post;
