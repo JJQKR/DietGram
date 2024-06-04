@@ -19,17 +19,8 @@ import Login from "./pages/TestPages/Login";
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<NavBar />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/myposts" element={<Postlist />} />
-            <Route path="/mypage" element={<Mypage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <NavBar />
+      <Postlist />
     </>
   );
 }
