@@ -47,6 +47,8 @@ const SignUpForm = () => {
       if (error) {
         console.error(error);
       } else {
+        const { user } = data;
+        supabase.login.insertUser(user.id);
         alert("환영합니다 로그인 하실래요?");
         // 회원가입 성공하면 로그인 페이지로?
       }
