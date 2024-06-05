@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { supabase } from "../../supabase/supabase";
 import { checkLengthValidation, checkEqualValidation } from "./signUpValidation";
 import * as S from "./SignUpForm.styled";
-import { changeUserInfo, changeValue } from "../../redux/slices/form.slice";
+import { changeUserInfo, changeValue, initFormData } from "../../redux/slices/form.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -12,9 +12,11 @@ const SignUpForm = () => {
   const navigator = useNavigate();
   const formData = useSelector(state => state.formData);
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const emailRef = useRef();
   const spanRef = useRef([]);
 
   useEffect(() => {
+    emailRef.current.focus();
     spanRef.current[0].style.display = "none";
     spanRef.current[1].style.display = "none";
     spanRef.current[2].style.display = "none";
@@ -28,7 +30,6 @@ const SignUpForm = () => {
     const action = changeUserInfo({ email, password, nickName });
     dispatch(action);
 
-    // 유효성 검사
     if (!checkLengthValidation(email, 1)) {
       dispatch(changeValue({ type: "email", content: "" }))
       return spanRef.current[0].style.display = "block";
@@ -51,8 +52,9 @@ const SignUpForm = () => {
       } else {
         const { user } = data;
         supabase.login.insertUser(user.id);
+        dispatch(initFormData());
         alert("환영합니다 로그인 하실래요?");
-        navigator("/login")
+        navigator("/login");
       }
     } catch (error) {
       console.error(error);
@@ -67,6 +69,7 @@ const SignUpForm = () => {
           <S.Input
             id="email"
             type="email"
+            ref={emailRef}
             onChange={(e) => {
               const action = changeValue({ type: "email", content: e.target.value })
               dispatch(action);
