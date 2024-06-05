@@ -63,7 +63,7 @@ const Postlist = () => {
                   dispatch(action);
                 }}
               >
-                {currentUserInfo.nickName}
+                {/* {currentUserInfo.nickName} */}
               </S.Nickname>
             </S.ProfileBox>
             <S.ContextBox>
@@ -92,9 +92,7 @@ const Postlist = () => {
   return (
     <>
       <S.PostsNumberBox>
-        <S.PostsNumber>
-          {currentUserInfo.nickName} 님의 포스트 {myPostList.length}건
-        </S.PostsNumber>
+        <S.PostsNumber>{/* {currentUserInfo.nickName} 님의 포스트 {myPostList.length}건 */}</S.PostsNumber>
       </S.PostsNumberBox>
       <S.Boxes>
         {showPosts(myPostList)}

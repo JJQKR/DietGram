@@ -9,8 +9,8 @@ import * as S from './NavBar.styled';
 const NavBar = () => {
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.user.isLogin);
-  const currentUser = useSelector((state) => state.user.currentUser);
-  console.log(currentUser);
+  const loggedinUser = useSelector((state) => state.user.currentUser);
+  console.log(loggedinUser);
 
   useEffect(() => {
     const checkIsLogin = async () => {
@@ -44,7 +44,7 @@ const NavBar = () => {
   };
 
   const handleMypostsClick = () => {
-    const action = selectUser(currentUser.id);
+    const action = selectUser(loggedinUser.id);
     dispatch(action);
   };
 
@@ -65,7 +65,7 @@ const NavBar = () => {
           <Link to="/mypost" style={{ textDecoration: 'none' }}>
             <S.Menu onClick={handleMypostsClick}>My Posts</S.Menu>
           </Link>
-          <Link to={`/profile/${currentUser?.id || ''}`} style={{ textDecoration: 'none' }}>
+          <Link to={`/profile/${loggedinUser?.id || ''}`} style={{ textDecoration: 'none' }}>
             <S.Menu>My Page</S.Menu>
           </Link>
         </S.RightSection>
