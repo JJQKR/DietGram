@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { changePost, deletePost } from '../redux/slices/postsSlice';
 import { Boxes } from './GlobalStyle';
+import { supabase } from '../supabase/supabase';
 
 export const Button = styled.button`
   border: none;
@@ -122,8 +123,10 @@ const FileSpan = styled.span`
 export default function EditPost() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { id } = useParams();
-  const posts = useSelector((state) => state.posts);
+  const { editId } = useParams();
+  const posts = useSelector((state) => state.posts.postList);
+  //console.log(posts);
+  const filteredPost = posts.find((post) => post.id === +editId);
 
   //const selectedPost = posts.find((element) => element.id === id);
   //근데 selectedPost를 정하는 게, 상세페이지에서 넘어올 때도 필요한가?
@@ -197,28 +200,28 @@ export default function EditPost() {
               <input id="fileTest" type="file" style={{ display: 'none' }} accept="image/*"></input>
 
               <Label htmlFor="postMenu">메뉴</Label>
-              <Input id="postMenu" width="440" type="text" />
+              <Input id="postMenu" width="440" type="text" defaultValue={filteredPost.menu} />
 
               <Label htmlFor="postDescription">내용</Label>
-              <Textarea id="postDescription"></Textarea>
+              <Textarea id="postDescription" defaultValue={filteredPost.content}></Textarea>
               {/* 댓글에서 사용될 수도 있는 textarea와 스타일 맞추기  */}
 
               <Label htmlFor="postDate">날짜</Label>
-              <Input id="postDate" width="440" type="number" placeholder="YYYY-MM-DD" />
+              <Input id="postDate" width="440" type="date" defaultValue={filteredPost.date} />
             </Left>
             <Right>
               {/* 숫자이기만 하면 값 크기 제한 없게 */}
               <Label htmlFor="postCalories">칼로리</Label>
-              <Input id="postCalories" type="number" />
+              <Input id="postCalories" type="number" defaultValue={filteredPost.kcal} />
 
               <Label htmlFor="postRate">평점</Label>
-              <Input id="postRate" type="number" />
+              <Input id="postRate" type="number" defaultValue={filteredPost.raiting} />
 
               <Label htmlFor="postPrice">금액</Label>
-              <Input id="postPrice" type="number" />
+              <Input id="postPrice" type="number" defaultValue={filteredPost.price} />
 
               <Label htmlFor="postPlace">장소</Label>
-              <Input id="postPlace" type="text" />
+              <Input id="postPlace" type="text" defaultValue={filteredPost.place} />
               <Button type="submit">저장</Button>
             </Right>
           </InnerContainer>
