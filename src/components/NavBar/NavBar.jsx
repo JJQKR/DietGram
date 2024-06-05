@@ -10,6 +10,7 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.user.isLogin);
   const currentUser = useSelector((state) => state.user.currentUser);
+  console.log(currentUser);
 
   useEffect(() => {
     const checkIsLogin = async () => {
@@ -64,7 +65,7 @@ const NavBar = () => {
           <Link to="/mypost" style={{ textDecoration: 'none' }}>
             <S.Menu onClick={handleMypostsClick}>My Posts</S.Menu>
           </Link>
-          <Link to="/profile" style={{ textDecoration: 'none' }}>
+          <Link to={`/profile/${currentUser.id}`} style={{ textDecoration: 'none' }}>
             <S.Menu>My Page</S.Menu>
           </Link>
         </S.RightSection>
