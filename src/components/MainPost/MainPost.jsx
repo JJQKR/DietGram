@@ -7,6 +7,7 @@ const MainPost = () => {
   const data = useSelector((state) => state.activeIndex.data);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const curUser = useSelector((state) => state.user.currentUser.user_metadata);
 
   const handlePostClick = (userId, postId) => {
     const selectPostAction = selectPost(postId);
