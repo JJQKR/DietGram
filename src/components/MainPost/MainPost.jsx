@@ -38,7 +38,7 @@ const MainPost = () => {
               src={post.postImage || DefaultMenuImage}
               alt="Menu Image"
               onClick={() => {
-                navigate(`/detail/${post.id}`);
+                navigate(`/detail/${post?.id}`);
                 handlePostClick(post.user_id, post.id);
               }}
             />
