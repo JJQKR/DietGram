@@ -63,11 +63,11 @@ class Post {
     // 유저에 like id를 넣어줘야해
     const { data } = await this.#client.from('users').select('*');
     const loginUser = data.filter((item) => item.user_id === userId);
-    const likeIdx = loginUser[0].like.findIndex((item) => item === id);
-    likeIdx !== -1 ? loginUser[0].like.splice(likeIdx, 1) : loginUser[0].like.push(id);
+    const likeIdx = loginUser[0]?.like.findIndex((item) => item === id);
+    likeIdx !== -1 ? loginUser[0]?.like.splice(likeIdx, 1) : loginUser[0].like.push(id);
     const updatedData = await this.#client
       .from('users')
-      .update({ like: loginUser[0].like })
+      .update({ like: loginUser[0]?.like })
       .eq('user_id', userId)
       .select();
     return updatedData.data[0];
