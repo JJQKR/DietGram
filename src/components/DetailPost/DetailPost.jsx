@@ -13,7 +13,7 @@ const DetailPost = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts.postList);
   const postUserId = useSelector((state) => state.posts.currentUserId);
-  
+
   useEffect(() => {
     const getUsers = async () => {
       const users = await supabase.post.getUsers();
