@@ -110,6 +110,12 @@ const Textarea = styled.textarea`
   }
 `;
 
+const FileSpan = styled.span`
+  border: black solid 1px;
+  border-radius: 15px;
+  padding: 5px;
+`;
+
 const reader = new FileReader();
 
 export default function UploadPost() {
@@ -181,7 +187,16 @@ export default function UploadPost() {
           <InnerContainer>
             <Left>
               <Img src={newPostImage} />
-              <input type="file" accept="image/*" onChange={handleSaveImageFile}></input>
+              <label htmlFor="fileTest">
+                <FileSpan>파일 업로드하기</FileSpan>
+              </label>
+              <input
+                id="fileTest"
+                type="file"
+                style={{ display: 'none' }}
+                accept="image/*"
+                onChange={handleSaveImageFile}
+              ></input>
 
               <Label htmlFor="postMenu">메뉴</Label>
               <Input

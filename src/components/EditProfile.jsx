@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCurrentUser } from '../redux/slices/user.slice';
 
+
 const Container = styled.div`
   display: flex;
   flex-direction: row;
@@ -119,9 +120,11 @@ const H3 = styled.h3`
  */
 
 export default function EditProfile() {
+
   const currentUser = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState('');
+
 
   const [imageSrc, setImageSrc] = useState('image 18.png');
   //이거를 public 폴더에 넣으면 바로 쓸 수 있다
@@ -133,7 +136,7 @@ export default function EditProfile() {
   };
 
   const [newPostImage, setNewPostImage] = useState('');
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     await supabase.login.updateNickname(nickname);
@@ -142,6 +145,7 @@ export default function EditProfile() {
     // 로그인 정보를 리덕스에 저장한다.
     dispatch(getCurrentUser(session?.data.session.user));
   };
+
 
   const handleSaveImageFile = (event) => {
     const { files } = event.target;
@@ -175,13 +179,16 @@ export default function EditProfile() {
             {/* 아래꺼는 이미지 src 바로 바꾸는 로직이고 그냥 이미지 바로 띄워주고 있는거다 */}
             <div>
               <Image src={imageSrc} alt="Example" />
+
               <ImageButton onClick={changeImageSrc}>이미지 변경</ImageButton>
+
             </div>
             <div>
               <img src={currentUser?.user_metadata.avatarUrl} alt="" width="200px" />
             </div>
             <label>
               <Image className="profileImage" src={newPostImage} img="img/" />
+
               <input type="file" accept="image/*" onChange={handleSaveImageFile} />
             </label>
             {/* 새로 업로드 하고 미리 보는 로직 */}
