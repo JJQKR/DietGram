@@ -1,16 +1,15 @@
-import { Link } from 'react-router-dom';
-import * as S from './NavBar.styled';
 import { useEffect } from 'react';
-import { supabase } from '../../supabase/supabase';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkLogin, getCurrentUser } from '../../redux/slices/user.slice';
+import { Link } from 'react-router-dom';
 import { selectUser } from '../../redux/slices/posts.slice';
+import { checkLogin, getCurrentUser } from '../../redux/slices/user.slice';
+import { supabase } from '../../supabase/supabase';
+import * as S from './NavBar.styled';
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.user.isLogin);
   const currentUser = useSelector((state) => state.user.currentUser);
-  console.log(currentUser);
 
   useEffect(() => {
     const checkIsLogin = async () => {
@@ -66,7 +65,6 @@ const NavBar = () => {
             <S.Menu onClick={handleMypostsClick}>My Posts</S.Menu>
           </Link>
           <Link to={`/profile/${currentUser?.id || ''}`} style={{ textDecoration: 'none' }}>
-            {' '}
             <S.Menu>My Page</S.Menu>
           </Link>
         </S.RightSection>

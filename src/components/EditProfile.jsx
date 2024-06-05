@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { supabase } from '../supabase/supabase';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
 import { getCurrentUser } from '../redux/slices/user.slice';
+import { supabase } from '../supabase/supabase';
 import { changeValue } from '../redux/slices/form.slice';
 import { useNavigate } from 'react-router-dom';
+
 
 const Container = styled.div`
   display: flex;
@@ -109,6 +109,7 @@ const H3 = styled.h3`
 `;
 
 export default function EditProfile() {
+
   const navigate = useNavigate();
   const sliceNickname = useSelector((state) => state.formData.nickName);
   console.log(sliceNickname);
@@ -116,7 +117,6 @@ export default function EditProfile() {
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState('');
   const [newPostImage, setNewPostImage] = useState('');
-
   const changeImg = async () => {
     const { data } = await supabase.auth.updateUser({
       data: { avatarUrl: imgUrl }
@@ -131,7 +131,6 @@ export default function EditProfile() {
     // const session = await supabase.login.getSession();
     // 로그인 정보를 리덕스에 저장한다.
     // dispatch(getCurrentUser(session?.data.session.user));
-
     await supabase.login.changeNickName(sliceNickname);
   };
 
@@ -139,6 +138,7 @@ export default function EditProfile() {
     const { files } = event.target;
     const uploadFile = files[0];
     //console.log(uploadFile)
+
 
     const reader = new FileReader();
     reader.readAsDataURL(uploadFile);
