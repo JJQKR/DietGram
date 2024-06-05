@@ -1,10 +1,11 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { changePost, deletePost } from '../redux/slices/postsSlice';
 import { Boxes } from './GlobalStyle';
 import { supabase } from '../supabase/supabase';
+import { changeValue, initFormData } from '../redux/slices/form.slice';
 
 export const Button = styled.button`
   border: none;
@@ -125,8 +126,19 @@ export default function EditPost() {
   const dispatch = useDispatch();
   const { editId } = useParams();
   const posts = useSelector((state) => state.posts.postList);
+  const formData = useSelector((state) => state.formData);
+
   //console.log(posts);
   const filteredPost = posts.find((post) => post.id === +editId);
+
+  useEffect(() => {
+    dispatch(changeValue({ type: 'menu', content: filteredPost.menu }));
+    dispatch(changeValue({ type: 'content', content: filteredPost.content }));
+    dispatch(changeValue({ type: 'date', content: filteredPost.date }));
+    dispatch(changeValue({ type: 'kcal', content: filteredPost.kcal }));
+    dispatch(changeValue({ type: 'price', content: filteredPost.price }));
+    dispatch(changeValue({ type: 'place', content: filteredPost.place }));
+  }, []);
 
   //const selectedPost = posts.find((element) => element.id === id);
   //근데 selectedPost를 정하는 게, 상세페이지에서 넘어올 때도 필요한가?
@@ -140,31 +152,43 @@ export default function EditPost() {
   // const [price, setPrice] = useState(selectedPost.price);
   // const [place, setPlace] = useState(selectedPost.place);
 
-  const handleChangePost = () => {
-    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-    if (!datePattern.test(date)) {
-      alert('날짜를 YYYY-MM-DD 형식으로 입력해주세요.');
-      return;
-    }
-    if (!menu || price <= 0) {
-      //근데 0원일 수도 있지 않나??
-      alert('유효한 항목과 금액을 입력해주세요.');
-      return;
-    }
-    const newPost = {
-      id,
-      // postImage,
-      menu,
-      description,
-      date,
-      calories,
-      rate,
-      price,
-      place
-    };
+  const handleChangePost = async (event) => {
+    // const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+    // if (!datePattern.test(date)) {
+    //   alert('날짜를 YYYY-MM-DD 형식으로 입력해주세요.');
+    //   return;
+    // }
+    // if (!menu || price <= 0) {
+    //   //근데 0원일 수도 있지 않나??
+    //   alert('유효한 항목과 금액을 입력해주세요.');
+    //   return;
+    // }
+    // const newPost = {
+    //   id,
+    //   // postImage,
+    //   menu,
+    //   description,
+    //   date,
+    //   calories,
+    //   rate,
+    //   price,
+    //   place
+    // };
 
-    dispatch(changePost(newPost));
-    navigate('/detail'); //페이지명 변경 필요
+    // dispatch(changePost(newPost));
+    // navigate('/detail'); //페이지명 변경 필요
+    event.preventDefault();
+
+    try {
+      const { data, error } = await supabase.post.updateServerPost(editId, formData);
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleDeletePost = () => {
@@ -190,7 +214,7 @@ export default function EditPost() {
   return (
     <>
       <Container>
-        <form>
+        <form onSubmit={handleChangePost}>
           <InnerContainer>
             <Left>
               <Img />
@@ -200,28 +224,68 @@ export default function EditPost() {
               <input id="fileTest" type="file" style={{ display: 'none' }} accept="image/*"></input>
 
               <Label htmlFor="postMenu">메뉴</Label>
-              <Input id="postMenu" width="440" type="text" defaultValue={filteredPost.menu} />
+              <Input
+                id="postMenu"
+                width="440"
+                type="text"
+                defaultValue={filteredPost.menu}
+                onChange={(e) => {
+                  dispatch(changeValue({ type: 'menu', content: e.target.value }));
+                }}
+              />
 
               <Label htmlFor="postDescription">내용</Label>
-              <Textarea id="postDescription" defaultValue={filteredPost.content}></Textarea>
+              <Textarea
+                id="postDescription"
+                defaultValue={filteredPost.content}
+                onChange={(e) => {
+                  dispatch(changeValue({ type: 'content', content: e.target.value }));
+                }}
+              ></Textarea>
               {/* 댓글에서 사용될 수도 있는 textarea와 스타일 맞추기  */}
 
               <Label htmlFor="postDate">날짜</Label>
-              <Input id="postDate" width="440" type="date" defaultValue={filteredPost.date} />
+              <Input
+                id="postDate"
+                width="440"
+                type="date"
+                defaultValue={filteredPost.date}
+                onChange={(e) => dispatch(changeValue({ type: 'date', content: e.target.value }))}
+              />
             </Left>
             <Right>
               {/* 숫자이기만 하면 값 크기 제한 없게 */}
               <Label htmlFor="postCalories">칼로리</Label>
-              <Input id="postCalories" type="number" defaultValue={filteredPost.kcal} />
+              <Input
+                id="postCalories"
+                type="number"
+                defaultValue={filteredPost.kcal}
+                onChange={(e) => dispatch(changeValue({ type: 'kcal', content: e.target.value }))}
+              />
 
               <Label htmlFor="postRate">평점</Label>
-              <Input id="postRate" type="number" defaultValue={filteredPost.raiting} />
+              <Input
+                id="postRate"
+                type="number"
+                defaultValue={filteredPost.raiting}
+                onChange={(e) => dispatch(changeValue({ type: 'rating', content: e.target.value }))}
+              />
 
               <Label htmlFor="postPrice">금액</Label>
-              <Input id="postPrice" type="number" defaultValue={filteredPost.price} />
+              <Input
+                id="postPrice"
+                type="number"
+                defaultValue={filteredPost.price}
+                onChange={(e) => dispatch(changeValue({ type: 'price', content: e.target.value }))}
+              />
 
               <Label htmlFor="postPlace">장소</Label>
-              <Input id="postPlace" type="text" defaultValue={filteredPost.place} />
+              <Input
+                id="postPlace"
+                type="text"
+                defaultValue={filteredPost.place}
+                onChange={(e) => dispatch(changeValue({ type: 'place', content: e.target.value }))}
+              />
               <Button type="submit">저장</Button>
             </Right>
           </InnerContainer>

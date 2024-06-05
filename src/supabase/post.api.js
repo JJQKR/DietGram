@@ -41,7 +41,7 @@ class Post {
   }
 
   async updateServerPost(id, formData) {
-    const { data } = await this.#client
+    const { data, error } = await this.#client
       .from('posts')
       .update({
         menu: formData.menu,
@@ -53,10 +53,8 @@ class Post {
       })
       .eq('id', id)
       .select();
-    console.log('data', id);
-    const [updatedPost] = data;
 
-    return updatedPost;
+    return { data, error };
   }
 
   async isLike(id, userId) {
