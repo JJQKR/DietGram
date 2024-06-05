@@ -9,7 +9,6 @@ const DetailCommentAdd = () => {
   const comment = useSelector((state) => state.formData.comment);
   const userInfo = useSelector((state) => state.user.currentUser?.user_metadata);
   const curPostId = useSelector((state) => state.posts.currentPostId);
-  console.log(userInfo);
 
   // const commentList = useSelector((state) => state.comments);
   // console.log('commentList', commentList);

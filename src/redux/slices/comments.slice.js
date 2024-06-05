@@ -13,9 +13,9 @@ const commentsSlice = createSlice({
     },
 
     deleteData: (state, action) => {
-      const idx = state.commentList.findIndex((item) => item.id !== action.payload.id);
+      const filteredData = state.commentList.filter((item) => item.id !== action.payload.id);
 
-      state.commentList.splice(idx, 1);
+      state.commentList = filteredData;
     },
     updateData: (state, action) => {
       const index = state.commentList.findIndex((item) => item.id === action.payload.id);

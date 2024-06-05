@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   DetailPostUserComment,
   DetailCommentUserName,
@@ -11,17 +11,26 @@ import {
   CommentButtonBox
 } from './DetailComments.style';
 import { supabase } from '../../supabase/supabase';
+import { deleteData, updateData } from '../../redux/slices/comments.slice';
 
 const DetailComments = () => {
+  const dispatch = useDispatch();
   const commentList = useSelector((state) => state.comments.commentList);
   const curPostId = useSelector((state) => state.posts.currentPostId);
 
   const curComments = commentList.filter((comments) => comments.post_id === curPostId);
-  console.log(curComments);
 
-  const commentEdit = async () => {
+  const commentEdit = async (id) => {
+    const comment = prompt('수정 댓글을 입력해주세요.');
     const data = await supabase.comment.updateComment(id, comment);
-    console.log(data);
+    const action = updateData(data);
+    dispatch(action);
+  };
+
+  const commentDelete = async (id) => {
+    const data = await supabase.comment.deleteComment(id);
+    const action = deleteData(data);
+    dispatch(action);
   };
 
   return (
@@ -40,8 +49,8 @@ const DetailComments = () => {
               </PostGuest>
             </DetailCommentUserName>
             <CommentButtonBox>
-              <CommentButton>수정</CommentButton>
-              <CommentButton>삭제</CommentButton>
+              <CommentButton onClick={() => commentEdit(comments.id)}>수정</CommentButton>
+              <CommentButton onClick={() => commentDelete(comments.id)}>삭제</CommentButton>
             </CommentButtonBox>
           </DetailCommentUserBox>
         );
