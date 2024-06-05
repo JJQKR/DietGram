@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { changeValue } from '../redux/slices/form.slice';
 import { getCurrentUser } from '../redux/slices/user.slice';
 import { supabase } from '../supabase/supabase';
-import { changeValue } from '../redux/slices/form.slice';
-import { useNavigate } from 'react-router-dom';
-
 
 const Container = styled.div`
   display: flex;
@@ -109,28 +108,28 @@ const H3 = styled.h3`
 `;
 
 export default function EditProfile() {
-
   const navigate = useNavigate();
   const sliceNickname = useSelector((state) => state.formData.nickName);
   console.log(sliceNickname);
   const currentUser = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
-  const [nickname, setNickname] = useState('');
   const [newPostImage, setNewPostImage] = useState('');
-  const changeImg = async () => {
-    const { data } = await supabase.auth.updateUser({
-      data: { avatarUrl: imgUrl }
-    });
-    console.log(data);
-  };
+  // const changeImg = async () => {
+  //   const { data } = await supabase.auth.updateUser({
+  //     data: { avatarUrl: imgUrl }
+  //   });
+  //   console.log(data);
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // await supabase.login.updateNickname(sliceNickname);
-    // 로그인했다면 로그인 정보를 가져온다.
-    // const session = await supabase.login.getSession();
-    // 로그인 정보를 리덕스에 저장한다.
-    // dispatch(getCurrentUser(session?.data.session.user));
+    const userData = {
+      ...currentUser,
+      user_metadata: { ...currentUser.user_metadata, nickName: sliceNickname }
+    };
+    dispatch(getCurrentUser(userData));
+
+    console.log('currentUser', userData);
     await supabase.login.changeNickName(sliceNickname);
   };
 
@@ -138,7 +137,6 @@ export default function EditProfile() {
     const { files } = event.target;
     const uploadFile = files[0];
     //console.log(uploadFile)
-
 
     const reader = new FileReader();
     reader.readAsDataURL(uploadFile);
