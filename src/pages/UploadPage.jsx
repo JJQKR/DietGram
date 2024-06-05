@@ -1,5 +1,11 @@
+import UploadPost from '../components/UploadPost';
+
 function UploadPage() {
-  return <div>UploadPage</div>;
+  return (
+    <main>
+      <UploadPost />
+    </main>
+  );
 }
 
 export default UploadPage;
