@@ -1,24 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
-import { supabase } from "../../supabase/supabase";
-import { checkLengthValidation, checkEqualValidation } from "./signUpValidation";
-import * as S from "./SignUpForm.styled";
-import { changeUserInfo, changeValue } from "../../redux/slices/form.slice";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { changeUserInfo, changeValue } from '../../redux/slices/form.slice';
+import { supabase } from '../../supabase/supabase';
+import * as S from './SignUpForm.styled';
+import { checkEqualValidation, checkLengthValidation } from './signUpValidation';
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const navigator = useNavigate();
-  const formData = useSelector(state => state.formData);
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const formData = useSelector((state) => state.formData);
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const spanRef = useRef([]);
 
   useEffect(() => {
-    spanRef.current[0].style.display = "none";
-    spanRef.current[1].style.display = "none";
-    spanRef.current[2].style.display = "none";
-    spanRef.current[3].style.display = "none";
+    spanRef.current[0].style.display = 'none';
+    spanRef.current[1].style.display = 'none';
+    spanRef.current[2].style.display = 'none';
+    spanRef.current[3].style.display = 'none';
   }, []);
 
   const handleSubmitSignUpForm = async (event) => {
@@ -30,17 +29,17 @@ const SignUpForm = () => {
 
     // 유효성 검사
     if (!checkLengthValidation(email, 1)) {
-      dispatch(changeValue({ type: "email", content: "" }))
-      return spanRef.current[0].style.display = "block";
+      dispatch(changeValue({ type: 'email', content: '' }));
+      return (spanRef.current[0].style.display = 'block');
     }
     if (!checkLengthValidation(password, 6)) {
-      dispatch(changeValue({ type: "password", content: "" }))
-      return spanRef.current[1].style.display = "block";
+      dispatch(changeValue({ type: 'password', content: '' }));
+      return (spanRef.current[1].style.display = 'block');
     }
-    if (!checkEqualValidation(password, passwordConfirm)) return spanRef.current[2].style.display = "block";
+    if (!checkEqualValidation(password, passwordConfirm)) return (spanRef.current[2].style.display = 'block');
     if (!checkLengthValidation(nickName, 1)) {
-      dispatch(changeValue({ type: "nickName", content: "" }))
-      return spanRef.current[3].style.display = "block";
+      dispatch(changeValue({ type: 'nickName', content: '' }));
+      return (spanRef.current[3].style.display = 'block');
     }
 
     try {
@@ -50,9 +49,9 @@ const SignUpForm = () => {
         console.error(error);
       } else {
         const { user } = data;
-        supabase.login.insertUser(user.id);
-        alert("환영합니다 로그인 하실래요?");
-        navigator("/login")
+        supabase.login.insertUser(user.id, user.nickName);
+        alert('환영합니다 로그인 하실래요?');
+        navigator('/login');
       }
     } catch (error) {
       console.error(error);
@@ -68,26 +67,24 @@ const SignUpForm = () => {
             id="email"
             type="email"
             onChange={(e) => {
-              const action = changeValue({ type: "email", content: e.target.value })
+              const action = changeValue({ type: 'email', content: e.target.value });
               dispatch(action);
             }}
           />
         </S.InputBox>
-        <S.Span ref={el => (spanRef.current[0] = el)}>이메일을 입력해주세요!</S.Span>
+        <S.Span ref={(el) => (spanRef.current[0] = el)}>이메일을 입력해주세요!</S.Span>
         <S.InputBox>
           <label htmlFor="password">비밀번호</label>
           <S.Input
             id="password"
             type="password"
             onChange={(e) => {
-              const action = changeValue({ type: "password", content: e.target.value })
+              const action = changeValue({ type: 'password', content: e.target.value });
               dispatch(action);
             }}
           />
         </S.InputBox>
-        <S.Span ref={el => (spanRef.current[1] = el)}>
-          비밀번호는 6자이상 입력해주세요!
-        </S.Span>
+        <S.Span ref={(el) => (spanRef.current[1] = el)}>비밀번호는 6자이상 입력해주세요!</S.Span>
         <S.InputBox>
           <label htmlFor="passwordConfirm">비밀번호 확인</label>
           <S.Input
@@ -97,21 +94,19 @@ const SignUpForm = () => {
             onChange={(e) => setPasswordConfirm(e.target.value)}
           />
         </S.InputBox>
-        <S.Span ref={el => (spanRef.current[2] = el)}>
-          비밀번호와 동일하게 입력해주세요!
-        </S.Span>
+        <S.Span ref={(el) => (spanRef.current[2] = el)}>비밀번호와 동일하게 입력해주세요!</S.Span>
         <S.InputBox>
           <label htmlFor="nickName">닉네임</label>
           <S.Input
             id="nickName"
             type="text"
             onChange={(e) => {
-              const action = changeValue({ type: "nickName", content: e.target.value })
+              const action = changeValue({ type: 'nickName', content: e.target.value });
               dispatch(action);
             }}
           />
         </S.InputBox>
-        <S.Span ref={el => (spanRef.current[3] = el)}>닉네임을 입력해주세요!</S.Span>
+        <S.Span ref={(el) => (spanRef.current[3] = el)}>닉네임을 입력해주세요!</S.Span>
         <S.Button type="submit">회원가입</S.Button>
       </S.Form>
     </>
