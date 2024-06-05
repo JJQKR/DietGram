@@ -55,7 +55,6 @@ export const Button = styled.button`
 
 export const Span = styled.span`
     color: red;
-    display: ${props => props.$display ? "none" : "block"};
 `;
 
 

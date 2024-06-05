@@ -13,7 +13,6 @@ const DetailPostData = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.posts.postList);
   const postUserId = useSelector((state) => state.posts.currentUserId);
-
   const postData = userInfo.find((userPostData) => userPostData.user_id === postUserId);
 
   return (
@@ -25,15 +24,15 @@ const DetailPostData = () => {
         />
         <DetailPostText>
           <DetailPostInformation>
-            <PostDate>{postData.created_at.split('T')[0]}</PostDate>
-            <p>{postData.menu}</p>
-            <p>{postData.content}</p>
-            <p>{postData.place}</p>
+            <PostDate>{postData?.created_at.split('T')[0]}</PostDate>
+            <p>{postData?.menu}</p>
+            <p>{postData?.content}</p>
+            <p>{postData?.place}</p>
             <p>
-              {postData.kcal} Kcal / {postData.price} 원
+              {postData?.kcal} Kcal / {postData?.price} 원
             </p>
           </DetailPostInformation>
-          <PostGrade>평점 {postData.rating}</PostGrade>
+          <PostGrade>평점 {postData?.rating}</PostGrade>
         </DetailPostText>
       </DetailPostDataList>
     </>
