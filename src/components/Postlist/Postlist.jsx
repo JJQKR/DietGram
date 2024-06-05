@@ -5,6 +5,13 @@ import { Background } from '../../components/DeleteModal/DeleteModal.styled';
 import { selectPost, selectUser } from '../../redux/slices/posts.slice';
 import { supabase } from '../../supabase/supabase';
 import * as S from './Postlist.styled';
+
+// 닉네임 불러오기
+// 프로필 사진이나 닉네임을 클릭하면 그 포스트의 유저아이디를 받아 일치하는 포스트리스트페이지로 이동
+// myPostlist인 경우, 수정 삭제 버튼 사용가능
+// otherPostlist인 경우, 수정 삭제 버튼 작동하지 않게 숨기기
+// 포스트 사진을 클릭하면 해당 포스트의 상세 페이지로 이동
+
 const Postlist = () => {
   const dispatch = useDispatch();
   const [selectedPostId, setSelectedPostId] = useState(null);
