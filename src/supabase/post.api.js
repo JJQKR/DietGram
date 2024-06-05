@@ -56,7 +56,11 @@ class Post {
 
     return updatedPost;
   }
+  async updateServerPostLike(id, like) {
+    const { data } = await this.#client.from('posts').update({ like: like }).eq('id', id).select('*');
 
+    return data;
+  }
   async isLike(id, userId) {
     // 유저에 like id를 넣어줘야해
     const { data } = await this.#client.from('users').select('*');

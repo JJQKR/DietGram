@@ -17,6 +17,8 @@ const PostLike = () => {
     const action = setMyLikes(data);
     dispatch(clickLikeAction);
     dispatch(action);
+    const instantLike = data.like.includes(curPost) ? likes + 1 : likes - 1;
+    await supabase.post.updateServerPostLike(id, instantLike);
   };
 
   return (
