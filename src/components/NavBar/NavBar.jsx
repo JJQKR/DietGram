@@ -3,11 +3,13 @@ import * as S from './NavBar.styled';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../supabase/supabase';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkLogin } from '../../redux/slices/user.slice';
+import { checkLogin, getCurrentUser } from '../../redux/slices/user.slice';
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.user.isLogin);
+  const { currentUser } = useSelector(state => state.user);
+  console.log(currentUser);
 
   useEffect(() => {
     const checkIsLogin = async () => {
@@ -24,6 +26,7 @@ const NavBar = () => {
           onClick={async () => {
             await supabase.login.signOut();
             dispatch(checkLogin(false));
+            dispatch(getCurrentUser(null));
             alert('로그아웃 되었습니다!');
           }}
         >
