@@ -20,7 +20,6 @@ class Comment {
         nickName: nickName
       })
       .select('*');
-    console.log(postId, comment, avatar_url, nickName, data);
     return data;
   }
 
@@ -39,7 +38,6 @@ class Comment {
       })
       .eq('id', id)
       .select();
-    console.log('data', data);
     const [updatedPost] = data;
 
     return updatedPost;

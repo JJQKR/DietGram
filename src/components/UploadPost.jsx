@@ -171,11 +171,9 @@ export default function UploadPost() {
   const handleSaveImageFile = (event) => {
     const { files } = event.target;
     const uploadFile = files[0];
-    console.log(uploadFile);
     const reader = new FileReader();
     reader.readAsDataURL(uploadFile);
     reader.onloadend = () => {
-      console.log(reader.result);
       setNewPostImage(reader.result);
     };
   };

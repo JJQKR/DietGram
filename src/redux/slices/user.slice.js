@@ -33,7 +33,6 @@ const userSlice = createSlice({
 
     setMyLikes: (state, action) => {
       state.myLikes = action.payload.like;
-      console.log(action.payload.like);
     }
   }
 });

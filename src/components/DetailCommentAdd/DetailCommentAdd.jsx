@@ -11,7 +11,6 @@ const DetailCommentAdd = () => {
   const curPostId = useSelector((state) => state.posts.currentPostId);
 
   // const commentList = useSelector((state) => state.comments);
-  // console.log('commentList', commentList);
 
   const completeChange = async () => {
     const data = await supabase.comment.insertComment(curPostId, comment, userInfo.avatarUrl, userInfo.nickName);

@@ -61,6 +61,14 @@ class Login {
       return data;
     }
   }
+
+  changeNickName = async (sliceNickname) => {
+    console.log(sliceNickname);
+    const { data, error } = await this.#client.auth.updateUser({
+      data: { nickName: sliceNickname }
+    });
+    console.log(data);
+  };
 }
 
 export default Login;

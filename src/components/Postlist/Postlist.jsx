@@ -45,7 +45,6 @@ const Postlist = () => {
               <S.Nickname
                 onClick={() => {
                   const action = selectUser(data.user_id);
-                  console.log(currentUserId);
                   dispatch(action);
                 }}
               >

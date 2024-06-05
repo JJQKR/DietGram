@@ -4,7 +4,7 @@ const initialState = {
   postList: [],
   currentUserId: '',
   currentPostId: '',
-  like: 0
+  likes: 0
 };
 
 const postsSlice = createSlice({
@@ -36,10 +36,26 @@ const postsSlice = createSlice({
 
     selectPost: (state, action) => {
       state.currentPostId = action.payload;
+    },
+
+    initPostLikes: (state, action) => {
+      state.likes = action.payload;
+    },
+    clickedPostLikes: (state, action) => {
+      action.payload ? (state.likes += 1) : (state.likes -= 1);
     }
   }
 });
 
-export const { insertPost, deletePost, updatePost, initCommentList, initPostList, selectUser, selectPost } =
-  postsSlice.actions;
+export const {
+  insertPost,
+  deletePost,
+  updatePost,
+  initCommentList,
+  initPostList,
+  selectUser,
+  selectPost,
+  initPostLikes,
+  clickedPostLikes
+} = postsSlice.actions;
 export default postsSlice.reducer;

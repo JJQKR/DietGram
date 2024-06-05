@@ -34,7 +34,6 @@ class Post {
   //NOTE  삭제가능한 거 찾아서 넣어줘야 그 것을 삭제하고 리턴해서 데이터를 deletePost에 넣어서 삭제해야함 ㅇㅇ
   async deleteServerPost(id) {
     const { data } = await this.#client.from('posts').delete().eq('id', id).select();
-    console.log('data', data);
     const [deletedPost] = data;
 
     return deletedPost;
@@ -56,7 +55,11 @@ class Post {
 
     return { data, error };
   }
+  async updateServerPostLike(id, like) {
+    const { data } = await this.#client.from('posts').update({ like: like }).eq('id', id).select('*');
 
+    return data;
+  }
   async isLike(id, userId) {
     // 유저에 like id를 넣어줘야해
     const { data } = await this.#client.from('users').select('*');
