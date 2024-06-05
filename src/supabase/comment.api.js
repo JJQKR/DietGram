@@ -10,16 +10,17 @@ class Comment {
     return data;
   }
 
-  async insertComment(postId, comment, avatar_url) {
+  async insertComment(postId, comment, avatar_url, nickName) {
     const { data } = await this.#client
       .from('comments')
       .insert({
         post_id: postId,
         comment: comment,
-        avatar_url: avatar_url
+        avatar_url: avatar_url,
+        nickName: nickName
       })
       .select('*');
-
+    console.log(postId, comment, avatar_url, nickName, data);
     return data;
   }
 
@@ -30,11 +31,11 @@ class Comment {
     return deletedPost;
   }
 
-  async updateComment(id) {
+  async updateComment(id, comment) {
     const { data } = await this.#client
       .from('comments')
       .update({
-        comment: '야미야미야미'
+        comment: comment
       })
       .eq('id', id)
       .select();

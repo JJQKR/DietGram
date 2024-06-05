@@ -36,7 +36,6 @@ const postsSlice = createSlice({
 
     selectPost: (state, action) => {
       state.currentPostId = action.payload;
-      console.log(action.payload);
     }
   }
 });
