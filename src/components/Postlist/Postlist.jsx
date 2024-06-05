@@ -17,18 +17,18 @@ const Postlist = () => {
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const modalBackground = useRef(null);
-  const [rawData, setRawData] = useState([]);
+
+  const rawData = useSelector((state) => state.posts.postList);
   const userId = useSelector((state) => state.user.currentUser.id);
   const currentUserId = useSelector((state) => state.posts.currentUserId);
   console.log(userId, currentUserId);
 
-  useEffect(() => {
-    const checkPosts = async () => {
-      const data = await supabase.post.getPosts();
-      setRawData(data);
-    };
-    checkPosts();
-  }, []);
+  // useEffect(() => {
+  //   const checkPosts = () => {
+  //     setRawData(data);
+  //   };
+  //   checkPosts();
+  // }, []);
 
   const myPostList = rawData.filter((data) => data.user_id === userId);
   const otherPostList = rawData.filter((data) => data.user_id !== userId);

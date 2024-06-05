@@ -32,6 +32,7 @@ const postsSlice = createSlice({
 
     selectUser: (state, action) => {
       state.currentUserId = action.payload;
+      console.log(action.payload);
     },
 
     selectPost: (state, action) => {

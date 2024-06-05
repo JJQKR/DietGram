@@ -4,10 +4,14 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../../supabase/supabase';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkLogin } from '../../redux/slices/user.slice';
+import { selectUser } from '../../redux/slices/posts.slice';
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.user.isLogin);
+  const currentUserId = useSelector((state) => state.user.selectedUserInfo);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  console.log(currentUser);
 
   useEffect(() => {
     const checkIsLogin = async () => {
@@ -15,6 +19,14 @@ const NavBar = () => {
       check ? dispatch(checkLogin(true)) : dispatch(checkLogin(false));
     };
     checkIsLogin();
+  }, []);
+
+  useEffect(() => {
+    const checkUserInfo = async () => {
+      const check = await supabase.user.getUsers();
+      console.log(check);
+    };
+    checkUserInfo();
   }, []);
 
   const logInItem = () => {
@@ -31,11 +43,17 @@ const NavBar = () => {
         </S.Menu>
       );
     }
+
     return (
       <Link to="/login">
         <S.Menu>LogIn</S.Menu>
       </Link>
     );
+  };
+
+  const handleMypostsClick = (userId) => {
+    const action = selectUser(userId);
+    dispatch(action);
   };
 
   return (
@@ -53,7 +71,7 @@ const NavBar = () => {
         </Link>
         <S.RightSection>
           <Link to="/mypost" style={{ textDecoration: 'none' }}>
-            <S.Menu>My Posts</S.Menu>
+            <S.Menu onClick={handleMypostsClick}>My Posts</S.Menu>
           </Link>
           <Link to="/profile" style={{ textDecoration: 'none' }}>
             <S.Menu>My Page</S.Menu>
