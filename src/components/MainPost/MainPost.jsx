@@ -23,14 +23,7 @@ const MainPost = () => {
     <>
       {data.map((post) => {
         return (
-          <Post
-            onClick={() => {
-              navigate(`/detail/${post.id}`);
-              handlePostClick(post.user_id, post.id);
-              console.log('post', post);
-            }}
-            key={post.id}
-          >
+          <Post key={post.id}>
             <PostList>
               <UserData>
                 <UserImage src={post.userImage || defaultUserImage} alt="UserImage" />
@@ -41,7 +34,15 @@ const MainPost = () => {
                 <p>{post.kcal} kcal</p>
               </PostTimeCalorie>
             </PostList>
-            <PostImage src={post.postImage || DefaultMenuImage} alt="Menu Image" />
+            <PostImage
+              src={post.postImage || DefaultMenuImage}
+              alt="Menu Image"
+              onClick={() => {
+                navigate(`/detail/${post.id}`);
+                handlePostClick(post.user_id, post.id);
+                console.log('post', post);
+              }}
+            />
           </Post>
         );
       })}
