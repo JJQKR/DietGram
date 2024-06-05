@@ -114,7 +114,7 @@ export const ButtonBox = styled.div`
 export const Button = styled.button`
   width: 40px;
   height: 25px;
-  display: ${({ dataId, userId }) => (dataId === userId ? 'none' : 'block')};
+  display: ${({ dataUserId, userId }) => (dataUserId === userId ? 'block' : 'none')};
   border-radius: 10px;
   border: none;
   background-color: #dcdcdc;

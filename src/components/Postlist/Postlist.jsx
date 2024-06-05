@@ -11,7 +11,9 @@ const Postlist = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const modalBackground = useRef(null);
   const [rawData, setRawData] = useState([]);
-  const userId = useSelector((state) => state.user.currentUser);
+  const userId = useSelector((state) => state.user.currentUser.id);
+  const currentUserId = useSelector((state) => state.posts.currentUserId);
+  console.log(userId, currentUserId);
 
   useEffect(() => {
     const checkPosts = async () => {
@@ -32,7 +34,6 @@ const Postlist = () => {
     setDeleteModalOpen(true);
   };
 
-  const currentUserId = useSelector((state) => state.posts.currentUserId);
   const showPosts = (postlist) => {
     {
       return postlist.map((data) => {
@@ -56,10 +57,10 @@ const Postlist = () => {
               <S.MiddleBox>
                 <S.FoodKcal>{data.kcal} </S.FoodKcal>
                 <S.ButtonBox>
-                  <S.Button dataId={data.id} userId={userId}>
+                  <S.Button dataUserId={data.user_id} userId={userId}>
                     수정
                   </S.Button>
-                  <S.Button dataId={data.id} userId={userId} onClick={() => handleDeleteButtonClick(data.id)}>
+                  <S.Button dataUserId={data.user_id} userId={userId} onClick={() => handleDeleteButtonClick(data.id)}>
                     삭제
                   </S.Button>
                 </S.ButtonBox>
