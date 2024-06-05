@@ -11,8 +11,8 @@ class Post {
   }
 
   async getUsers() {
-    const { data } = await this.#client.from('users').select();
-    return data;
+    const { data, error } = await this.#client.from('users').select();
+    return { data, error };
   }
 
   async insertServerPost(formData) {

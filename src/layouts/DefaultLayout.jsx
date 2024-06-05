@@ -41,7 +41,7 @@ function DefaultLayout() {
       dispatch(action);
     };
     const initMyLikes = async () => {
-      const data = await supabase.post.getUsers();
+      const { data } = await supabase.post.getUsers();
       const filteredData = data.filter((item) => item?.user_id === curUserInfo?.id);
       const action = setMyLikes(filteredData[0]);
       dispatch(action);

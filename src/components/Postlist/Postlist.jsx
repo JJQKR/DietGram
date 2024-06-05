@@ -1,10 +1,11 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DeleteModal from '../../components/DeleteModal/DeleteModal';
 import { Background } from '../../components/DeleteModal/DeleteModal.styled';
 import { selectPost, selectUser } from '../../redux/slices/posts.slice';
 import * as S from './Postlist.styled';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../../supabase/supabase';
 
 // 닉네임 불러오기
 // 프로필 사진이나 닉네임을 클릭하면 그 포스트의 유저아이디를 받아 일치하는 포스트리스트페이지로 이동
@@ -19,10 +20,24 @@ const Postlist = () => {
   const modalBackground = useRef(null);
 
   const rawData = useSelector((state) => state.posts.postList);
-  const userId = useSelector((state) => state.user.currentUser?.id);
-  const currentUserId = useSelector((state) => state.posts.currentUserId);
-
+  const userId = useSelector((state) => state.user.currentUser?.id); // 로그인 한 계정의 id
+  const currentUserId = useSelector((state) => state.posts.currentUserId); // 현재 postlist에서 뿌려주는 post의 유저 id
   const myPostList = rawData.filter((data) => data.user_id === currentUserId);
+  const [currentUserData, setCurrentUserData] = useState([]);
+
+  useEffect(() => {
+    const 유저가져오기 = async () => {
+      const { data } = await supabase.post.getUsers();
+      setCurrentUserData(data);
+    };
+    유저가져오기();
+  }, []);
+
+  const currentUserInfo = currentUserData.find((user) => user.user_id === currentUserId);
+  console.log(currentUserInfo);
+  console.log('currentUserData =>', currentUserData);
+  console.log('currentUserId =>', currentUserId);
+  //console.log("userId =>", currentUserId)
 
   const handleDeleteButtonClick = (id) => {
     const action = selectPost(id);
@@ -48,7 +63,7 @@ const Postlist = () => {
                   dispatch(action);
                 }}
               >
-                ddd
+                {currentUserInfo.nickName}
               </S.Nickname>
             </S.ProfileBox>
             <S.ContextBox>
@@ -77,7 +92,9 @@ const Postlist = () => {
   return (
     <>
       <S.PostsNumberBox>
-        <S.PostsNumber>ddd 님의 포스트 건</S.PostsNumber>
+        <S.PostsNumber>
+          {currentUserInfo.nickName} 님의 포스트 {myPostList.length}건
+        </S.PostsNumber>
       </S.PostsNumberBox>
       <S.Boxes>
         {showPosts(myPostList)}
