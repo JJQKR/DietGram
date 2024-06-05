@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   postList: [],
   currentUserId: '',
-  currentPostId: ''
+  currentPostId: '',
+  like: 0
 };
 
 const postsSlice = createSlice({

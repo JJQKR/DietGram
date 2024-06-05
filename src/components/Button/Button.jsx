@@ -1,11 +1,9 @@
-import { NewPostButton } from "./Button.style";
+import { useNavigate } from 'react-router-dom';
+import { NewPostButton } from './Button.style';
 
-const Button = ({ type, onclickFunc }) => {
-  return (
-    <NewPostButton type={type} onClick={onclickFunc}>
-      +
-    </NewPostButton>
-  );
+const Button = () => {
+  const navigate = useNavigate();
+  return <NewPostButton onClick={() => navigate('/upload')}>+</NewPostButton>;
 };
 
 export default Button;
