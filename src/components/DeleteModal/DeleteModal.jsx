@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { deletePost } from '../../redux/slices/posts.slice';
 import { supabase } from '../../supabase/supabase';
 import * as S from './DeleteModal.styled';
@@ -6,14 +6,11 @@ import * as S from './DeleteModal.styled';
 const DeleteModal = ({ setDeleteModalOpen }) => {
   const dispatch = useDispatch();
 
-  const selector = useSelector((state) => state.posts);
-
   const handleDeletePost = async (id) => {
     const data = await supabase.post.deleteServerPost(id);
 
     const action = deletePost(data);
     dispatch(action);
-    console.log(selector.postList);
     setDeleteModalOpen(false);
   };
 

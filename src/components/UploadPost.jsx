@@ -176,7 +176,6 @@ export default function UploadPost() {
     const reader = new FileReader();
     reader.readAsDataURL(uploadFile);
     reader.onloadend = () => {
-      console.log(reader.result);
       setNewPostImage(reader.result);
     };
   };
