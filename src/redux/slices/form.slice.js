@@ -6,10 +6,11 @@ const initializeFormData = (state) => {
   state.kcal = 0;
   state.rating = 0.0;
   state.price = 0;
-  state.place = "";
-  state.email = "";
-  state.password = "";
-  state.nickName = "";
+  state.place = '';
+  state.email = '';
+  state.password = '';
+  state.nickName = '';
+  state.comment = '';
 };
 
 const initialState = {
@@ -18,10 +19,11 @@ const initialState = {
   kcal: 0,
   rating: 0.0,
   price: 0,
-  place: "",
-  email: "",
-  password: "",
-  nickName: "",
+  place: '',
+  email: '',
+  password: '',
+  nickName: '',
+  comment: ''
 };
 
 const formSlice = createSlice({
@@ -40,7 +42,7 @@ const formSlice = createSlice({
       state.email = action.payload.email;
       state.password = action.payload.password;
       state.nickName = action.payload.nickName;
-    },
+    }
 
     // selectPost: (state, action) => {
     //   const selectedPost = state.recordList.filter(
@@ -53,7 +55,7 @@ const formSlice = createSlice({
     //   state.price = selectedPost.price;
     //   state.place = selectedPost.place;
     // },
-  },
+  }
 });
 
 export const { initFormData, changeValue, changeUserInfo } = formSlice.actions;

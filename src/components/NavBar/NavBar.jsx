@@ -1,15 +1,15 @@
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as S from './NavBar.styled';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { supabase } from '../../supabase/supabase';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkLogin, getCurrentUser } from '../../redux/slices/user.slice';
+import { selectUser } from '../../redux/slices/posts.slice';
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.user.isLogin);
-  const { currentUser } = useSelector(state => state.user);
-  console.log(currentUser);
+  const currentUser = useSelector((state) => state.user.currentUser);
 
   useEffect(() => {
     const checkIsLogin = async () => {
@@ -34,11 +34,17 @@ const NavBar = () => {
         </S.Menu>
       );
     }
+
     return (
       <Link to="/login">
         <S.Menu>LogIn</S.Menu>
       </Link>
     );
+  };
+
+  const handleMypostsClick = () => {
+    const action = selectUser(currentUser.id);
+    dispatch(action);
   };
 
   return (
@@ -56,7 +62,7 @@ const NavBar = () => {
         </Link>
         <S.RightSection>
           <Link to="/mypost" style={{ textDecoration: 'none' }}>
-            <S.Menu>My Posts</S.Menu>
+            <S.Menu onClick={handleMypostsClick}>My Posts</S.Menu>
           </Link>
           <Link to="/profile" style={{ textDecoration: 'none' }}>
             <S.Menu>My Page</S.Menu>

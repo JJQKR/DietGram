@@ -39,7 +39,7 @@ const LoginForm = () => {
         password
       );
       if (error) {
-        alert("이메일과 비밀번호를 확인해주세요!");
+        alert('이메일과 비밀번호를 확인해주세요!');
       } else {
         alert("로그인 되었습니다!");
         navigator("/");
@@ -49,7 +49,7 @@ const LoginForm = () => {
         dispatch(checkLogin(true));
       }
     } catch (error) {
-      alert("네트워크 이슈");
+      alert('네트워크 이슈');
     }
   };
 
@@ -64,8 +64,8 @@ const LoginForm = () => {
             ref={emailRef}
             onChange={(e) => {
               const action = changeValue({
-                type: "email",
-                content: e.target.value,
+                type: 'email',
+                content: e.target.value
               });
               dispatch(action);
             }}
@@ -81,8 +81,8 @@ const LoginForm = () => {
             type="password"
             onChange={(e) => {
               const action = changeValue({
-                type: "password",
-                content: e.target.value,
+                type: 'password',
+                content: e.target.value
               });
               dispatch(action);
             }}
@@ -91,7 +91,7 @@ const LoginForm = () => {
         <S.Span ref={el => (spanRef.current[1] = el)}>비밀번호를 확인해주세요!</S.Span>
         <S.ButtonDiv>
           <S.Button type="submit">로그인</S.Button>
-          <S.Button $color="green" type="button" onClick={() => navigator("/signup")}>
+          <S.Button $color="green" type="button" onClick={() => navigator('/signup')}>
             회원가입
           </S.Button>
         </S.ButtonDiv>

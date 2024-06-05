@@ -1,4 +1,4 @@
-import DetailPost from "../components/DetailPost/DetailPost";
+import DetailPost from '../components/DetailPost/DetailPost';
 
 const DetailPage = () => {
   return (
