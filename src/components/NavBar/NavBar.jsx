@@ -64,7 +64,7 @@ const NavBar = () => {
           <Link to="/mypost" style={{ textDecoration: 'none' }}>
             <S.Menu onClick={handleMypostsClick}>My Posts</S.Menu>
           </Link>
-          <Link to={`/profile/${currentUser?.id}`} style={{ textDecoration: 'none' }}>
+          <Link to={`/profile/${currentUser?.id || ''}`} style={{ textDecoration: 'none' }}>
             <S.Menu>My Page</S.Menu>
           </Link>
         </S.RightSection>
