@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
 export const Button = styled.button`
+  border: none;
   border-radius: 10px;
   background-color: green;
 `;
@@ -60,7 +61,6 @@ const Left = styled.div`
   width: 530px;
   height: 560px;
   align-items: center;
-  background-color: #9be99b;
 `;
 
 const Right = styled.div`
@@ -72,7 +72,12 @@ const Right = styled.div`
   width: 370px;
   height: 560px;
   gap: 10px;
-  background-color: #ffc2b4;
+`;
+
+const Img = styled.img`
+  width: 300px;
+  height: 150px;
+  object-fit: cover;
 `;
 
 const Label = styled.label`
@@ -80,15 +85,29 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  width: ${(prop) => prop.width}px;
+  width: ${(prop) => (prop.width ? `${prop.width}px` : '320px')};
   height: 55px;
+  font-size: 20px;
+  text-indent: 10px;
   border: none;
+  border-radius: 15px;
+  box-shadow: 0px 0px 5px #b5b5b5;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const Textarea = styled.textarea`
   width: 440px;
   height: 160px;
   border: none;
+  border-radius: 15px;
+  font-size: 20px;
+  text-indent: 10px;
+  box-shadow: 0px 0px 5px #b5b5b5;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const reader = new FileReader();
@@ -161,7 +180,7 @@ export default function UploadPost() {
         <form onSubmit={handleAddPost}>
           <InnerContainer>
             <Left>
-              <img src={newPostImage} />
+              <Img src={newPostImage} />
               <input type="file" accept="image/*" onChange={handleSaveImageFile}></input>
 
               <Label htmlFor="postMenu">메뉴</Label>
