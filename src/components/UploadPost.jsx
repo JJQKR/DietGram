@@ -39,25 +39,28 @@ const Container = styled.div`
 `;
 
 const InnerContainer = styled.div`
-  background-color: #e7e7e7;
-  width: 70%;
-  height: 500px;
+  width: 1000px;
+  height: 650px;
   margin: 5rem 1rem;
-  border: 1px black solid;
+  border: none;
   border-radius: 15px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: #f4f4f4;
+  box-shadow: 0px 0px 5px #b5b5b5;
 `;
+
 const Left = styled.div`
-  margin: 3rem 0 30px 30px;
+  margin: 5% 0 5% 5%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 35%;
+  width: 530px;
+  height: 560px;
   align-items: center;
-  /* background-color: green; */
+  background-color: #9be99b;
 `;
 
 const Right = styled.div`
@@ -66,9 +69,26 @@ const Right = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: left;
-  width: 35%;
-  height: 50%;
-  /* background-color: blue; */
+  width: 370px;
+  height: 560px;
+  gap: 10px;
+  background-color: #ffc2b4;
+`;
+
+const Label = styled.label`
+  font-size: 24px;
+`;
+
+const Input = styled.input`
+  width: ${(prop) => prop.width}px;
+  height: 55px;
+  border: none;
+`;
+
+const Textarea = styled.textarea`
+  width: 440px;
+  height: 160px;
+  border: none;
 `;
 
 const reader = new FileReader();
@@ -139,55 +159,69 @@ export default function UploadPost() {
     <>
       <Container>
         <form onSubmit={handleAddPost}>
-          <Left>
-            <img src={newPostImage} />
-            <input type="file" accept="image/*" onChange={handleSaveImageFile}></input>
+          <InnerContainer>
+            <Left>
+              <img src={newPostImage} />
+              <input type="file" accept="image/*" onChange={handleSaveImageFile}></input>
 
-            <label htmlFor="postMenu">메뉴</label>
-            <input id="postMenu" type="text" value={newMenu} onChange={(event) => setNewMenu(event.target.value)} />
+              <Label htmlFor="postMenu">메뉴</Label>
+              <Input
+                id="postMenu"
+                width="440"
+                type="text"
+                value={newMenu}
+                onChange={(event) => setNewMenu(event.target.value)}
+              />
 
-            <label htmlFor="postDescription">내용</label>
-            <textarea
-              id="postDescription"
-              value={newDescription}
-              onChange={(event) => setNewDescription(event.target.value)}
-            ></textarea>
-            {/* 댓글에서 사용될 수도 있는 textarea와 스타일 맞추기  */}
+              <Label htmlFor="postDescription">내용</Label>
+              <Textarea
+                id="postDescription"
+                value={newDescription}
+                onChange={(event) => setNewDescription(event.target.value)}
+              ></Textarea>
+              {/* 댓글에서 사용될 수도 있는 textarea와 스타일 맞추기  */}
 
-            <label htmlFor="postDate">날짜</label>
-            <input
-              id="postDate"
-              type="number"
-              placeholder="YYYY-MM-DD"
-              value={newDate}
-              onChange={(event) => setNewDate(event.target.value)}
-            />
-          </Left>
-          <Right>
-            {/* 숫자이기만 하면 값 크기 제한 없게 */}
-            <label htmlFor="postCalories">칼로리</label>
-            <input
-              id="postCalories"
-              type="number"
-              value={newCalories}
-              onChange={(event) => setNewCalories(event.target.value)}
-            />
+              <Label htmlFor="postDate">날짜</Label>
+              <Input
+                id="postDate"
+                width="440"
+                type="number"
+                placeholder="YYYY-MM-DD"
+                value={newDate}
+                onChange={(event) => setNewDate(event.target.value)}
+              />
+            </Left>
+            <Right>
+              {/* 숫자이기만 하면 값 크기 제한 없게 */}
+              <Label htmlFor="postCalories">칼로리</Label>
+              <Input
+                id="postCalories"
+                type="number"
+                value={newCalories}
+                onChange={(event) => setNewCalories(event.target.value)}
+              />
 
-            <label htmlFor="postRate">평점</label>
-            <input id="postRate" type="number" value={newRate} onChange={(event) => setNewRate(event.target.value)} />
+              <Label htmlFor="postRate">평점</Label>
+              <Input id="postRate" type="number" value={newRate} onChange={(event) => setNewRate(event.target.value)} />
 
-            <label htmlFor="postPrice">금액</label>
-            <input
-              id="postPrice"
-              type="number"
-              value={newPrice}
-              onChange={(event) => setNewPrice(event.target.value)}
-            />
+              <Label htmlFor="postPrice">금액</Label>
+              <Input
+                id="postPrice"
+                type="number"
+                value={newPrice}
+                onChange={(event) => setNewPrice(event.target.value)}
+              />
 
-            <label htmlFor="postPlace">장소</label>
-            <input id="postPlace" type="text" value={newPlace} onChange={(event) => setNewPlace(event.target.value)} />
-            <Button type="submit">저장</Button>
-          </Right>
+              <Label htmlFor="postPlace">장소</Label>
+              <Input
+                id="postPlace"
+                type="text"
+                value={newPlace}
+                onChange={(event) => setNewPlace(event.target.value)}
+              />
+              <Button type="submit">저장</Button>
+            </Right>
+          </InnerContainer>
         </form>
       </Container>
     </>
