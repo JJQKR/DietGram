@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { supabase } from "../supabase/supabase";
-import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { supabase } from '../supabase/supabase';
+import styled from 'styled-components';
 
 const Container = styled.div`
   display: flex;
@@ -88,11 +88,11 @@ const NicknameButton = styled.button`
 export default function EditProfile() {
   //###############################################################################################
   const [initialProfile, setInitialProfile] = useState([
-    { key: uuidv4(), id: "ssyc@naver.com", nickname: "JJQKR" },
-    { key: uuidv4(), id: "yjco@naver.com", nickname: "문샤" },
+    { key: uuidv4(), id: 'ssyc@naver.com', nickname: 'JJQKR' },
+    { key: uuidv4(), id: 'yjco@naver.com', nickname: '문샤' }
   ]);
 
-  const [nickname, setNickname] = useState("");
+  const [nickname, setNickname] = useState('');
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -110,7 +110,7 @@ export default function EditProfile() {
     const newProfile = {
       key,
       id,
-      nickname,
+      nickname
     };
     setInitialProfile([...initialProfile, newProfile]);
     // 닉네임을 변경하는 코드를 작성한다.
@@ -118,16 +118,16 @@ export default function EditProfile() {
   };
   //###############################################################################################
 
-  const [imageSrc, setImageSrc] = useState("image 18.png");
+  const [imageSrc, setImageSrc] = useState('image 18.png');
   //이거를 public 폴더에 넣으면 바로 쓸 수 있다
 
   //imageSrc 바꾸는 함수
   const changeImageSrc = () => {
-    setImageSrc("kakaoImage.jpg");
+    setImageSrc('kakaoImage.jpg');
     ///chnageImage 누르면 컴퓨터에서 가져온 새 이미지로 바뀌도록 src설정하기
   };
 
-  const [newPostImage, setNewPostImage] = useState("");
+  const [newPostImage, setNewPostImage] = useState('');
 
   const handleSaveImageFile = (event) => {
     const { files } = event.target;
@@ -161,9 +161,7 @@ export default function EditProfile() {
             {/* 아래꺼는 이미지 src 바로 바꾸는 로직이고 그냥 이미지 바로 띄워주고 있는거다 */}
             <div>
               <Image src={imageSrc} alt="Example" />
-              <ImageButton onClick={changeImageSrc}>
-                이미지 src 변경
-              </ImageButton>
+              <ImageButton onClick={changeImageSrc}>이미지 src 변경</ImageButton>
             </div>
             <div>
               {/* <Emoji
@@ -178,11 +176,7 @@ export default function EditProfile() {
               <Image className="profileImage" src={newPostImage} img="img/" />
               {/* * 못생긴 파일선택 버튼 자동생성, label태그로 감싸고 스타일 따로 준
               뒤 input버튼은 안 보이게 */}
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleSaveImageFile}
-              />
+              <input type="file" accept="image/*" onChange={handleSaveImageFile} />
             </label>
             {/* 새로 업로드 하고 미리 보는 로직 */}
             <ImageButton>이미지 제거</ImageButton>
