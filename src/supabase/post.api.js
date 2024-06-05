@@ -10,6 +10,11 @@ class Post {
     return data;
   }
 
+  async getUsers() {
+    const { data } = await this.#client.from('users').select();
+    return data;
+  }
+
   async insertServerPost(formData) {
     const { data } = await this.#client
       .from('posts')

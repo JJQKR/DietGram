@@ -25,7 +25,6 @@ const SortButton = () => {
       const action = initPostList(posts);
       dispatch(action);
       dispatch(setSortType('latest'));
-
       dispatch(setData(posts));
       dispatch(sortData());
       return posts;

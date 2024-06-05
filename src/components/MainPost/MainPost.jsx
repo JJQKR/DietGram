@@ -1,10 +1,18 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Post, PostImage, PostList, PostTimeCalorie, UserData, UserImage, UserName } from './MainPost.styled';
 import { useNavigate } from 'react-router-dom';
+import { selectUser } from '../../redux/slices/posts.slice';
 
 const MainPost = () => {
   const data = useSelector((state) => state.activeIndex.data);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const currentUserId = useSelector((state) => state.posts);
+
+  const handlePostClick = (userid) => {
+    const action = selectUser(userid);
+    dispatch(action);
+  };
 
   const defaultUserImage =
     'https://w7.pngwing.com/pngs/682/203/png-transparent-account-user-person-profile-avatar-basic-interface-icon.png';
@@ -17,6 +25,7 @@ const MainPost = () => {
           <Post
             onClick={() => {
               navigate(`/detail/${post.id}`);
+              handlePostClick(post.user_id);
             }}
             key={post.id}
           >
