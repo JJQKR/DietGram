@@ -10,7 +10,7 @@ export const NewPostButton = styled.button`
   background-color: #d9d9d9;
   position: fixed;
   right: 150px;
-  top: 50px;
+  top: 110px;
 
   &:hover {
     background-color: gray;

@@ -3,7 +3,7 @@ import * as S from './NavBar.styled';
 import { useEffect } from 'react';
 import { supabase } from '../../supabase/supabase';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkLogin } from '../../redux/slices/user.slice';
+import { checkLogin, getCurrentUser } from '../../redux/slices/user.slice';
 import { selectUser } from '../../redux/slices/posts.slice';
 
 const NavBar = () => {
@@ -27,6 +27,7 @@ const NavBar = () => {
           onClick={async () => {
             await supabase.login.signOut();
             dispatch(checkLogin(false));
+            dispatch(getCurrentUser(null));
             alert('로그아웃 되었습니다!');
           }}
         >

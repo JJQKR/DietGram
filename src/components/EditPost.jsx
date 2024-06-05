@@ -97,52 +97,52 @@ export default function EditPost() {
               ref={imageRef}
             />
             <button></button> */}
-          </form>
-          {/* api데이터 */}
-          <label htmlFor="postMenu">메뉴</label>
-          <input id="postMenu" type="text" value={menu} onChange={(event) => setMenu(event.target.value)} />
-          <label htmlFor="postDescription">내용</label>
-          <textarea
-            id="postDescription"
-            style={{ resize: none }}
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
-          ></textarea>
-          {/* 댓글에서 사용될 수도 있는 textarea와 스타일 맞추기  */}
-          <label htmlFor="postDate">날짜</label>
-          <input
-            id="postDate"
-            type="number"
-            placeholder="YYYY-MM-DD"
-            value={date}
-            onChange={(event) => setDate(event.target.value)}
-          />
-          {/* api 데이터 */}
-          {/* 숫자이기만 하면 값 크기 제한 없게 */}
-          <label htmlFor="postCalories">칼로리</label>
-          <input
-            id="postCalories"
-            type="number"
-            value={calories}
-            onChange={(event) => setCalories(event.target.value)}
-          />
-          {/* min = 1, max = 10으로 설정하는 거 있던데 영화 과제 혜미님 코드에 */}
-          <label htmlFor="postRate">평점</label>
-          <input id="postRate" type="number" value={rate} onChange={(event) => setRate(event.target.value)} />
-          {/* 숫자이기만 하면 값 크기 제한 없게, 0원도 가능 */}
-          <label htmlFor="postPrice">금액</label>
-          <input id="postPrice" type="number" value={newPrice} onChange={(event) => setNewPrice(event.target.value)} />
-          <label htmlFor="postPlace">장소</label>
-          <input id="postPlace" type="text" value={place} onChange={(event) => setPlace(event.target.value)} />
-          <Button type="submit" onClick={() => navigate('/detail')}>
-            {/* page명 수정 필요 */}
-            저장
-          </Button>
-          {/* 저장하면 상세페이지로 이동, 페이지명 수정 필요 */}
-          <Button onClick={() => navigate('/')}>취소</Button>
-          {/* 취소하면 홈으로 이동*/}
         </form>
-      </Boxes>
+        {/* api데이터 */}
+        <label htmlFor="postMenu">메뉴</label>
+        <input id="postMenu" type="text" value={menu} onChange={(event) => setMenu(event.target.value)} />
+        <label htmlFor="postDescription">내용</label>
+        <textarea
+          id="postDescription"
+          style={{ resize: none }}
+          value={description}
+          onChange={(event) => setDescription(event.target.value)}
+        ></textarea>
+        {/* 댓글에서 사용될 수도 있는 textarea와 스타일 맞추기  */}
+        <label htmlFor="postDate">날짜</label>
+        <input
+          id="postDate"
+          type="number"
+          placeholder="YYYY-MM-DD"
+          value={date}
+          onChange={(event) => setDate(event.target.value)}
+        />
+        {/* api 데이터 */}
+        {/* 숫자이기만 하면 값 크기 제한 없게 */}
+        <label htmlFor="postCalories">칼로리</label>
+        <input
+          id="postCalories"
+          type="number"
+          value={calories}
+          onChange={(event) => setCalories(event.target.value)}
+        />
+        {/* min = 1, max = 10으로 설정하는 거 있던데 영화 과제 혜미님 코드에 */}
+        <label htmlFor="postRate">평점</label>
+        <input id="postRate" type="number" value={rate} onChange={(event) => setRate(event.target.value)} />
+        {/* 숫자이기만 하면 값 크기 제한 없게, 0원도 가능 */}
+        <label htmlFor="postPrice">금액</label>
+        <input id="postPrice" type="number" value={newPrice} onChange={(event) => setNewPrice(event.target.value)} />
+        <label htmlFor="postPlace">장소</label>
+        <input id="postPlace" type="text" value={place} onChange={(event) => setPlace(event.target.value)} />
+        <Button type="submit" onClick={() => navigate('/detail')}>
+          {/* page명 수정 필요 */}
+          저장
+        </Button>
+        {/* 저장하면 상세페이지로 이동, 페이지명 수정 필요 */}
+        <Button onClick={() => navigate('/')}>취소</Button>
+        {/* 취소하면 홈으로 이동*/}
+      </form>
+    </Boxes >
       ;
     </>
   );

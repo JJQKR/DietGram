@@ -59,15 +59,16 @@ class Post {
     return updatedPost;
   }
 
-  async isLike(id) {
+  async isLike(id, userId) {
     // 유저에 like id를 넣어줘야해
-    const { data } = await this.#client.from('users').select('like');
-    const likeIdx = data[0].like.findIndex((item) => item === id);
-    likeIdx !== -1 ? data[0].like.splice(likeIdx, 1) : data[0].like.push(id);
+    const { data } = await this.#client.from('users').select('*');
+    const loginUser = data.filter((item) => item.user_id === userId);
+    const likeIdx = loginUser[0]?.like.findIndex((item) => item === id);
+    likeIdx !== -1 ? loginUser[0]?.like.splice(likeIdx, 1) : loginUser[0].like.push(id);
     const updatedData = await this.#client
       .from('users')
-      .update({ like: data[0].like })
-      .eq('user_id', '3f79941c-4b6c-4137-87c9-f2d6a40d6be7')
+      .update({ like: loginUser[0]?.like })
+      .eq('user_id', userId)
       .select();
     return updatedData.data[0];
   }
