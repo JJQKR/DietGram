@@ -10,11 +10,11 @@ const DetailCommentAdd = () => {
   const userInfo = useSelector((state) => state.user.currentUser?.user_metadata);
   const curPostId = useSelector((state) => state.posts.currentPostId);
 
-  const commentList = useSelector((state) => state.comments);
-  console.log('commentList', commentList);
+  // const commentList = useSelector((state) => state.comments);
+  // console.log('commentList', commentList);
 
   const completeChange = async () => {
-    const data = await supabase.comment.insertComment(curPostId, comment, userInfo.avatarUrl);
+    const data = await supabase.comment.insertComment(curPostId, comment, userInfo.avatarUrl, userInfo.nickName);
     const action = insertData(data);
     dispatch(action);
   };
