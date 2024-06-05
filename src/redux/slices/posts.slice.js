@@ -16,7 +16,6 @@ const postsSlice = createSlice({
 
     deletePost: (state, action) => {
       const idx = state.postList.find((item) => item.id === action.payload.id);
-      console.log(idx);
       state.postList.splice(idx, 1);
     },
     updatePost: (state, action) => {
@@ -32,12 +31,10 @@ const postsSlice = createSlice({
 
     selectUser: (state, action) => {
       state.currentUserId = action.payload;
-      console.log(action.payload);
     },
 
     selectPost: (state, action) => {
       state.currentPostId = action.payload;
-      console.log(action.payload);
     }
   }
 });

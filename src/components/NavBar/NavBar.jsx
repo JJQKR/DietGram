@@ -1,6 +1,6 @@
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as S from './NavBar.styled';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { supabase } from '../../supabase/supabase';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkLogin } from '../../redux/slices/user.slice';
@@ -9,9 +9,7 @@ import { selectUser } from '../../redux/slices/posts.slice';
 const NavBar = () => {
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.user.isLogin);
-  const currentUserId = useSelector((state) => state.user.selectedUserInfo);
   const currentUser = useSelector((state) => state.user.currentUser);
-  console.log(currentUser);
 
   useEffect(() => {
     const checkIsLogin = async () => {
@@ -19,14 +17,6 @@ const NavBar = () => {
       check ? dispatch(checkLogin(true)) : dispatch(checkLogin(false));
     };
     checkIsLogin();
-  }, []);
-
-  useEffect(() => {
-    const checkUserInfo = async () => {
-      const check = await supabase.user.getUsers();
-      console.log(check);
-    };
-    checkUserInfo();
   }, []);
 
   const logInItem = () => {
@@ -51,8 +41,8 @@ const NavBar = () => {
     );
   };
 
-  const handleMypostsClick = (userId) => {
-    const action = selectUser(userId);
+  const handleMypostsClick = () => {
+    const action = selectUser(currentUser.id);
     dispatch(action);
   };
 
