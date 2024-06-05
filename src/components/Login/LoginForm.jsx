@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { changeValue } from "../../redux/slices/form.slice";
-import { checkLogin, getCurrentUser } from "../../redux/slices/user.slice";
-import { supabase } from "../../supabase/supabase";
-import * as S from "./LoginForm.styled";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { changeValue } from '../../redux/slices/form.slice';
+import { checkLogin, getCurrentUser } from '../../redux/slices/user.slice';
+import { supabase } from '../../supabase/supabase';
+import * as S from './LoginForm.styled';
 
 const LoginForm = () => {
   const navigator = useNavigate();
@@ -24,15 +24,12 @@ const LoginForm = () => {
     const { email, password } = formData;
 
     try {
-      const { data, error } = await supabase.login.signInWithPassword(
-        email,
-        password
-      );
+      const { data, error } = await supabase.login.signInWithPassword(email, password);
       if (error) {
-        alert("이메일과 비밀번호를 확인해주세요!");
+        alert('이메일과 비밀번호를 확인해주세요!');
       } else {
-        alert("로그인 되었습니다!");
-        navigator("/");
+        alert('로그인 되었습니다!');
+        navigator('/');
         console.log(data);
         const { user } = data;
         dispatch(getCurrentUser(user));
@@ -40,7 +37,7 @@ const LoginForm = () => {
         console.log(currentUser);
       }
     } catch (error) {
-      alert("네트워크 이슈");
+      alert('네트워크 이슈');
     }
   };
 
@@ -54,16 +51,14 @@ const LoginForm = () => {
             type="email"
             onChange={(e) => {
               const action = changeValue({
-                type: "email",
-                content: e.target.value,
+                type: 'email',
+                content: e.target.value
               });
               dispatch(action);
             }}
           />
         </S.InputBox>
-        <S.Span $display={isEmailValid}>
-          이메일을 정확히 입력한 것이 맞는지 확인해주세요!
-        </S.Span>
+        <S.Span $display={isEmailValid}>이메일을 정확히 입력한 것이 맞는지 확인해주세요!</S.Span>
         <S.InputBox>
           <label htmlFor="password">비밀번호</label>
           <S.Input
@@ -71,8 +66,8 @@ const LoginForm = () => {
             type="password"
             onChange={(e) => {
               const action = changeValue({
-                type: "password",
-                content: e.target.value,
+                type: 'password',
+                content: e.target.value
               });
               dispatch(action);
             }}
@@ -81,7 +76,7 @@ const LoginForm = () => {
         <S.Span $display={isPasswordValid}>비밀번호를 확인해주세요!</S.Span>
         <S.ButtonDiv>
           <S.Button type="submit">로그인</S.Button>
-          <S.Button $color="green" type="button" onClick={() => navigator("/signup")}>
+          <S.Button $color="green" type="button" onClick={() => navigator('/signup')}>
             회원가입
           </S.Button>
         </S.ButtonDiv>

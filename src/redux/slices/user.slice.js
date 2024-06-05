@@ -1,13 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   currentUser: null,
   isLogin: false,
   myLikes: [],
+  totalUserInfo: [],
+  selectedUserInfo: {}
 };
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     getCurrentUser: (state, action) => {
@@ -15,6 +17,12 @@ const userSlice = createSlice({
     },
     checkLogin: (state, action) => {
       action.payload ? (state.isLogin = true) : (state.isLogin = false);
+    },
+    selectUserInfo: (state, action) => {
+      state.selectedUserInfo = action.payload;
+    },
+    setTotalUserInfo: (state, action) => {
+      state.totalUserInfo = action.payload;
     },
 
     // NOTE post.api.js 의 isLike 함수의 반환값인 배열을 사용
@@ -26,9 +34,9 @@ const userSlice = createSlice({
     setMyLikes: (state, action) => {
       state.myLikes = action.payload.like;
       console.log(action.payload.like);
-    },
-  },
+    }
+  }
 });
 
-export const { getCurrentUser, checkLogin, setMyLikes } = userSlice.actions;
+export const { getCurrentUser, checkLogin, setMyLikes, selectUserInfo, setTotalUserInfo } = userSlice.actions;
 export default userSlice.reducer;
