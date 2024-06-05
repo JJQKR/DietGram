@@ -1,9 +1,123 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { changePost, deletePost } from '../redux/slices/postsSlice';
 import { Boxes } from './GlobalStyle';
+
+export const Button = styled.button`
+  border: none;
+  border-radius: 10px;
+  background-color: green;
+`;
+// export const Section = styled.section`
+//   display: flex;
+//   justify-content: space-between;
+//   margin: 20%;
+//   border: black 1px solid;
+//   border-radius: 10%;
+//   background-color: pink;
+// `;
+
+export const ImageLabel = styled.label`
+  margin: 5px 0 20px 0;
+  font-weight: bold;
+  font-size: 13px;
+  color: #0095f6;
+  display: inline-block;
+  cursor: pointer;
+`;
+export const ImageInput = styled.input`
+  border: black 1px solid;
+  background-color: red;
+  border-radius: 50%;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+`;
+
+const InnerContainer = styled.div`
+  width: 1000px;
+  height: 650px;
+  margin: 5rem 1rem;
+  border: none;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f4;
+  box-shadow: 0px 0px 5px #b5b5b5;
+`;
+
+const Left = styled.div`
+  margin: 5% 0 5% 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 530px;
+  height: 560px;
+  align-items: center;
+`;
+
+const Right = styled.div`
+  margin: 5% 5% 5% 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: left;
+  width: 370px;
+  height: 560px;
+  gap: 10px;
+`;
+
+const Img = styled.img`
+  width: 300px;
+  height: 150px;
+  object-fit: cover;
+`;
+
+const Label = styled.label`
+  font-size: 24px;
+`;
+
+const Input = styled.input`
+  width: ${(prop) => (prop.width ? `${prop.width}px` : '320px')};
+  height: 55px;
+  font-size: 20px;
+  text-indent: 10px;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0px 0px 5px #b5b5b5;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Textarea = styled.textarea`
+  width: 440px;
+  height: 160px;
+  border: none;
+  border-radius: 15px;
+  font-size: 20px;
+  text-indent: 10px;
+  box-shadow: 0px 0px 5px #b5b5b5;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const FileSpan = styled.span`
+  border: black solid 1px;
+  border-radius: 15px;
+  padding: 5px;
+`;
 
 export default function EditPost() {
   const navigate = useNavigate();
@@ -11,17 +125,17 @@ export default function EditPost() {
   const { id } = useParams();
   const posts = useSelector((state) => state.posts);
 
-  const selectedPost = posts.find((element) => element.id === id);
+  //const selectedPost = posts.find((element) => element.id === id);
   //근데 selectedPost를 정하는 게, 상세페이지에서 넘어올 때도 필요한가?
 
   // const [postImage, setPostImage] = useState(selectedPost.postImage);
-  const [menu, setMenu] = useState(selectedPost.menu);
-  const [description, setDescription] = useState(selectedPost.description);
-  const [date, setDate] = useState(selectedPost.date);
-  const [calories, setCalories] = useState(selectedPost.calories);
-  const [rate, setRate] = useState(selectedPost.rate);
-  const [price, setPrice] = useState(selectedPost.price);
-  const [place, setPlace] = useState(selectedPost.place);
+  // const [menu, setMenu] = useState(selectedPost.menu);
+  // const [description, setDescription] = useState(selectedPost.description);
+  // const [date, setDate] = useState(selectedPost.date);
+  // const [calories, setCalories] = useState(selectedPost.calories);
+  // const [rate, setRate] = useState(selectedPost.rate);
+  // const [price, setPrice] = useState(selectedPost.price);
+  // const [place, setPlace] = useState(selectedPost.place);
 
   const handleChangePost = () => {
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -72,78 +186,44 @@ export default function EditPost() {
 
   return (
     <>
-      {/* 이전페이지(상세페이지나 마이포스트s)에서 수정 눌러서 올 때
-  id값 가지고 오는 로직 */}
-      {posts.map((post) => (
-        <li
-          key={post.id}
-          onClick={() => {
-            navigate(`/detail/${post.id}`);
-          }}
-        ></li>
-      ))}
-      <Boxes>
-        <form onSubmit={handleChangePost}>
-          {/* <form>
-            <ImageLabel htmlFor="postImage" className="postImageLabel">
-              사진 불러오기
-            </ImageLabel>
-            <ImageInput
-              id="postImage"
-              className="postImageInput"
-              type="file"
-              accept="image/*"
-              onChange={saveImageFile}
-              ref={imageRef}
-            />
-            <button></button> */}
+      <Container>
+        <form>
+          <InnerContainer>
+            <Left>
+              <Img />
+              <label htmlFor="fileTest">
+                <FileSpan>파일 업로드하기</FileSpan>
+              </label>
+              <input id="fileTest" type="file" style={{ display: 'none' }} accept="image/*"></input>
+
+              <Label htmlFor="postMenu">메뉴</Label>
+              <Input id="postMenu" width="440" type="text" />
+
+              <Label htmlFor="postDescription">내용</Label>
+              <Textarea id="postDescription"></Textarea>
+              {/* 댓글에서 사용될 수도 있는 textarea와 스타일 맞추기  */}
+
+              <Label htmlFor="postDate">날짜</Label>
+              <Input id="postDate" width="440" type="number" placeholder="YYYY-MM-DD" />
+            </Left>
+            <Right>
+              {/* 숫자이기만 하면 값 크기 제한 없게 */}
+              <Label htmlFor="postCalories">칼로리</Label>
+              <Input id="postCalories" type="number" />
+
+              <Label htmlFor="postRate">평점</Label>
+              <Input id="postRate" type="number" />
+
+              <Label htmlFor="postPrice">금액</Label>
+              <Input id="postPrice" type="number" />
+
+              <Label htmlFor="postPlace">장소</Label>
+              <Input id="postPlace" type="text" />
+              <Button type="submit">저장</Button>
+            </Right>
+          </InnerContainer>
         </form>
-        {/* api데이터 */}
-        <label htmlFor="postMenu">메뉴</label>
-        <input id="postMenu" type="text" value={menu} onChange={(event) => setMenu(event.target.value)} />
-        <label htmlFor="postDescription">내용</label>
-        <textarea
-          id="postDescription"
-          style={{ resize: none }}
-          value={description}
-          onChange={(event) => setDescription(event.target.value)}
-        ></textarea>
-        {/* 댓글에서 사용될 수도 있는 textarea와 스타일 맞추기  */}
-        <label htmlFor="postDate">날짜</label>
-        <input
-          id="postDate"
-          type="number"
-          placeholder="YYYY-MM-DD"
-          value={date}
-          onChange={(event) => setDate(event.target.value)}
-        />
-        {/* api 데이터 */}
-        {/* 숫자이기만 하면 값 크기 제한 없게 */}
-        <label htmlFor="postCalories">칼로리</label>
-        <input
-          id="postCalories"
-          type="number"
-          value={calories}
-          onChange={(event) => setCalories(event.target.value)}
-        />
-        {/* min = 1, max = 10으로 설정하는 거 있던데 영화 과제 혜미님 코드에 */}
-        <label htmlFor="postRate">평점</label>
-        <input id="postRate" type="number" value={rate} onChange={(event) => setRate(event.target.value)} />
-        {/* 숫자이기만 하면 값 크기 제한 없게, 0원도 가능 */}
-        <label htmlFor="postPrice">금액</label>
-        <input id="postPrice" type="number" value={newPrice} onChange={(event) => setNewPrice(event.target.value)} />
-        <label htmlFor="postPlace">장소</label>
-        <input id="postPlace" type="text" value={place} onChange={(event) => setPlace(event.target.value)} />
-        <Button type="submit" onClick={() => navigate('/detail')}>
-          {/* page명 수정 필요 */}
-          저장
-        </Button>
-        {/* 저장하면 상세페이지로 이동, 페이지명 수정 필요 */}
-        <Button onClick={() => navigate('/')}>취소</Button>
-        {/* 취소하면 홈으로 이동*/}
-      </form>
-    </Boxes >
-      ;
+      </Container>
     </>
   );
 }

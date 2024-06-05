@@ -4,6 +4,7 @@ import DeleteModal from '../../components/DeleteModal/DeleteModal';
 import { Background } from '../../components/DeleteModal/DeleteModal.styled';
 import { selectPost, selectUser } from '../../redux/slices/posts.slice';
 import * as S from './Postlist.styled';
+import { useNavigate } from 'react-router-dom';
 
 // 닉네임 불러오기
 // 프로필 사진이나 닉네임을 클릭하면 그 포스트의 유저아이디를 받아 일치하는 포스트리스트페이지로 이동
@@ -13,6 +14,7 @@ import * as S from './Postlist.styled';
 
 const Postlist = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const modalBackground = useRef(null);
 
@@ -26,6 +28,12 @@ const Postlist = () => {
     const action = selectPost(id);
     dispatch(action);
     setDeleteModalOpen(true);
+  };
+
+  const handleEditButtonClick = (id) => {
+    const action = selectPost(id);
+    dispatch(action);
+    navigate(`/edit/${id}`);
   };
 
   const showPosts = (postlist) => {
@@ -52,7 +60,7 @@ const Postlist = () => {
               <S.MiddleBox>
                 <S.FoodKcal>{data.kcal} </S.FoodKcal>
                 <S.ButtonBox>
-                  <S.Button dataUserId={data.user_id} userId={userId}>
+                  <S.Button dataUserId={data.user_id} userId={userId} onClick={() => handleEditButtonClick(data.id)}>
                     수정
                   </S.Button>
                   <S.Button dataUserId={data.user_id} userId={userId} onClick={() => handleDeleteButtonClick(data.id)}>
