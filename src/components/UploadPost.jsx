@@ -33,28 +33,43 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  max-width: 1440px;
+
   width: 100%;
-  background-color: red;
+  height: 100%;
 `;
 
+const InnerContainer = styled.div`
+  background-color: #e7e7e7;
+  width: 70%;
+  height: 500px;
+  margin: 5rem 1rem;
+  border: 1px black solid;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
 const Left = styled.div`
-  margin: 30px 0 30px 30px;
+  margin: 3rem 0 30px 30px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   width: 35%;
   align-items: center;
-  background-color: green;
+  /* background-color: green; */
 `;
 
 const Right = styled.div`
-  margin: 30px 0 30px 30px;
+  margin: 5% 5% 5% 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
+  align-items: left;
   width: 35%;
-  background-color: blue;
+  height: 50%;
+  /* background-color: blue; */
+`;
 
 const reader = new FileReader();
 
@@ -125,7 +140,7 @@ export default function UploadPost() {
       <Container>
         <form onSubmit={handleAddPost}>
           <Left>
-            <img src={newPostImage} img="img/" />
+            <img src={newPostImage} />
             <input type="file" accept="image/*" onChange={handleSaveImageFile}></input>
 
             <label htmlFor="postMenu">메뉴</label>
