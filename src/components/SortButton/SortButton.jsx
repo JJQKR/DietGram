@@ -1,14 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setActiveIndex,
-  setData,
-  setSortType,
-  sortData,
-} from '../../redux/slices/sortslice';
+import { initPostList } from '../../redux/slices/posts.slice';
+import { setActiveIndex, setData, setSortType, sortData } from '../../redux/slices/sortslice';
 import { supabase } from '../../supabase/supabase';
 import { Button, ButtonList } from './SortButton.style';
-import { initPostList } from '../../redux/slices/posts.slice';
 
 const SortButton = () => {
   const activeIndex = useSelector((state) => state.activeIndex.value);
@@ -44,12 +39,7 @@ const SortButton = () => {
         return (
           <Button
             $active={activeIndex === index}
-            onClick={() =>
-              handleSortButton(
-                index,
-                ['latest', 'highCalories', 'lowCalories'][index]
-              )
-            }
+            onClick={() => handleSortButton(index, ['latest', 'highCalories', 'lowCalories'][index])}
             key={index}
             type="button"
           >

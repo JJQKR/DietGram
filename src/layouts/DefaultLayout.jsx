@@ -1,9 +1,10 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Outlet } from "react-router-dom";
-import NavBar from "../components/NavBar/NavBar";
-import { checkLogin } from "../redux/slices/user.slice";
-import { supabase } from "../supabase/supabase";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Outlet } from 'react-router-dom';
+import NavBar from '../components/NavBar/NavBar';
+import { initPostList } from '../redux/slices/posts.slice';
+import { checkLogin } from '../redux/slices/user.slice';
+import { supabase } from '../supabase/supabase';
 
 function DefaultLayout() {
   const dispatch = useDispatch();
@@ -14,7 +15,12 @@ function DefaultLayout() {
       const action = checkLogin(isSignIn);
       dispatch(action);
     };
-
+    const initPostData = async () => {
+      const data = await supabase.post.getPosts();
+      const action = initPostList(data);
+      dispatch(action);
+    };
+    initPostData();
     checkSignInStatus();
   }, []);
 
