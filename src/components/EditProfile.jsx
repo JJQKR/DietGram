@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { supabase } from "../supabase/supabase";
-import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { supabase } from '../../supabase/supabase';
+import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { getCurrentUser } from '../../redux/slices/user.slice';
 
 const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  max-width: 1440px;
+
   width: 100%;
   height: 100%;
-  background-color: red;
 `;
-
-// 한 줄에 있을 애들 끼리 div로 묶고
-// flex에서 gap사용: 버튼이 따닥 붙어 있으면 요소들 사이 간격 주기가 gap
-// rem단위/px단위
 
 const InnerContainer = styled.div`
   background-color: #e7e7e7;
@@ -49,6 +46,24 @@ const Right = styled.div`
   height: 50%;
   /* background-color: blue; */
 `;
+const Button = styled.button`
+  color: #343434;
+  background-color: #b1b1b1;
+
+  width: 40px;
+  height: 25px;
+  border-radius: 10px;
+  border: none;
+
+  font-size: 13px;
+  font-family: 'SUITE-Regular';
+  &:hover {
+    color: white;
+    background-color: #0084fd;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+`;
 
 const Image = styled.img`
   display: flex;
@@ -59,6 +74,23 @@ const Image = styled.img`
 `;
 
 const ImageButton = styled.button`
+  align-items: center;
+  color: #343434;
+  background-color: #b1b1b1;
+
+  width: 100px;
+  height: 25px;
+  border-radius: 10px;
+  border: none;
+
+  font-size: 13px;
+  font-family: 'SUITE-Regular';
+  &:hover {
+    color: white;
+    background-color: #0084fd;
+    transition: 0.3s;
+    cursor: pointer;
+  }
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -67,12 +99,13 @@ const ImageButton = styled.button`
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: right;
   gap: 30px;
 `;
-const NicknameButton = styled.button`
-  background-color: #0084fd;
-  color: white;
-  border-radius: 5px;
+
+const H3 = styled.h3`
+  font-size: 25px;
+  font-weight: 600;
 `;
 
 /**
@@ -86,48 +119,29 @@ const NicknameButton = styled.button`
  */
 
 export default function EditProfile() {
-  //###############################################################################################
-  const [initialProfile, setInitialProfile] = useState([
-    { key: uuidv4(), id: "ssyc@naver.com", nickname: "JJQKR" },
-    { key: uuidv4(), id: "yjco@naver.com", nickname: "문샤" },
-  ]);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
+  const [nickname, setNickname] = useState('');
 
-  const [nickname, setNickname] = useState("");
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const getUser = async () => {
-      const session = await supabase.login.getSession();
-      // 유저 정보
-      console.log(session.data);
-      // session.data.user => id, email, ...
-      setUser(session.data.user);
-    };
-    getUser();
-  }, []);
-
-  const handleEditProfile = async () => {
-    const newProfile = {
-      key,
-      id,
-      nickname,
-    };
-    setInitialProfile([...initialProfile, newProfile]);
-    // 닉네임을 변경하는 코드를 작성한다.
-    // await supabase.
-  };
-  //###############################################################################################
-
-  const [imageSrc, setImageSrc] = useState("image 18.png");
+  const [imageSrc, setImageSrc] = useState('image 18.png');
   //이거를 public 폴더에 넣으면 바로 쓸 수 있다
 
   //imageSrc 바꾸는 함수
   const changeImageSrc = () => {
-    setImageSrc("kakaoImage.jpg");
+    setImageSrc('kakaoImage.jpg');
     ///chnageImage 누르면 컴퓨터에서 가져온 새 이미지로 바뀌도록 src설정하기
   };
 
-  const [newPostImage, setNewPostImage] = useState("");
+  const [newPostImage, setNewPostImage] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await supabase.login.updateNickname(nickname);
+    // 로그인했다면 로그인 정보를 가져온다.
+    const session = await supabase.login.getSession();
+    // 로그인 정보를 리덕스에 저장한다.
+    dispatch(getCurrentUser(session?.data.session.user));
+  };
 
   const handleSaveImageFile = (event) => {
     const { files } = event.target;
@@ -161,51 +175,32 @@ export default function EditProfile() {
             {/* 아래꺼는 이미지 src 바로 바꾸는 로직이고 그냥 이미지 바로 띄워주고 있는거다 */}
             <div>
               <Image src={imageSrc} alt="Example" />
-              <ImageButton onClick={changeImageSrc}>
-                이미지 src 변경
-              </ImageButton>
+              <ImageButton onClick={changeImageSrc}>이미지 변경</ImageButton>
             </div>
             <div>
-              {/* <Emoji
-              symbol="👀"
-              label="eyes"
-              padding={"6px 0px 0px 0px"}
-              emojiSize={"20px"}
-            /> */}
-              이미지 미리보기
+              <img src={currentUser?.user_metadata.avatarUrl} alt="" width="200px" />
             </div>
             <label>
               <Image className="profileImage" src={newPostImage} img="img/" />
-              {/* * 못생긴 파일선택 버튼 자동생성, label태그로 감싸고 스타일 따로 준
-              뒤 input버튼은 안 보이게 */}
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleSaveImageFile}
-              />
+              <input type="file" accept="image/*" onChange={handleSaveImageFile} />
             </label>
             {/* 새로 업로드 하고 미리 보는 로직 */}
-            <ImageButton>이미지 제거</ImageButton>
+            <ButtonContainer>
+              <ImageButton>이미지 제거</ImageButton>
+            </ButtonContainer>
           </Left>
 
           {/* //############################################################################################### */}
           <Right>
             <>
-              현재 닉네임
-              <form onSubmit={handleEditProfile}>
-                {initialProfile.map((user) => {
-                  return (
-                    <div key={user.key}>
-                      <li>이메일 :{user.id}</li>
-                      <li>닉네임: {user.nickname}</li>
-                    </div>
-                  );
-                })}
-                <div key={user?.id}>
-                  <li>이메일 :{user?.id}</li>
-                  {/* TODO: 수정하기 */}
-                  {/* <li>닉네임: {user.raw_metadata.nickname}</li> */}
-                </div>
+              <form onSubmit={handleSubmit}>
+                <p>현재 닉네임</p>
+
+                <H3>{currentUser?.user_metadata.nickName}</H3>
+                {/* <div key={currentUser?.id}>
+                  <p>이메일:{currentUser?.email}</p>
+                  <p>닉네임: {currentUser?.user_metadata.nickName}</p>
+                </div> */}
                 <label htmlFor="nicknameInput"></label>
                 <input
                   className="nicknameInput"
@@ -213,11 +208,14 @@ export default function EditProfile() {
                   value={nickname}
                   onChange={(event) => setNickname(event.target.value)}
                 />
-                {/* 중복 검사 필요 */}
-                <NicknameButton type="submit">수정</NicknameButton>
+
+                <ButtonContainer>
+                  <Button type="submit" onClick={() => alert('중복 검사 만들어야지?')}>
+                    완료
+                  </Button>
+                </ButtonContainer>
               </form>
-              {/* //############################################################################################### */}
-              <NicknameButton>취소</NicknameButton>
+              <Button onClick={() => alert('홈으로 가게')}>취소</Button>
             </>
           </Right>
         </InnerContainer>
