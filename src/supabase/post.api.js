@@ -16,7 +16,7 @@ class Post {
   }
 
   async insertServerPost(formData) {
-    const { data } = await this.#client
+    const { data, error } = await this.#client
       .from('posts')
       .insert({
         menu: formData.menu,
@@ -24,11 +24,19 @@ class Post {
         kcal: formData.kcal,
         raiting: formData.rating,
         price: formData.price,
-        place: formData.place
+        place: formData.place,
+        date: formData.date
       })
       .select('*');
 
-    return data;
+    return { data, error };
+  }
+
+  async uploadServerImage(file) {
+    const { data, error } = await this.#client.storage
+      .from('dietgram-images')
+      .upload(`public/${crypto.randomUUID()}.png`, file);
+    return { data, error };
   }
 
   //NOTE  삭제가능한 거 찾아서 넣어줘야 그 것을 삭제하고 리턴해서 데이터를 deletePost에 넣어서 삭제해야함 ㅇㅇ

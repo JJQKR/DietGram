@@ -1,6 +1,10 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
+import { initFormData, changeValue } from '../redux/slices/form.slice';
+import { insertPost } from '../redux/slices/posts.slice';
+import { supabase } from '../supabase/supabase';
 
 export const Button = styled.button`
   border: none;
@@ -119,53 +123,51 @@ const FileSpan = styled.span`
 const reader = new FileReader();
 
 export default function UploadPost() {
-  const [posts, setPosts] = useState('');
-
   const [newPostImage, setNewPostImage] = useState('');
-  const [newMenu, setNewMenu] = useState('');
-  const [newDescription, setNewDescription] = useState('');
-  const [newDate, setNewDate] = useState(Date.now());
-  const [newCalories, setNewCalories] = useState('');
-  const [newRate, setNewRate] = useState('');
-  const [newPrice, setNewPrice] = useState('');
-  const [newPlace, setNewPlace] = useState('');
+  const dispatch = useDispatch();
+  const formData = useSelector((state) => state.formData);
+  console.log(formData);
 
-  const handleAddPost = () => {
-    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-    if (datePattern.test(newDate)) {
-      alert('날짜를 YYYY-MM-DD 형식으로 입력해주세요.');
-      //sweetAlert 쓰고 싶다
-      return;
+  const handleAddPost = async (event) => {
+    // const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+    // if (datePattern.test(newDate)) {
+    //   alert('날짜를 YYYY-MM-DD 형식으로 입력해주세요.');
+    //   //sweetAlert 쓰고 싶다
+    //   return;
+    // }
+
+    // const parsedPrice = parseInt(newPrice, 10);
+    // if (!newMenu || parsedPrice <= 0) {
+    //   alert('유효한 메뉴과 금액을 입력해주세요.');
+    //   return;
+    // }
+    event.preventDefault();
+
+    // const newPost = {
+    //   id: uuidv4(),
+    //   // newPostImage,
+    //   menu,
+    //   content,
+    //   date,
+    //   kcal,
+    //   rating,
+    //   price,
+    //   place
+    // };
+
+    try {
+      const { data, error } = await supabase.post.insertServerPost(formData);
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(data);
+      }
+    } catch (error) {
+      console.error(error);
     }
-
-    const parsedPrice = parseInt(newPrice, 10);
-    if (!newMenu || parsedPrice <= 0) {
-      alert('유효한 메뉴과 금액을 입력해주세요.');
-      return;
-    }
-
-    const newPost = {
-      id: uuidv4(),
-      // newPostImage,
-      newMenu,
-      newDescription,
-      newDate,
-      newCalories,
-      newRate,
-      newPrice,
-      newPlace
-    };
-
-    localStorage.setItem('새 게시물', JSON.stringify(newPost));
 
     // setNewPostImage('');
-    setNewMenu('');
-    setNewDescription('');
-    setNewDate('');
-    setNewCalories('');
-    setNewRate('');
-    setNewPrice('');
-    setNewPlace('');
+    // dietgram-images
   };
 
   const handleSaveImageFile = (event) => {
@@ -176,6 +178,19 @@ export default function UploadPost() {
     reader.onloadend = () => {
       setNewPostImage(reader.result);
     };
+  };
+
+  const uploadTest = async (file) => {
+    try {
+      const { data, error } = await supabase.post.uploadServerImage(file);
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -201,26 +216,23 @@ export default function UploadPost() {
                 id="postMenu"
                 width="440"
                 type="text"
-                value={newMenu}
-                onChange={(event) => setNewMenu(event.target.value)}
+                onChange={(e) => dispatch(changeValue({ type: 'menu', content: e.target.value }))}
               />
 
               <Label htmlFor="postDescription">내용</Label>
               <Textarea
                 id="postDescription"
-                value={newDescription}
-                onChange={(event) => setNewDescription(event.target.value)}
+                onChange={(e) => dispatch(changeValue({ type: 'content', content: e.target.value }))}
               ></Textarea>
               {/* 댓글에서 사용될 수도 있는 textarea와 스타일 맞추기  */}
 
-              <Label htmlFor="postDate">날짜</Label>
+              <Label htmlFor="ateDate">날짜</Label>
               <Input
-                id="postDate"
+                id="ateDate"
                 width="440"
-                type="number"
-                placeholder="YYYY-MM-DD"
-                value={newDate}
-                onChange={(event) => setNewDate(event.target.value)}
+                type="date"
+                placeholder="날짜"
+                onChange={(e) => dispatch(changeValue({ type: 'date', content: e.target.value }))}
               />
             </Left>
             <Right>
@@ -229,27 +241,28 @@ export default function UploadPost() {
               <Input
                 id="postCalories"
                 type="number"
-                value={newCalories}
-                onChange={(event) => setNewCalories(event.target.value)}
+                onChange={(e) => dispatch(changeValue({ type: 'kcal', content: e.target.value }))}
               />
 
               <Label htmlFor="postRate">평점</Label>
-              <Input id="postRate" type="number" value={newRate} onChange={(event) => setNewRate(event.target.value)} />
+              <Input
+                id="postRate"
+                type="number"
+                onChange={(e) => dispatch(changeValue({ type: 'rating', content: e.target.value }))}
+              />
 
               <Label htmlFor="postPrice">금액</Label>
               <Input
                 id="postPrice"
                 type="number"
-                value={newPrice}
-                onChange={(event) => setNewPrice(event.target.value)}
+                onChange={(e) => dispatch(changeValue({ type: 'price', content: e.target.value }))}
               />
 
               <Label htmlFor="postPlace">장소</Label>
               <Input
                 id="postPlace"
                 type="text"
-                value={newPlace}
-                onChange={(event) => setNewPlace(event.target.value)}
+                onChange={(e) => dispatch(changeValue({ type: 'place', content: e.target.value }))}
               />
               <Button type="submit">저장</Button>
             </Right>
