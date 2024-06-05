@@ -1,5 +1,11 @@
+import EditProfile from '../components/EditProfile';
+
 function ProfilePage() {
-  return <div>ProfilePage</div>;
+  return (
+    <>
+      <EditProfile></EditProfile>
+    </>
+  );
 }
 
 export default ProfilePage;

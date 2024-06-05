@@ -3,7 +3,7 @@ import { deletePost } from '../../redux/slices/posts.slice';
 import { supabase } from '../../supabase/supabase';
 import * as S from './DeleteModal.styled';
 
-const DeleteModal = ({ selectedPostId, setDeleteModalOpen }) => {
+const DeleteModal = ({ setDeleteModalOpen }) => {
   const dispatch = useDispatch();
 
   const selector = useSelector((state) => state.posts);
