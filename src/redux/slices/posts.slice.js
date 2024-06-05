@@ -10,16 +10,16 @@ const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    insertData: (state, action) => {
+    insertPost: (state, action) => {
       state.postList.push(action.payload[0]);
     },
 
-    deleteData: (state, action) => {
-      const idx = state.postList.findIndex((item) => item.id !== action.payload);
+    deletePost: (state, action) => {
+      const idx = state.postList.find((item) => item.id === action.payload.id);
       console.log(idx);
       state.postList.splice(idx, 1);
     },
-    updateData: (state, action) => {
+    updatePost: (state, action) => {
       const index = state.postList.findIndex((item) => item.id === action.payload.id);
       if (index !== -1) {
         state.postList[index] = action.payload;
@@ -41,6 +41,6 @@ const postsSlice = createSlice({
   }
 });
 
-export const { insertData, deleteData, updateData, initCommentList, initPostList, selectUser, selectPost } =
+export const { insertPost, deletePost, updatePost, initCommentList, initPostList, selectUser, selectPost } =
   postsSlice.actions;
 export default postsSlice.reducer;
