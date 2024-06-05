@@ -12,6 +12,7 @@ const DetailPost = () => {
 
   useEffect(() => {
     const getCurrentUserId = async () => {
+      console.log('totalUsers', totalUsers);
       const currentUserInfo = totalUsers.find((user) => user.user_id === postUserId);
       const action = selectUserInfo(currentUserInfo);
       dispatch(action);

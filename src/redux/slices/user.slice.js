@@ -22,7 +22,7 @@ const userSlice = createSlice({
       state.selectedUserInfo = action.payload;
     },
     setTotalUserInfo: (state, action) => {
-      state.totalUserInfo = action.payload.like;
+      state.totalUserInfo = action.payload;
     },
 
     // NOTE post.api.js 의 isLike 함수의 반환값인 배열을 사용
