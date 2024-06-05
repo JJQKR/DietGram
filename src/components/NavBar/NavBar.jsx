@@ -36,7 +36,7 @@ const NavBar = () => {
     }
 
     return (
-      <Link to="/login">
+      <Link to="/login" style={{ textDecoration: 'none' }}>
         <S.Menu>LogIn</S.Menu>
       </Link>
     );

@@ -7,8 +7,8 @@ import LoginPage from '../pages/LoginPage';
 import MyPostPage from '../pages/MyPostPage';
 import ProfilePage from '../pages/ProfilePage';
 import SignUpPage from '../pages/SignUpPage';
-import UpdatePage from '../pages/UpdatePage';
 import UploadPage from '../pages/UploadPage';
+import EditPage from '../pages/EditPage';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
       { path: '/login', element: <LoginPage /> },
       { path: '/profile/:profileId', element: <ProfilePage /> },
       { path: '/signup', element: <SignUpPage /> },
-      { path: '/update', element: <UpdatePage /> },
+      { path: '/edit/:editId', element: <EditPage /> },
       { path: '/upload', element: <UploadPage /> },
       { path: '/test', element: <Test /> }
     ]
