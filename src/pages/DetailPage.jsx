@@ -1,4 +1,5 @@
-import DetailPost from "../components/DetailPost/DetailPost";
+import { useParams } from 'react-router-dom';
+import DetailPost from '../components/DetailPost/DetailPost';
 
 const DetailPage = () => {
   return (
