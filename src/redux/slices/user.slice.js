@@ -4,6 +4,7 @@ const initialState = {
   currentUser: null,
   isLogin: false,
   myLikes: [],
+  totalUserInfo: [],
   selectedUserInfo: {}
 };
 
@@ -20,6 +21,9 @@ const userSlice = createSlice({
     selectUserInfo: (state, action) => {
       state.selectedUserInfo = action.payload;
     },
+    setTotalUserInfo: (state, action) => {
+      state.totalUserInfo = action.payload;
+    },
 
     // NOTE post.api.js 의 isLike 함수의 반환값인 배열을 사용
     // const data = await supabase.post.isLike(7);
@@ -34,5 +38,5 @@ const userSlice = createSlice({
   }
 });
 
-export const { getCurrentUser, checkLogin, setMyLikes, selectUserInfo } = userSlice.actions;
+export const { getCurrentUser, checkLogin, setMyLikes, selectUserInfo, setTotalUserInfo } = userSlice.actions;
 export default userSlice.reducer;
