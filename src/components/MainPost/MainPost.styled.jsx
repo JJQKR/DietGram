@@ -22,6 +22,7 @@ export const PostList = styled.div`
 export const UserData = styled.div`
   display: flex;
   flex-direction: row;
+  cursor: pointer;
 `;
 
 export const UserImage = styled.img`
@@ -49,4 +50,5 @@ export const PostImage = styled.img`
   height: 300px;
   background-size: cover;
   background-position: center;
+  cursor: pointer;
 `;

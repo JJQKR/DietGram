@@ -5,6 +5,7 @@ import NavBar from '../components/NavBar/NavBar';
 import { initPostList } from '../redux/slices/posts.slice';
 import { checkLogin, setTotalUserInfo } from '../redux/slices/user.slice';
 import { supabase } from '../supabase/supabase';
+import { initCommentList } from '../redux/slices/comments.slice';
 
 function DefaultLayout() {
   const dispatch = useDispatch();
@@ -12,6 +13,11 @@ function DefaultLayout() {
     const initUsersData = async () => {
       const users = await supabase.post.getUsers();
       const action = setTotalUserInfo(users);
+      dispatch(action);
+    };
+    const initCommentsData = async () => {
+      const comments = await supabase.comment.getComments();
+      const action = initCommentList(comments);
       dispatch(action);
     };
     const checkSignInStatus = async () => {
@@ -27,6 +33,7 @@ function DefaultLayout() {
     initUsersData();
     initPostData();
     checkSignInStatus();
+    initCommentsData();
   }, []);
 
   return (

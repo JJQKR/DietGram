@@ -40,7 +40,6 @@ const MainPost = () => {
               onClick={() => {
                 navigate(`/detail/${post.id}`);
                 handlePostClick(post.user_id, post.id);
-                console.log('post', post);
               }}
             />
           </Post>
