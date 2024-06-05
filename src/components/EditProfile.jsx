@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { supabase } from '../supabase/supabase';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
 import { getCurrentUser } from '../redux/slices/user.slice';
-
+import { supabase } from '../supabase/supabase';
 
 const Container = styled.div`
   display: flex;
@@ -120,11 +118,9 @@ const H3 = styled.h3`
  */
 
 export default function EditProfile() {
-
   const currentUser = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState('');
-
 
   const [imageSrc, setImageSrc] = useState('image 18.png');
   //이거를 public 폴더에 넣으면 바로 쓸 수 있다
@@ -136,7 +132,7 @@ export default function EditProfile() {
   };
 
   const [newPostImage, setNewPostImage] = useState('');
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await supabase.login.updateNickname(nickname);
@@ -146,11 +142,9 @@ export default function EditProfile() {
     dispatch(getCurrentUser(session?.data.session.user));
   };
 
-
   const handleSaveImageFile = (event) => {
     const { files } = event.target;
     const uploadFile = files[0];
-    console.log(uploadFile);
     //File
     // {name: 'dfdf.png',
     // lastModified:1717125592134,
@@ -162,7 +156,6 @@ export default function EditProfile() {
     const reader = new FileReader();
     reader.readAsDataURL(uploadFile);
     reader.onloadend = () => {
-      console.log(reader.result);
       //data:image/png;base64,
       //iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAYAAAB5fY51AAAACXBIWXMAAAsTAA
       //ALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAACJKSURBVHgB7d0NcFTluQfwJ/uRpBScOIU
@@ -181,7 +174,6 @@ export default function EditProfile() {
               <Image src={imageSrc} alt="Example" />
 
               <ImageButton onClick={changeImageSrc}>이미지 변경</ImageButton>
-
             </div>
             <div>
               <img src={currentUser?.user_metadata.avatarUrl} alt="" width="200px" />
