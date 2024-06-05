@@ -1,16 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Post, PostImage, PostList, PostTimeCalorie, UserData, UserImage, UserName } from './MainPost.styled';
 import { useNavigate } from 'react-router-dom';
-import { selectUser } from '../../redux/slices/posts.slice';
+import { selectPost, selectUser } from '../../redux/slices/posts.slice';
+import { Post, PostImage, PostList, PostTimeCalorie, UserData, UserImage, UserName } from './MainPost.styled';
 
 const MainPost = () => {
   const data = useSelector((state) => state.activeIndex.data);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const currentUserId = useSelector((state) => state.posts);
 
-  const handlePostClick = (userid) => {
-    const action = selectUser(userid);
+  const handlePostClick = (userId, postId) => {
+    const selectPostAction = selectPost(postId);
+    const action = selectUser(userId);
+    dispatch(selectPostAction);
     dispatch(action);
   };
 
@@ -25,7 +26,8 @@ const MainPost = () => {
           <Post
             onClick={() => {
               navigate(`/detail/${post.id}`);
-              handlePostClick(post.user_id);
+              handlePostClick(post.user_id, post.id);
+              console.log('post', post);
             }}
             key={post.id}
           >
