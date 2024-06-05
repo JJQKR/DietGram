@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { initFormData, changeValue } from '../redux/slices/form.slice';
 import { insertPost } from '../redux/slices/posts.slice';
+import { supabase } from '../supabase/supabase';
 
 export const Button = styled.button`
   border: none;
@@ -127,7 +128,7 @@ export default function UploadPost() {
   const formData = useSelector((state) => state.formData);
   console.log(formData);
 
-  const handleAddPost = (event) => {
+  const handleAddPost = async (event) => {
     // const datePattern = /^\d{4}-\d{2}-\d{2}$/;
     // if (datePattern.test(newDate)) {
     //   alert('날짜를 YYYY-MM-DD 형식으로 입력해주세요.');
@@ -141,34 +142,56 @@ export default function UploadPost() {
     //   return;
     // }
     event.preventDefault();
-    const { menu, content, date, kcal, rating, price, place } = formData;
 
-    const newPost = {
-      id: uuidv4(),
-      // newPostImage,
-      menu,
-      content,
-      date,
-      kcal,
-      rating,
-      price,
-      place
-    };
-    console.log(newPost);
+    // const newPost = {
+    //   id: uuidv4(),
+    //   // newPostImage,
+    //   menu,
+    //   content,
+    //   date,
+    //   kcal,
+    //   rating,
+    //   price,
+    //   place
+    // };
+
+    try {
+      const { data, error } = await supabase.post.insertServerPost(formData);
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
 
     // setNewPostImage('');
+    // dietgram-images
   };
 
   const handleSaveImageFile = (event) => {
     const { files } = event.target;
     const uploadFile = files[0];
-    console.log(uploadFile);
     const reader = new FileReader();
     reader.readAsDataURL(uploadFile);
     reader.onloadend = () => {
       console.log(reader.result);
       setNewPostImage(reader.result);
     };
+  };
+
+  const uploadTest = async (file) => {
+    try {
+      const { data, error } = await supabase.post.uploadServerImage(file);
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

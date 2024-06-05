@@ -12,6 +12,7 @@ const initializeFormData = (state) => {
   state.nickName = '';
   state.comment = '';
   state.date = '';
+  state.imageUrl = '';
 };
 
 const initialState = {
@@ -25,7 +26,8 @@ const initialState = {
   email: '',
   password: '',
   nickName: '',
-  comment: ''
+  comment: '',
+  imageUrl: ''
 };
 
 const formSlice = createSlice({
