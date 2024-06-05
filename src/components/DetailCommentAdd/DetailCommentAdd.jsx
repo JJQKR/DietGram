@@ -12,7 +12,6 @@ const DetailCommentAdd = () => {
   const curPostId = useSelector((state) => state.posts.currentPostId);
 
   // const commentList = useSelector((state) => state.comments);
-  // console.log('commentList', commentList);
 
   const completeChange = async () => {
     if (isLogin === false) return alert('로그인 해주세요.');
