@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { supabase } from '../../supabase/supabase';
+import { supabase } from '../supabase/supabase';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { getCurrentUser } from '../../redux/slices/user.slice';
+import { getCurrentUser } from '../redux/slices/user.slice';
 
 const Container = styled.div`
   display: flex;
