@@ -23,23 +23,29 @@ const Postlist = () => {
   const userId = useSelector((state) => state.user.currentUser?.id); // 로그인 한 계정의 id
   const currentUserId = useSelector((state) => state.posts.currentUserId); // 현재 postlist에서 뿌려주는 post의 유저 id
   const myPostList = rawData.filter((data) => data.user_id === currentUserId);
-  const [currentUserData, setCurrentUserData] = useState([]);
+  const totalUser = useSelector((state) => state.user.totalUserInfo.data);
+  console.log('totalUser =>', totalUser);
 
-  useEffect(() => {
-    const 유저가져오기 = async () => {
-      const { data } = await supabase.post.getUsers();
-      setCurrentUserData(data);
-    };
-    유저가져오기();
-  }, []);
+  const [clickedPostId, setClickedPostId] = useState('');
 
-  const currentUserInfo = currentUserData.find((user) => user.user_id === currentUserId);
+  // const [currentUserData, setCurrentUserData] = useState([]);
+  // useEffect(() => {
+  //   const getUserData = async () => {
+  //     const { data } = await supabase.post.getUsers();
+  //     setCurrentUserData(data);
+  //   };
+  //   getUserData();
+  // }, []);
+  // console.log('currentUserData=>', currentUserData);
+
+  const currentUserInfo = totalUser.find((user) => user.user_id === currentUserId);
   console.log(currentUserInfo);
-  console.log('currentUserData =>', currentUserData);
+  // console.log('currentUserData =>', currentUserData);
   console.log('currentUserId =>', currentUserId);
   //console.log("userId =>", currentUserId)
 
   const handleDeleteButtonClick = (id) => {
+    setClickedPostId(id);
     const action = selectPost(id);
     dispatch(action);
     setDeleteModalOpen(true);
@@ -55,35 +61,41 @@ const Postlist = () => {
     {
       return postlist.map((data) => {
         return (
-          <S.Post key={data.id}>
-            <S.ProfileBox>
-              <S.Nickname
-                onClick={() => {
-                  const action = selectUser(data.user_id);
-                  dispatch(action);
-                }}
-              >
-                {/* {currentUserInfo.nickName} */}
-              </S.Nickname>
-            </S.ProfileBox>
-            <S.ContextBox>
-              <S.TopBox>
-                <S.Fooditem>{data.menu}</S.Fooditem>
-                <S.FoodAverage>★ {data.rating}</S.FoodAverage>
-              </S.TopBox>
-              <S.MiddleBox>
-                <S.FoodKcal>{data.kcal} </S.FoodKcal>
-                <S.ButtonBox>
-                  <S.Button dataUserId={data.user_id} userId={userId} onClick={() => handleEditButtonClick(data.id)}>
-                    수정
-                  </S.Button>
-                  <S.Button dataUserId={data.user_id} userId={userId} onClick={() => handleDeleteButtonClick(data.id)}>
-                    삭제
-                  </S.Button>
-                </S.ButtonBox>
-              </S.MiddleBox>
-            </S.ContextBox>
-          </S.Post>
+          <>
+            <S.Post key={data.id}>
+              <S.ProfileBox>
+                <S.Nickname
+                  onClick={() => {
+                    const action = selectUser(data.user_id);
+                    dispatch(action);
+                  }}
+                >
+                  {currentUserInfo.nickName}
+                </S.Nickname>
+              </S.ProfileBox>
+              <S.ContextBox>
+                <S.TopBox>
+                  <S.Fooditem>{data.menu}</S.Fooditem>
+                  <S.FoodAverage>★ {data.rating}</S.FoodAverage>
+                </S.TopBox>
+                <S.MiddleBox>
+                  <S.FoodKcal>{data.kcal} </S.FoodKcal>
+                  <S.ButtonBox>
+                    <S.Button dataUserId={data.user_id} userId={userId} onClick={() => handleEditButtonClick(data.id)}>
+                      수정
+                    </S.Button>
+                    <S.Button
+                      dataUserId={data.user_id}
+                      userId={userId}
+                      onClick={() => handleDeleteButtonClick(data.id)}
+                    >
+                      삭제
+                    </S.Button>
+                  </S.ButtonBox>
+                </S.MiddleBox>
+              </S.ContextBox>
+            </S.Post>
+          </>
         );
       });
     }
@@ -92,7 +104,9 @@ const Postlist = () => {
   return (
     <>
       <S.PostsNumberBox>
-        <S.PostsNumber>{/* {currentUserInfo.nickName} 님의 포스트 {myPostList.length}건 */}</S.PostsNumber>
+        <S.PostsNumber>
+          {currentUserInfo.nickName} 님의 포스트 {myPostList.length}건
+        </S.PostsNumber>
       </S.PostsNumberBox>
       <S.Boxes>
         {showPosts(myPostList)}
@@ -105,7 +119,7 @@ const Postlist = () => {
               }
             }}
           >
-            <DeleteModal setDeleteModalOpen={setDeleteModalOpen} />
+            <DeleteModal setDeleteModalOpen={setDeleteModalOpen} clickedPostId={clickedPostId} />
           </Background>
         )}
       </S.Boxes>
