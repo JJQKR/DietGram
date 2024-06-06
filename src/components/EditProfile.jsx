@@ -20,17 +20,8 @@ export default function EditProfile() {
   useEffect(() => {
     dispatch(changeValue({ type: "nickName", content: currentNickName }));
     dispatch(changeValue({ type: "imageUrl", content: currentProfileImage }));
-  }, [])
+  }, []);
 
-  const state = useSelector(state => state.formData);
-  console.log(state);
-
-  // const changeImg = async () => {
-  //   const { data } = await supabase.auth.updateUser({
-  //     data: { avatarUrl: imgUrl }
-  //   });
-  //   console.log(data);
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const postImageUrl = await uploadImageFileToStorage(postImage);
@@ -40,11 +31,12 @@ export default function EditProfile() {
     };
     dispatch(getCurrentUser(userData));
     await supabase.login.changeUserInfo(currentUserId, sliceNickname, postImageUrl);
+    navigate('/');
   };
 
   const uploadImageFileToStorage = async (file) => {
     if (!file) {
-      return currentProfileImage;
+      return newImageFile;
     }
     const imageUrl = await supabase.login.uploadServerProfileImage(file);
     try {
