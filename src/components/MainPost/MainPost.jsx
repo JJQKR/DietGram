@@ -6,7 +6,6 @@ import { Post, PostImage, PostList, PostTimeCalorie, UserData, UserImage, UserNa
 const MainPost = () => {
   const data = useSelector((state) => state.activeIndex.data);
   const userData = useSelector((state) => state.user?.totalUserInfo);
-  console.log('userData', userData);
   const getNickName = (userId) => {
     const curUserData = userData.data.find((item) => item.user_id === userId);
     return curUserData?.nickName;
