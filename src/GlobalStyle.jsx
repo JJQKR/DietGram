@@ -7,6 +7,9 @@ ${reset}
 body {
   width: 100%;
   font-family: 'SUITE-Regular';
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 `;
 
