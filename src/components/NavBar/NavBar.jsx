@@ -10,7 +10,6 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.user.isLogin);
   const loggedinUser = useSelector((state) => state.user.currentUser);
-  console.log(loggedinUser);
 
   useEffect(() => {
     const checkIsLogin = async () => {
