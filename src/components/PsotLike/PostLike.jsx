@@ -10,9 +10,10 @@ const PostLike = () => {
   const curPostUser = useSelector((state) => state.user?.currentUser);
   const myLikes = useSelector((state) => state.user.myLikes);
   const likes = useSelector((state) => state.posts.likes);
+  const isLogin = useSelector((state) => state.user.isLogin);
 
   const handleLikeClick = async (id, userId) => {
-    if (curPostUser === null) return alert('로그인을 해주세요.');
+    if (isLogin === false) return alert('로그인을 해주세요.');
     const data = await supabase.post.isLike(id, userId);
     const clickLikeAction = clickedPostLikes(data.like.includes(curPost));
     const action = setMyLikes(data);
