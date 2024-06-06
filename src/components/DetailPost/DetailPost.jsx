@@ -14,7 +14,7 @@ const DetailPost = () => {
   const posts = useSelector((state) => state.posts.postList);
   useEffect(() => {
     const curPost = posts.find((item) => item.id === postId);
-    const action = initPostLikes(curPost.like);
+    const action = initPostLikes(curPost?.like);
     dispatch(action);
   }, []);
   useEffect(() => {

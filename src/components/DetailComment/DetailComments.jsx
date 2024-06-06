@@ -17,8 +17,9 @@ const DetailComments = () => {
   const dispatch = useDispatch();
   const commentList = useSelector((state) => state.comments.commentList);
   const curPostId = useSelector((state) => state.posts.currentPostId);
-  // const currentUser = useSelector((state) => state.user.currentUser?.user_metadata);
+  const currentUser = useSelector((state) => state.user.currentUser);
   const curComments = commentList.filter((comments) => comments.post_id === curPostId);
+  const hidden = curComments.map((comment) => currentUser?.id === comment?.user_id);
 
   const commentEdit = async (id) => {
     const comment = prompt('수정 댓글을 입력해주세요.');
@@ -35,7 +36,7 @@ const DetailComments = () => {
 
   return (
     <DetailPostUserComment>
-      {curComments.map((comments) => {
+      {curComments.map((comments, idx) => {
         return (
           <DetailCommentUserBox key={comments.id}>
             <DetailCommentUserName>
@@ -49,8 +50,12 @@ const DetailComments = () => {
               </PostGuest>
             </DetailCommentUserName>
             <CommentButtonBox>
-              <CommentButton onClick={() => commentEdit(comments.id)}>수정</CommentButton>
-              <CommentButton onClick={() => commentDelete(comments.id)}>삭제</CommentButton>
+              <CommentButton $hidden={hidden[idx]} onClick={() => commentEdit(comments.id)}>
+                수정
+              </CommentButton>
+              <CommentButton $hidden={hidden[idx]} onClick={() => commentDelete(comments.id)}>
+                삭제
+              </CommentButton>
             </CommentButtonBox>
           </DetailCommentUserBox>
         );
