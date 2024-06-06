@@ -6,13 +6,15 @@ export const ButtonList = styled.button`
   margin: 0 auto;
   position: relative;
   left: 380px;
+  padding-top: 10px;
   border: none;
   background-color: transparent;
 `;
 
 export const Button = styled.button`
   height: 30px;
-  font-size: 18px;
+  font-size: 20px;
+  font-family: 'SUITE-Regular';
   background-color: transparent;
   border: none;
   cursor: pointer;
