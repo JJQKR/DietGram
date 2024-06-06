@@ -1,10 +1,10 @@
-import { useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { changeValue } from '../redux/slices/form.slice';
-import { getCurrentUser } from '../redux/slices/user.slice';
-import { supabase } from '../supabase/supabase';
+import { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { changeValue } from "../redux/slices/form.slice";
+import { getCurrentUser } from "../redux/slices/user.slice";
+import { supabase } from "../supabase/supabase";
 const Container = styled.div`
   display: flex;
   flex-direction: row;
@@ -49,7 +49,7 @@ const Button = styled.button`
   border-radius: 10px;
   border: none;
   font-size: 13px;
-  font-family: 'SUITE-Regular';
+  font-family: "SUITE-Regular";
   &:hover {
     color: white;
     background-color: #0084fd;
@@ -73,7 +73,7 @@ const ImageButton = styled.button`
   border: none;
 
   font-size: 13px;
-  font-family: 'SUITE-Regular';
+  font-family: "SUITE-Regular";
   &:hover {
     color: white;
     background-color: #0084fd;
@@ -143,7 +143,7 @@ export default function EditProfile() {
   const sliceNickname = useSelector((state) => state.formData.nickName);
   const currentUser = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
-  const [newPostImage, setNewPostImage] = useState('');
+  const [newPostImage, setNewPostImage] = useState("");
   // const changeImg = async () => {
   //   const { data } = await supabase.auth.updateUser({
   //     data: { avatarUrl: imgUrl }
@@ -154,7 +154,7 @@ export default function EditProfile() {
     e.preventDefault();
     const userData = {
       ...currentUser,
-      user_metadata: { ...currentUser.user_metadata, nickName: sliceNickname }
+      user_metadata: { ...currentUser.user_metadata, nickName: sliceNickname },
     };
     dispatch(getCurrentUser(userData));
     await supabase.login.changeNickName(sliceNickname);
@@ -176,17 +176,28 @@ export default function EditProfile() {
     fileInputRef.current.click();
   };
 
-  console.log('currentUser?.user_metadata.avatarUrl', currentUser?.user_metadata.avatarUrl);
+  console.log(
+    "currentUser?.user_metadata.avatarUrl",
+    currentUser?.user_metadata.avatarUrl
+  );
 
   return (
     <>
       <Container>
         <InnerContainer>
           <Left>
-            <Image className="profileImage" src={`${currentUser?.user_metadata.avatarUrl}`} img="img/" />
+            <Image
+              className="profileImage"
+              src={`${currentUser?.user_metadata.avatarUrl}`}
+              img="img/"
+            />
             <ButtonContainer>
               <ImageButton>이미지 제거</ImageButton>
-              <input type="file" accept="image/*" onChange={handleSaveImageFile} />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleSaveImageFile}
+              />
             </ButtonContainer>
           </Left>
           <Right>
@@ -198,14 +209,17 @@ export default function EditProfile() {
                 type="text"
                 value={sliceNickname}
                 onChange={(event) => {
-                  const action = changeValue({ type: 'nickName', content: event.target.value });
+                  const action = changeValue({
+                    type: "nickName",
+                    content: event.target.value,
+                  });
                   dispatch(action);
                 }}
               />
 
               <ButtonContainer>
                 <Button type="submit">완료</Button>
-                <Button onClick={() => navigate('/')}>취소</Button>
+                <Button onClick={() => navigate("/")}>취소</Button>
               </ButtonContainer>
             </Form>
           </Right>
