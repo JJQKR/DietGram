@@ -45,6 +45,7 @@ export const PostComment = styled.p`
 
 export const CommentButtonBox = styled.div`
   max-width: 71px;
+  display: flex;
   width: 100%;
 `;
 

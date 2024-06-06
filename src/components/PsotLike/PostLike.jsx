@@ -12,7 +12,7 @@ const PostLike = () => {
   const likes = useSelector((state) => state.posts.likes);
 
   const handleLikeClick = async (id, userId) => {
-    // if (currentUserLogin === false) return alert('로그인을 해주세요.');
+    if (curPostUser === null) return alert('로그인을 해주세요.');
     const data = await supabase.post.isLike(id, userId);
     const clickLikeAction = clickedPostLikes(data.like.includes(curPost));
     const action = setMyLikes(data);
@@ -27,7 +27,7 @@ const PostLike = () => {
       <PostLikeButton onClick={() => handleLikeClick(curPost, curPostUser?.id)}>
         {myLikes.includes(curPost) ? '♥︎' : '♡'}
       </PostLikeButton>
-      <span>{likes}</span>
+      <span>좋아요 {likes}개</span>
     </PostLikeBox>
   );
 };
