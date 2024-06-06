@@ -23,13 +23,17 @@ const Postlist = () => {
 
   const currentUserInfo = totalUser.find((user) => user.user_id === currentUserId);
 
+  const handleFoodFileClick = (id) => {
+    dispatch(selectPost(id));
+    navigate(`/detail/${id}`);
+  };
+
   const handleDeleteButtonClick = (id) => {
     setClickedPostId(id);
     const action = selectPost(id);
     dispatch(action);
     setDeleteModalOpen(true);
   };
-
   const handleEditButtonClick = (id) => {
     const action = selectPost(id);
     dispatch(action);
@@ -54,13 +58,13 @@ const Postlist = () => {
                 </S.Nickname>
               </S.ProfileBox>
               <S.ContextBox>
-                <img style={{ width: '100%', height: '300px' }} src={data.img_url} />
+                <S.FoodFile src={data.img_url} onClick={() => handleFoodFileClick(data.id)} />
                 <S.TopBox>
                   <S.Fooditem>{data.menu}</S.Fooditem>
-                  <S.FoodAverage>★ {data.rating}</S.FoodAverage>
+                  <S.FoodAverage>★ {data.raiting}</S.FoodAverage>
                 </S.TopBox>
                 <S.MiddleBox>
-                  <S.FoodKcal>{data.kcal} </S.FoodKcal>
+                  <S.FoodKcal>{data.kcal} kcal </S.FoodKcal>
                   <S.ButtonBox>
                     <S.Button dataUserId={data.user_id} userId={userId} onClick={() => handleEditButtonClick(data.id)}>
                       수정
