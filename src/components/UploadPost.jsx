@@ -1,24 +1,16 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { v4 as uuidv4 } from 'uuid';
 import { initFormData, changeValue } from '../redux/slices/form.slice';
-import { insertPost } from '../redux/slices/posts.slice';
+import { initPostList } from '../redux/slices/posts.slice';
 import { supabase } from '../supabase/supabase';
+import { useNavigate } from 'react-router-dom';
 
 export const Button = styled.button`
   border: none;
   border-radius: 10px;
   background-color: green;
 `;
-// export const Section = styled.section`
-//   display: flex;
-//   justify-content: space-between;
-//   margin: 20%;
-//   border: black 1px solid;
-//   border-radius: 10%;
-//   background-color: pink;
-// `;
 
 export const ImageLabel = styled.label`
   margin: 5px 0 20px 0;
@@ -120,40 +112,26 @@ const FileSpan = styled.span`
   padding: 5px;
 `;
 
-const reader = new FileReader();
-
 export default function UploadPost() {
   const [newPostImage, setNewPostImage] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const formData = useSelector((state) => state.formData);
   console.log(formData);
 
   const handleAddPost = async (event) => {
-    // const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-    // if (datePattern.test(newDate)) {
-    //   alert('날짜를 YYYY-MM-DD 형식으로 입력해주세요.');
-    //   //sweetAlert 쓰고 싶다
-    //   return;
-    // }
-
-    // const parsedPrice = parseInt(newPrice, 10);
-    // if (!newMenu || parsedPrice <= 0) {
-    //   alert('유효한 메뉴과 금액을 입력해주세요.');
-    //   return;
-    // }
     event.preventDefault();
 
-    // const newPost = {
-    //   id: uuidv4(),
-    //   // newPostImage,
-    //   menu,
-    //   content,
-    //   date,
-    //   kcal,
-    //   rating,
-    //   price,
-    //   place
-    // };
+    // 유효성 검사
+    const { menu, content, date, kcal, rating, price, place } = formData;
+
+    if (!menu.trim()) return alert('메뉴를 입력해주세요!');
+    if (!content.trim()) return alert('내용을 입력해주세요!');
+    if (!date.trim()) return alert('날짜를 입력해주세요!');
+    if (+kcal < 0) return alert('유효한 칼로리를 입력해주세요!');
+    if (+rating < 0 || +rating > 5) return alert('평점을 0점 이상, 5점 이하로 입력해주세요!');
+    if (+price < 0) return alert('유효한 금액을 입력해주세요!');
+    if (!place.trim()) return alert('장소를 입력해주세요!');
 
     try {
       const { data, error } = await supabase.post.insertServerPost(formData);
@@ -161,6 +139,10 @@ export default function UploadPost() {
         console.error(error);
       } else {
         console.log(data);
+        navigate('/mypost');
+        const posts = await supabase.post.getPosts();
+        dispatch(initPostList(posts));
+        dispatch(initFormData()); // 폼초기화
       }
     } catch (error) {
       console.error(error);
@@ -178,19 +160,6 @@ export default function UploadPost() {
     reader.onloadend = () => {
       setNewPostImage(reader.result);
     };
-  };
-
-  const uploadTest = async (file) => {
-    try {
-      const { data, error } = await supabase.post.uploadServerImage(file);
-      if (error) {
-        console.error(error);
-      } else {
-        console.log(data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   return (
