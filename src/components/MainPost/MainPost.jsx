@@ -5,6 +5,10 @@ import { Post, PostImage, PostList, PostTimeCalorie, UserData, UserImage, UserNa
 
 const MainPost = () => {
   const data = useSelector((state) => state.activeIndex.data);
+  // const postList = useSelector((state) => state.posts.postList);
+  // const totalUser = useSelector((state) => state.user.totalUserInfo);
+  // console.log(postList);
+  // console.log(totalUser);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
