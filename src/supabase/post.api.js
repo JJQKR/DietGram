@@ -11,8 +11,8 @@ class Post {
   }
 
   async getUsers() {
-    const { data } = await this.#client.from('users').select();
-    return data;
+    const { data, error } = await this.#client.from('users').select();
+    return { data, error };
   }
 
   async insertServerPost(formData) {
@@ -25,7 +25,8 @@ class Post {
         raiting: formData.rating,
         price: formData.price,
         place: formData.place,
-        date: formData.date
+        date: formData.date,
+        img_url: formData.imageUrl
       })
       .select('*');
 
@@ -35,8 +36,16 @@ class Post {
   async uploadServerImage(file) {
     const { data, error } = await this.#client.storage
       .from('dietgram-images')
-      .upload(`public/${crypto.randomUUID()}.png`, file);
-    return { data, error };
+      .upload(`post-images/${crypto.randomUUID()}.png`, file);
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    const { data: imageData } = await this.#client.storage.from('dietgram-images').getPublicUrl(data.path);
+
+    return imageData.publicUrl;
   }
 
   //NOTE  삭제가능한 거 찾아서 넣어줘야 그 것을 삭제하고 리턴해서 데이터를 deletePost에 넣어서 삭제해야함 ㅇㅇ
@@ -56,10 +65,11 @@ class Post {
         kcal: formData.kcal,
         raiting: formData.rating,
         price: formData.price,
-        place: formData.place
+        place: formData.place,
+        img_url: formData.imageUrl
       })
       .eq('id', id)
-      .select();
+      .select('*');
 
     return { data, error };
   }

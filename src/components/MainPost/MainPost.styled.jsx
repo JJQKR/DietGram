@@ -6,9 +6,10 @@ export const Post = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #d9d9d9;
   padding: 15px;
-  border-radius: 10px;
+  border-radius: 20px;
+  background-color: #f4f4f4;
+  box-shadow: 0px 0px 5px #b5b5b5;
 `;
 
 export const PostList = styled.div`
@@ -36,19 +37,24 @@ export const UserImage = styled.img`
 export const PostTimeCalorie = styled.div`
   font-size: 15px;
   margin-top: 10px;
+  margin-right: 5px;
+  line-height: 120%;
   display: flex;
   flex-direction: column;
 `;
 
 export const UserName = styled.p`
-  margin-top: 30px;
-  padding-left: 10px;
+  margin-top: 17px;
+  padding-left: 12px;
+  font-size: 18px;
 `;
 
 export const PostImage = styled.img`
   width: 100%;
   height: 300px;
+  border-radius: 10px;
   background-size: cover;
   background-position: center;
+  box-shadow: 0px 0px 2px #b5b5b5;
   cursor: pointer;
 `;
