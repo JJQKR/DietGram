@@ -17,6 +17,7 @@ function DefaultLayout() {
       const action = setTotalUserInfo(users);
       dispatch(action);
     };
+
     const initCommentsData = async () => {
       const comments = await supabase.comment.getComments();
       const action = initCommentList(comments);

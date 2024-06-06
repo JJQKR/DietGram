@@ -59,7 +59,7 @@ class Post {
         place: formData.place
       })
       .eq('id', id)
-      .select();
+      .select('*');
 
     return { data, error };
   }

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DeleteModal from '../../components/DeleteModal/DeleteModal';
 import { Background } from '../../components/DeleteModal/DeleteModal.styled';
-import { selectPost, selectUser } from '../../redux/slices/posts.slice';
+import { initPostList, selectPost, selectUser } from '../../redux/slices/posts.slice';
 import * as S from './Postlist.styled';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase/supabase';
@@ -19,7 +19,16 @@ const Postlist = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const modalBackground = useRef(null);
 
+  // useEffect(() => {
+  //   const getPostsData = async () => {
+  //     const { data } = await supabase.post.getPosts();
+  //     dispatch(initPostList(data)); // postlist 초기화
+  //   };
+  //   getPostsData();
+  // }, []);
+
   const rawData = useSelector((state) => state.posts.postList);
+  console.log(rawData);
   const userId = useSelector((state) => state.user.currentUser?.id); // 로그인 한 계정의 id
   const currentUserId = useSelector((state) => state.posts.currentUserId); // 현재 postlist에서 뿌려주는 post의 유저 id
   const myPostList = rawData.filter((data) => data.user_id === currentUserId);
@@ -28,15 +37,9 @@ const Postlist = () => {
 
   const [clickedPostId, setClickedPostId] = useState('');
 
-  // const [currentUserData, setCurrentUserData] = useState([]);
-  // useEffect(() => {
-  //   const getUserData = async () => {
-  //     const { data } = await supabase.post.getUsers();
-  //     setCurrentUserData(data);
-  //   };
-  //   getUserData();
-  // }, []);
-  // console.log('currentUserData=>', currentUserData);
+  //const [postsData, setPostsData] = useState([]);
+
+  //console.log('currentUserData=>', currentUserData);
 
   const currentUserInfo = totalUser.find((user) => user.user_id === currentUserId);
   console.log(currentUserInfo);
