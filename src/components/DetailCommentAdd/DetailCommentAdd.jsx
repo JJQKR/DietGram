@@ -15,15 +15,19 @@ const DetailCommentAdd = () => {
 
   const completeChange = async () => {
     if (isLogin === false) return alert('로그인 해주세요.');
+    if (!comment.trim()) return alert('내용을 입력해주세요.');
     const data = await supabase.comment.insertComment(curPostId, comment, userInfo.avatarUrl, userInfo.nickName);
     const action = insertData(data);
     dispatch(action);
+    dispatch(changeValue({ type: 'comment', content: '' }));
   };
+
   return (
     <DetailPostCommentInput>
       <CommentInput
         placeholder="댓글 달기"
         type="text"
+        value={comment}
         onChange={(e) => {
           const action = changeValue({ type: 'comment', content: e.target.value });
           dispatch(action);
