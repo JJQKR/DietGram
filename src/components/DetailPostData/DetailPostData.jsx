@@ -7,18 +7,18 @@ import {
   PostDate,
   PostGrade
 } from './DetailPostData.style';
-import { useEffect } from 'react';
 
 const DetailPostData = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.posts.postList);
   const postUserId = useSelector((state) => state.posts.currentUserId);
   const postData = userInfo.find((userPostData) => userPostData.user_id === postUserId);
+  console.log('postData', postData);
 
   return (
     <>
       <DetailPostDataList>
-        <DetailPostImage src={postData?.url} alt="게시글 사진" />
+        <DetailPostImage src={postData?.img_url} alt="게시글 사진" />
         <DetailPostText>
           <DetailPostInformation>
             <PostDate>{postData?.created_at.split('T')[0]}</PostDate>
@@ -29,7 +29,7 @@ const DetailPostData = () => {
               {postData?.kcal} Kcal / {postData?.price} 원
             </p>
           </DetailPostInformation>
-          <PostGrade>평점 {postData?.rating}</PostGrade>
+          <PostGrade>평점 {postData?.raiting}</PostGrade>
         </DetailPostText>
       </DetailPostDataList>
     </>

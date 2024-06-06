@@ -1,31 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import DeleteModal from '../../components/DeleteModal/DeleteModal';
 import { Background } from '../../components/DeleteModal/DeleteModal.styled';
-import { initPostList, selectPost, selectUser } from '../../redux/slices/posts.slice';
+import { selectPost, selectUser } from '../../redux/slices/posts.slice';
 import * as S from './Postlist.styled';
-import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../supabase/supabase';
-
-// 닉네임 불러오기
-// 프로필 사진이나 닉네임을 클릭하면 그 포스트의 유저아이디를 받아 일치하는 포스트리스트페이지로 이동
-// myPostlist인 경우, 수정 삭제 버튼 사용가능
-// otherPostlist인 경우, 수정 삭제 버튼 작동하지 않게 숨기기
-// 포스트 사진을 클릭하면 해당 포스트의 상세 페이지로 이동
 
 const Postlist = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const modalBackground = useRef(null);
-
-  // useEffect(() => {
-  //   const getPostsData = async () => {
-  //     const { data } = await supabase.post.getPosts();
-  //     dispatch(initPostList(data)); // postlist 초기화
-  //   };
-  //   getPostsData();
-  // }, []);
 
   const rawData = useSelector((state) => state.posts.postList);
   const userId = useSelector((state) => state.user.currentUser?.id); // 로그인 한 계정의 id
@@ -34,10 +19,6 @@ const Postlist = () => {
   const totalUser = useSelector((state) => state.user.totalUserInfo.data);
 
   const [clickedPostId, setClickedPostId] = useState('');
-
-  //const [postsData, setPostsData] = useState([]);
-
-  //console.log('currentUserData=>', currentUserData);
 
   const currentUserInfo = totalUser.find((user) => user.user_id === currentUserId);
 
@@ -56,6 +37,7 @@ const Postlist = () => {
 
   const showPosts = (postlist) => {
     {
+      console.log('postList', postlist);
       return postlist.map((data) => {
         return (
           <>
@@ -71,6 +53,7 @@ const Postlist = () => {
                 </S.Nickname>
               </S.ProfileBox>
               <S.ContextBox>
+                <img style={{ width: '100%', height: '300px' }} src={data.img_url} />
                 <S.TopBox>
                   <S.Fooditem>{data.menu}</S.Fooditem>
                   <S.FoodAverage>★ {data.rating}</S.FoodAverage>
