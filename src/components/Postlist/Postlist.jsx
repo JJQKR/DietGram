@@ -28,12 +28,10 @@ const Postlist = () => {
   // }, []);
 
   const rawData = useSelector((state) => state.posts.postList);
-  console.log(rawData);
   const userId = useSelector((state) => state.user.currentUser?.id); // 로그인 한 계정의 id
   const currentUserId = useSelector((state) => state.posts.currentUserId); // 현재 postlist에서 뿌려주는 post의 유저 id
   const myPostList = rawData.filter((data) => data.user_id === currentUserId);
   const totalUser = useSelector((state) => state.user.totalUserInfo.data);
-  console.log('totalUser =>', totalUser);
 
   const [clickedPostId, setClickedPostId] = useState('');
 
@@ -42,10 +40,6 @@ const Postlist = () => {
   //console.log('currentUserData=>', currentUserData);
 
   const currentUserInfo = totalUser.find((user) => user.user_id === currentUserId);
-  console.log(currentUserInfo);
-  // console.log('currentUserData =>', currentUserData);
-  console.log('currentUserId =>', currentUserId);
-  //console.log("userId =>", currentUserId)
 
   const handleDeleteButtonClick = (id) => {
     setClickedPostId(id);
@@ -73,7 +67,7 @@ const Postlist = () => {
                     dispatch(action);
                   }}
                 >
-                  {currentUserInfo.nickName}
+                  {currentUserInfo?.nickName}
                 </S.Nickname>
               </S.ProfileBox>
               <S.ContextBox>
@@ -108,7 +102,7 @@ const Postlist = () => {
     <>
       <S.PostsNumberBox>
         <S.PostsNumber>
-          {currentUserInfo.nickName} 님의 포스트 {myPostList.length}건
+          {currentUserInfo?.nickName} 님의 포스트 {myPostList?.length}건
         </S.PostsNumber>
       </S.PostsNumberBox>
       <S.Boxes>

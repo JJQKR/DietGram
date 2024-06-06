@@ -7,7 +7,6 @@ const DeleteModal = ({ setDeleteModalOpen, clickedPostId }) => {
   const dispatch = useDispatch();
 
   const selectedPostId = selectPost(clickedPostId);
-  console.log('selectedPostId =>', selectedPostId);
 
   const handleDeletePost = async (id) => {
     const data = await supabase.post.deleteServerPost(id);

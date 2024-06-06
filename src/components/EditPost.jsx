@@ -135,7 +135,6 @@ export default function EditPost() {
 
     // 유효성 검사
     const { menu, content, date, kcal, rating, price, place } = formData;
-    console.log(typeof rating);
 
     if (!menu.trim()) return alert('메뉴를 입력해주세요!');
     if (!content.trim()) return alert('내용을 입력해주세요!');
@@ -150,7 +149,6 @@ export default function EditPost() {
       if (error) {
         console.error(error);
       } else {
-        console.log(data);
         navigate('/mypost');
         const posts = await supabase.post.getPosts();
         dispatch(initPostList(posts));

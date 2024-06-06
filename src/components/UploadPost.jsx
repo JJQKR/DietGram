@@ -5,7 +5,6 @@ import { initFormData, changeValue } from '../redux/slices/form.slice';
 import { initPostList } from '../redux/slices/posts.slice';
 import { supabase } from '../supabase/supabase';
 import { useNavigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 
 export const Button = styled.button`
   border: none;
@@ -114,16 +113,17 @@ const FileSpan = styled.span`
 `;
 
 export default function UploadPost() {
-  const [imgUrl, setImgUrl] = useState('');
   const [newImageFile, setNewImageFile] = useState(null);
+  const [postImage, setPostImage] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formData = useSelector((state) => state.formData);
-  console.log(formData);
 
   const handleAddPost = async (event) => {
     event.preventDefault();
-    dispatch(changeValue({ type: 'imageUrl', content: imgUrl }));
+    const postImageUrl = await uploadImageFileToStorage(postImage);
+    dispatch(changeValue({ type: 'imageUrl', content: postImageUrl }));
+    const instantFormData = { ...formData, imageUrl: postImageUrl };
 
     // 유효성 검사
     const { menu, content, date, kcal, rating, price, place } = formData;
@@ -137,8 +137,7 @@ export default function UploadPost() {
     if (!place.trim()) return alert('장소를 입력해주세요!');
 
     try {
-      const { data, error } = await supabase.post.insertServerPost(formData);
-      console.log(data);
+      await supabase.post.insertServerPost(instantFormData);
       navigate('/mypost');
       const posts = await supabase.post.getPosts();
       dispatch(initPostList(posts));
@@ -146,15 +145,12 @@ export default function UploadPost() {
     } catch (error) {
       console.error(error);
     }
-
-    // setNewPostImage('');
-    // dietgram-images
   };
 
   const uploadImageFileToStorage = async (file) => {
     const imageUrl = await supabase.post.uploadServerImage(file);
     try {
-      setImgUrl(imageUrl);
+      return imageUrl;
     } catch (error) {
       console.error(error);
     }
@@ -163,15 +159,12 @@ export default function UploadPost() {
   const handleImageFile = async (event) => {
     const { files } = event.target;
     const uploadedFile = files[0];
-    console.log(uploadedFile);
     const reader = new FileReader();
     reader.readAsDataURL(uploadedFile);
     reader.onloadend = () => {
       setNewImageFile(reader.result);
     };
-    const objectUrl = URL.createObjectURL(uploadedFile);
-    console.log(objectUrl);
-    await uploadImageFileToStorage(uploadedFile);
+    setPostImage(uploadedFile);
   };
 
   return (

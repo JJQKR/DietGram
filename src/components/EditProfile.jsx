@@ -151,7 +151,6 @@ const Input = styled.input`
 export default function EditProfile() {
   const navigate = useNavigate();
   const sliceNickname = useSelector((state) => state.formData.nickName);
-  console.log(sliceNickname);
   const currentUser = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
   const [newPostImage, setNewPostImage] = useState('');
@@ -169,8 +168,6 @@ export default function EditProfile() {
       user_metadata: { ...currentUser.user_metadata, nickName: sliceNickname }
     };
     dispatch(getCurrentUser(userData));
-
-    console.log('currentUser', userData);
     await supabase.login.changeNickName(sliceNickname);
   };
 
@@ -182,7 +179,6 @@ export default function EditProfile() {
     const reader = new FileReader();
     reader.readAsDataURL(uploadFile);
     reader.onloadend = () => {
-      console.log(reader.result);
       setNewPostImage(reader.result);
     };
   };
@@ -193,7 +189,6 @@ export default function EditProfile() {
     fileInputRef.current.click();
   };
 
-  console.log();
   return (
     <>
       <Container>
