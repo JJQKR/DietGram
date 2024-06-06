@@ -15,6 +15,7 @@ const Postlist = () => {
   const rawData = useSelector((state) => state.posts.postList);
   const userId = useSelector((state) => state.user.currentUser?.id); // 로그인 한 계정의 id
   const currentUserId = useSelector((state) => state.posts.currentUserId); // 현재 postlist에서 뿌려주는 post의 유저 id
+  console.log('currentUserId => ', currentUserId);
   const myPostList = rawData.filter((data) => data.user_id === currentUserId);
   const totalUser = useSelector((state) => state.user.totalUserInfo.data);
 

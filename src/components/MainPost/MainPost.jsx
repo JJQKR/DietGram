@@ -31,7 +31,14 @@ const MainPost = () => {
             <PostList>
               <UserData>
                 <UserImage src={post.userImage || defaultUserImage} alt="UserImage" />
-                <UserName>{getNickName(post?.user_id)}</UserName>
+                <UserName
+                  onClick={() => {
+                    dispatch(selectUser(post?.user_id));
+                    navigate(`/mypost/${post?.user_id}`);
+                  }}
+                >
+                  {getNickName(post?.user_id)}
+                </UserName>
               </UserData>
               <PostTimeCalorie>
                 <p>{post.created_at.split('T')[0]}</p>
