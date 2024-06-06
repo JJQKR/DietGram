@@ -36,13 +36,16 @@ export const UserImage = styled.img`
 export const PostTimeCalorie = styled.div`
   font-size: 15px;
   margin-top: 10px;
+  margin-right: 5px;
+  line-height: 120%;
   display: flex;
   flex-direction: column;
 `;
 
 export const UserName = styled.p`
-  margin-top: 30px;
-  padding-left: 10px;
+  margin-top: 17px;
+  padding-left: 12px;
+  font-size: 18px;
 `;
 
 export const PostImage = styled.img`
