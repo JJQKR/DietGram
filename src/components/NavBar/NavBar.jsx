@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { selectUser } from '../../redux/slices/posts.slice';
 import { checkLogin, getCurrentUser } from '../../redux/slices/user.slice';
 import { supabase } from '../../supabase/supabase';
@@ -8,6 +8,7 @@ import * as S from './NavBar.styled';
 
 const NavBar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const loginState = useSelector((state) => state.user.isLogin);
   const loggedinUser = useSelector((state) => state.user.currentUser);
 
@@ -42,6 +43,10 @@ const NavBar = () => {
     );
   };
 
+  const handleBackButton = () => {
+    navigate(-1);
+  };
+
   const handleMypostsClick = () => {
     const action = selectUser(loggedinUser.id);
     dispatch(action);
@@ -51,7 +56,7 @@ const NavBar = () => {
     <>
       <S.Container>
         <S.LeftSection>
-          <S.BackBtn src={'/img/back-arrow-navigation.png'} />
+          <S.BackBtn src={'/img/back-arrow-navigation.png'} onClick={handleBackButton} />
           <Link to="/signup" style={{ textDecoration: 'none' }}>
             <S.Menu>Sign Up</S.Menu>
           </Link>

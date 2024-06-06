@@ -118,6 +118,7 @@ export default function UploadPost() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formData = useSelector((state) => state.formData);
+  const userId = useSelector((state) => state.user.currentUser);
 
   const handleAddPost = async (event) => {
     event.preventDefault();
@@ -138,7 +139,7 @@ export default function UploadPost() {
 
     try {
       await supabase.post.insertServerPost(instantFormData);
-      navigate('/mypost');
+      navigate(`/mypost/${userId}`);
       const posts = await supabase.post.getPosts();
       dispatch(initPostList(posts));
       dispatch(initFormData()); // 폼초기화
