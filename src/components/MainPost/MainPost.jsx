@@ -5,7 +5,11 @@ import { Post, PostImage, PostList, PostTimeCalorie, UserData, UserImage, UserNa
 
 const MainPost = () => {
   const data = useSelector((state) => state.activeIndex.data);
-
+  const userData = useSelector((state) => state.user.totalUserInfo);
+  const getNickName = (userId) => {
+    const curUserData = userData.find((item) => item.user_id === userId);
+    return curUserData?.nickName;
+  };
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -27,7 +31,7 @@ const MainPost = () => {
             <PostList>
               <UserData>
                 <UserImage src={post.userImage || defaultUserImage} alt="UserImage" />
-                <UserName>{post.id}</UserName>
+                <UserName>{getNickName(post?.user_id)}</UserName>
               </UserData>
               <PostTimeCalorie>
                 <p>{post.created_at.split('T')[0]}</p>
