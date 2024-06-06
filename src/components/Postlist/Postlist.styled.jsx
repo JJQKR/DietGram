@@ -31,7 +31,7 @@ export const Boxes = styled.div`
 
 export const Post = styled.div`
   width: 350px;
-  height: 460px;
+  height: 500px;
   border-radius: 20px;
   background-color: #f4f4f4;
   box-shadow: 0px 0px 5px #b5b5b5;
@@ -62,7 +62,7 @@ export const Nickname = styled.p`
 
 export const FoodFile = styled.img`
   width: 350px;
-  height: 350px;
+  height: 330px;
   object-fit: cover;
   border-bottom: 1px solid #e5e5e5;
 `;
@@ -76,7 +76,7 @@ export const ContextBox = styled.div`
 export const TopBox = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 15px 0px 10px 0px;
+  padding: 20px 0px 10px 0px;
 `;
 
 export const Fooditem = styled.p`
@@ -84,6 +84,7 @@ export const Fooditem = styled.p`
   font-weight: bold;
   margin-left: 20px;
   width: 250px;
+  height: 20px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -99,7 +100,7 @@ export const MiddleBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 5px;
+  padding-top: 3px;
 `;
 
 export const FoodKcal = styled.p`
