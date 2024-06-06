@@ -18,7 +18,6 @@ const MainPost = () => {
 
   const defaultUserImage =
     'https://w7.pngwing.com/pngs/682/203/png-transparent-account-user-person-profile-avatar-basic-interface-icon.png';
-  const DefaultMenuImage = 'https://jmagazine.joins.com/_data/photo/2019/02/838745483_xbF6yINr_2.jpg';
 
   return (
     <>
@@ -36,10 +35,10 @@ const MainPost = () => {
               </PostTimeCalorie>
             </PostList>
             <PostImage
-              src={post.postImage || DefaultMenuImage}
+              src={post.img_url}
               alt="Menu Image"
               onClick={() => {
-                navigate(`/detail/${post.id}`);
+                navigate(`/detail/${post?.id}`);
                 handlePostClick(post.user_id, post.id);
               }}
             />
