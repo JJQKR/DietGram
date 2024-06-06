@@ -5,6 +5,7 @@ import { initFormData, changeValue } from '../redux/slices/form.slice';
 import { initPostList } from '../redux/slices/posts.slice';
 import { supabase } from '../supabase/supabase';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 export const Button = styled.button`
   border: none;
@@ -113,7 +114,8 @@ const FileSpan = styled.span`
 `;
 
 export default function UploadPost() {
-  const [newPostImage, setNewPostImage] = useState('');
+  const [imgUrl, setImgUrl] = useState('');
+  const [newImageFile, setNewImageFile] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formData = useSelector((state) => state.formData);
@@ -121,6 +123,7 @@ export default function UploadPost() {
 
   const handleAddPost = async (event) => {
     event.preventDefault();
+    dispatch(changeValue({ type: 'imageUrl', content: imgUrl }));
 
     // 유효성 검사
     const { menu, content, date, kcal, rating, price, place } = formData;
@@ -135,15 +138,11 @@ export default function UploadPost() {
 
     try {
       const { data, error } = await supabase.post.insertServerPost(formData);
-      if (error) {
-        console.error(error);
-      } else {
-        console.log(data);
-        navigate('/mypost');
-        const posts = await supabase.post.getPosts();
-        dispatch(initPostList(posts));
-        dispatch(initFormData()); // 폼초기화
-      }
+      console.log(data);
+      navigate('/mypost');
+      const posts = await supabase.post.getPosts();
+      dispatch(initPostList(posts));
+      dispatch(initFormData()); // 폼초기화
     } catch (error) {
       console.error(error);
     }
@@ -152,14 +151,27 @@ export default function UploadPost() {
     // dietgram-images
   };
 
-  const handleSaveImageFile = (event) => {
+  const uploadImageFileToStorage = async (file) => {
+    const imageUrl = await supabase.post.uploadServerImage(file);
+    try {
+      setImgUrl(imageUrl);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleImageFile = async (event) => {
     const { files } = event.target;
-    const uploadFile = files[0];
+    const uploadedFile = files[0];
+    console.log(uploadedFile);
     const reader = new FileReader();
-    reader.readAsDataURL(uploadFile);
+    reader.readAsDataURL(uploadedFile);
     reader.onloadend = () => {
-      setNewPostImage(reader.result);
+      setNewImageFile(reader.result);
     };
+    const objectUrl = URL.createObjectURL(uploadedFile);
+    console.log(objectUrl);
+    await uploadImageFileToStorage(uploadedFile);
   };
 
   return (
@@ -168,7 +180,7 @@ export default function UploadPost() {
         <form onSubmit={handleAddPost}>
           <InnerContainer>
             <Left>
-              <Img src={newPostImage} />
+              <Img src={newImageFile} />
               <label htmlFor="fileTest">
                 <FileSpan>파일 업로드하기</FileSpan>
               </label>
@@ -177,7 +189,7 @@ export default function UploadPost() {
                 type="file"
                 style={{ display: 'none' }}
                 accept="image/*"
-                onChange={handleSaveImageFile}
+                onChange={handleImageFile}
               ></input>
 
               <Label htmlFor="postMenu">메뉴</Label>
