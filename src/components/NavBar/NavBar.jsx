@@ -29,6 +29,7 @@ const NavBar = () => {
             dispatch(checkLogin(false));
             dispatch(getCurrentUser(null));
             alert('로그아웃 되었습니다!');
+            navigate('/login');
           }}
         >
           LogOut
