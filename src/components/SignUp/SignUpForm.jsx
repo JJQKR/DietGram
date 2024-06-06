@@ -65,7 +65,7 @@ const SignUpForm = () => {
     <>
       <S.Form onSubmit={handleSubmitSignUpForm}>
         <S.InputBox>
-          <label htmlFor="email">이메일</label>
+          <S.Label htmlFor="email">이메일</S.Label>
           <S.Input
             id="email"
             type="email"
@@ -78,7 +78,7 @@ const SignUpForm = () => {
         </S.InputBox>
         <S.Span ref={(el) => (spanRef.current[0] = el)}>이메일을 입력해주세요!</S.Span>
         <S.InputBox>
-          <label htmlFor="password">비밀번호</label>
+          <S.Label htmlFor="password">비밀번호</S.Label>
           <S.Input
             id="password"
             type="password"
@@ -90,7 +90,7 @@ const SignUpForm = () => {
         </S.InputBox>
         <S.Span ref={(el) => (spanRef.current[1] = el)}>비밀번호는 6자이상 입력해주세요!</S.Span>
         <S.InputBox>
-          <label htmlFor="passwordConfirm">비밀번호 확인</label>
+          <S.Label htmlFor="passwordConfirm">비밀번호 확인</S.Label>
           <S.Input
             id="passwordConfirm"
             type="password"
@@ -100,7 +100,7 @@ const SignUpForm = () => {
         </S.InputBox>
         <S.Span ref={(el) => (spanRef.current[2] = el)}>비밀번호와 동일하게 입력해주세요!</S.Span>
         <S.InputBox>
-          <label htmlFor="nickName">닉네임</label>
+          <S.Label htmlFor="nickName">닉네임</S.Label>
           <S.Input
             id="nickName"
             type="text"
