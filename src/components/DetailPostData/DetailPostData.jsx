@@ -18,7 +18,7 @@ const DetailPostData = () => {
   return (
     <>
       <DetailPostDataList>
-        <DetailPostImage src={postData?.url} alt="게시글 사진" />
+        <DetailPostImage src={postData?.img_url} alt="게시글 사진" />
         <DetailPostText>
           <DetailPostInformation>
             <PostDate>{postData?.created_at.split('T')[0]}</PostDate>
