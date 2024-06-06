@@ -11,12 +11,12 @@ class Post {
   }
 
   async getUsers() {
-    const { data } = await this.#client.from('users').select();
-    return data;
+    const { data, error } = await this.#client.from('users').select();
+    return { data, error };
   }
 
   async insertServerPost(formData) {
-    const { data } = await this.#client
+    const { data, error } = await this.#client
       .from('posts')
       .insert({
         menu: formData.menu,
@@ -24,24 +24,40 @@ class Post {
         kcal: formData.kcal,
         raiting: formData.rating,
         price: formData.price,
-        place: formData.place
+        place: formData.place,
+        date: formData.date,
+        img_url: formData.imageUrl
       })
       .select('*');
 
-    return data;
+    return { data, error };
+  }
+
+  async uploadServerImage(file) {
+    const { data, error } = await this.#client.storage
+      .from('dietgram-images')
+      .upload(`post-images/${crypto.randomUUID()}.png`, file);
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    const { data: imageData } = await this.#client.storage.from('dietgram-images').getPublicUrl(data.path);
+
+    return imageData.publicUrl;
   }
 
   //NOTE  삭제가능한 거 찾아서 넣어줘야 그 것을 삭제하고 리턴해서 데이터를 deletePost에 넣어서 삭제해야함 ㅇㅇ
   async deleteServerPost(id) {
     const { data } = await this.#client.from('posts').delete().eq('id', id).select();
-    console.log('data', data);
     const [deletedPost] = data;
 
     return deletedPost;
   }
 
   async updateServerPost(id, formData) {
-    const { data } = await this.#client
+    const { data, error } = await this.#client
       .from('posts')
       .update({
         menu: formData.menu,
@@ -49,16 +65,19 @@ class Post {
         kcal: formData.kcal,
         raiting: formData.rating,
         price: formData.price,
-        place: formData.place
+        place: formData.place,
+        img_url: formData.imageUrl
       })
       .eq('id', id)
-      .select();
-    console.log('data', id);
-    const [updatedPost] = data;
+      .select('*');
 
-    return updatedPost;
+    return { data, error };
   }
+  async updateServerPostLike(id, like) {
+    const { data } = await this.#client.from('posts').update({ like: like }).eq('id', id).select('*');
 
+    return data;
+  }
   async isLike(id, userId) {
     // 유저에 like id를 넣어줘야해
     const { data } = await this.#client.from('users').select('*');

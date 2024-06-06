@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const INITIAL_POSTS = [
   {
     id: '59454ecd-0f61-422a-89d9-3213915343f2',
-    postImage,
+    //postImage,
     menu: '초밥',
     description: '너무 맛있어용',
     date: '2024-06-01',
@@ -14,7 +14,7 @@ const INITIAL_POSTS = [
   },
   {
     id: '4f60bace-03dc-458d-b0dc-d89ada034b29"454ecd-0f61-422a-89d9-3213915343f2',
-    postImage,
+    //postImage,
     menu: '페스토 햄 모짜렐라',
     description: '가성비는 좀 아쉽지만 단백질 함량 굿',
     date: '2024-06-01',

@@ -5,6 +5,11 @@ import { Post, PostImage, PostList, PostTimeCalorie, UserData, UserImage, UserNa
 
 const MainPost = () => {
   const data = useSelector((state) => state.activeIndex.data);
+  const userData = useSelector((state) => state.user?.totalUserInfo);
+  const getNickName = (userId) => {
+    const curUserData = userData.data.find((item) => item.user_id === userId);
+    return curUserData?.nickName;
+  };
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -17,7 +22,6 @@ const MainPost = () => {
 
   const defaultUserImage =
     'https://w7.pngwing.com/pngs/682/203/png-transparent-account-user-person-profile-avatar-basic-interface-icon.png';
-  const DefaultMenuImage = 'https://jmagazine.joins.com/_data/photo/2019/02/838745483_xbF6yINr_2.jpg';
 
   return (
     <>
@@ -27,7 +31,14 @@ const MainPost = () => {
             <PostList>
               <UserData>
                 <UserImage src={post.userImage || defaultUserImage} alt="UserImage" />
-                <UserName>{post.id}</UserName>
+                <UserName
+                  onClick={() => {
+                    dispatch(selectUser(post?.user_id));
+                    navigate(`/mypost/${post?.user_id}`);
+                  }}
+                >
+                  {getNickName(post?.user_id)}
+                </UserName>
               </UserData>
               <PostTimeCalorie>
                 <p>{post.created_at.split('T')[0]}</p>
@@ -35,10 +46,10 @@ const MainPost = () => {
               </PostTimeCalorie>
             </PostList>
             <PostImage
-              src={post.postImage || DefaultMenuImage}
+              src={post.img_url}
               alt="Menu Image"
               onClick={() => {
-                navigate(`/detail/${post.id}`);
+                navigate(`/detail/${post?.id}`);
                 handlePostClick(post.user_id, post.id);
               }}
             />

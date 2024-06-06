@@ -1,20 +1,16 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { v4 as uuidv4 } from 'uuid';
+import { initFormData, changeValue } from '../redux/slices/form.slice';
+import { initPostList } from '../redux/slices/posts.slice';
+import { supabase } from '../supabase/supabase';
+import { useNavigate } from 'react-router-dom';
 
 export const Button = styled.button`
   border: none;
   border-radius: 10px;
   background-color: green;
 `;
-// export const Section = styled.section`
-//   display: flex;
-//   justify-content: space-between;
-//   margin: 20%;
-//   border: black 1px solid;
-//   border-radius: 10%;
-//   background-color: pink;
-// `;
 
 export const ImageLabel = styled.label`
   margin: 5px 0 20px 0;
@@ -116,68 +112,59 @@ const FileSpan = styled.span`
   padding: 5px;
 `;
 
-const reader = new FileReader();
-
 export default function UploadPost() {
-  const [posts, setPosts] = useState('');
+  const [newImageFile, setNewImageFile] = useState(null);
+  const [postImage, setPostImage] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const formData = useSelector((state) => state.formData);
 
-  const [newPostImage, setNewPostImage] = useState('');
-  const [newMenu, setNewMenu] = useState('');
-  const [newDescription, setNewDescription] = useState('');
-  const [newDate, setNewDate] = useState(Date.now());
-  const [newCalories, setNewCalories] = useState('');
-  const [newRate, setNewRate] = useState('');
-  const [newPrice, setNewPrice] = useState('');
-  const [newPlace, setNewPlace] = useState('');
+  const handleAddPost = async (event) => {
+    event.preventDefault();
+    const postImageUrl = await uploadImageFileToStorage(postImage);
+    dispatch(changeValue({ type: 'imageUrl', content: postImageUrl }));
+    const instantFormData = { ...formData, imageUrl: postImageUrl };
 
-  const handleAddPost = () => {
-    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-    if (datePattern.test(newDate)) {
-      alert('날짜를 YYYY-MM-DD 형식으로 입력해주세요.');
-      //sweetAlert 쓰고 싶다
-      return;
+    // 유효성 검사
+    const { menu, content, date, kcal, rating, price, place } = formData;
+
+    if (!menu.trim()) return alert('메뉴를 입력해주세요!');
+    if (!content.trim()) return alert('내용을 입력해주세요!');
+    if (!date.trim()) return alert('날짜를 입력해주세요!');
+    if (+kcal < 0) return alert('유효한 칼로리를 입력해주세요!');
+    if (+rating < 0 || +rating > 5) return alert('평점을 0점 이상, 5점 이하로 입력해주세요!');
+    if (+price < 0) return alert('유효한 금액을 입력해주세요!');
+    if (!place.trim()) return alert('장소를 입력해주세요!');
+
+    try {
+      await supabase.post.insertServerPost(instantFormData);
+      navigate('/mypost');
+      const posts = await supabase.post.getPosts();
+      dispatch(initPostList(posts));
+      dispatch(initFormData()); // 폼초기화
+    } catch (error) {
+      console.error(error);
     }
-
-    const parsedPrice = parseInt(newPrice, 10);
-    if (!newMenu || parsedPrice <= 0) {
-      alert('유효한 메뉴과 금액을 입력해주세요.');
-      return;
-    }
-
-    const newPost = {
-      id: uuidv4(),
-      // newPostImage,
-      newMenu,
-      newDescription,
-      newDate,
-      newCalories,
-      newRate,
-      newPrice,
-      newPlace
-    };
-
-    localStorage.setItem('새 게시물', JSON.stringify(newPost));
-
-    // setNewPostImage('');
-    setNewMenu('');
-    setNewDescription('');
-    setNewDate('');
-    setNewCalories('');
-    setNewRate('');
-    setNewPrice('');
-    setNewPlace('');
   };
 
-  const handleSaveImageFile = (event) => {
+  const uploadImageFileToStorage = async (file) => {
+    const imageUrl = await supabase.post.uploadServerImage(file);
+    try {
+      return imageUrl;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleImageFile = async (event) => {
     const { files } = event.target;
-    const uploadFile = files[0];
-    console.log(uploadFile);
+    const uploadedFile = files[0];
     const reader = new FileReader();
-    reader.readAsDataURL(uploadFile);
+    reader.readAsDataURL(uploadedFile);
     reader.onloadend = () => {
-      console.log(reader.result);
-      setNewPostImage(reader.result);
+      setNewImageFile(reader.result);
     };
+    setPostImage(uploadedFile);
   };
 
   return (
@@ -186,7 +173,7 @@ export default function UploadPost() {
         <form onSubmit={handleAddPost}>
           <InnerContainer>
             <Left>
-              <Img src={newPostImage} />
+              <Img src={newImageFile} />
               <label htmlFor="fileTest">
                 <FileSpan>파일 업로드하기</FileSpan>
               </label>
@@ -195,7 +182,7 @@ export default function UploadPost() {
                 type="file"
                 style={{ display: 'none' }}
                 accept="image/*"
-                onChange={handleSaveImageFile}
+                onChange={handleImageFile}
               ></input>
 
               <Label htmlFor="postMenu">메뉴</Label>
@@ -203,26 +190,23 @@ export default function UploadPost() {
                 id="postMenu"
                 width="440"
                 type="text"
-                value={newMenu}
-                onChange={(event) => setNewMenu(event.target.value)}
+                onChange={(e) => dispatch(changeValue({ type: 'menu', content: e.target.value }))}
               />
 
               <Label htmlFor="postDescription">내용</Label>
               <Textarea
                 id="postDescription"
-                value={newDescription}
-                onChange={(event) => setNewDescription(event.target.value)}
+                onChange={(e) => dispatch(changeValue({ type: 'content', content: e.target.value }))}
               ></Textarea>
               {/* 댓글에서 사용될 수도 있는 textarea와 스타일 맞추기  */}
 
-              <Label htmlFor="postDate">날짜</Label>
+              <Label htmlFor="ateDate">날짜</Label>
               <Input
-                id="postDate"
+                id="ateDate"
                 width="440"
-                type="number"
-                placeholder="YYYY-MM-DD"
-                value={newDate}
-                onChange={(event) => setNewDate(event.target.value)}
+                type="date"
+                placeholder="날짜"
+                onChange={(e) => dispatch(changeValue({ type: 'date', content: e.target.value }))}
               />
             </Left>
             <Right>
@@ -231,27 +215,28 @@ export default function UploadPost() {
               <Input
                 id="postCalories"
                 type="number"
-                value={newCalories}
-                onChange={(event) => setNewCalories(event.target.value)}
+                onChange={(e) => dispatch(changeValue({ type: 'kcal', content: e.target.value }))}
               />
 
               <Label htmlFor="postRate">평점</Label>
-              <Input id="postRate" type="number" value={newRate} onChange={(event) => setNewRate(event.target.value)} />
+              <Input
+                id="postRate"
+                type="number"
+                onChange={(e) => dispatch(changeValue({ type: 'rating', content: e.target.value }))}
+              />
 
               <Label htmlFor="postPrice">금액</Label>
               <Input
                 id="postPrice"
                 type="number"
-                value={newPrice}
-                onChange={(event) => setNewPrice(event.target.value)}
+                onChange={(e) => dispatch(changeValue({ type: 'price', content: e.target.value }))}
               />
 
               <Label htmlFor="postPlace">장소</Label>
               <Input
                 id="postPlace"
                 type="text"
-                value={newPlace}
-                onChange={(event) => setNewPlace(event.target.value)}
+                onChange={(e) => dispatch(changeValue({ type: 'place', content: e.target.value }))}
               />
               <Button type="submit">저장</Button>
             </Right>

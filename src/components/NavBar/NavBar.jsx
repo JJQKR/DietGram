@@ -1,16 +1,15 @@
-import { Link } from 'react-router-dom';
-import * as S from './NavBar.styled';
 import { useEffect } from 'react';
-import { supabase } from '../../supabase/supabase';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkLogin, getCurrentUser } from '../../redux/slices/user.slice';
+import { Link } from 'react-router-dom';
 import { selectUser } from '../../redux/slices/posts.slice';
+import { checkLogin, getCurrentUser } from '../../redux/slices/user.slice';
+import { supabase } from '../../supabase/supabase';
+import * as S from './NavBar.styled';
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.user.isLogin);
-  const currentUser = useSelector((state) => state.user.currentUser);
-  console.log(currentUser);
+  const loggedinUser = useSelector((state) => state.user.currentUser);
 
   useEffect(() => {
     const checkIsLogin = async () => {
@@ -37,14 +36,14 @@ const NavBar = () => {
     }
 
     return (
-      <Link to="/login">
+      <Link to="/login" style={{ textDecoration: 'none' }}>
         <S.Menu>LogIn</S.Menu>
       </Link>
     );
   };
 
   const handleMypostsClick = () => {
-    const action = selectUser(currentUser.id);
+    const action = selectUser(loggedinUser.id);
     dispatch(action);
   };
 
@@ -62,10 +61,10 @@ const NavBar = () => {
           <S.Title>살과 칼로리의 행방불명</S.Title>
         </Link>
         <S.RightSection>
-          <Link to="/mypost" style={{ textDecoration: 'none' }}>
+          <Link to={`/mypost/${loggedinUser?.id}`} style={{ textDecoration: 'none' }}>
             <S.Menu onClick={handleMypostsClick}>My Posts</S.Menu>
           </Link>
-          <Link to={`/profile/${currentUser?.id}`} style={{ textDecoration: 'none' }}>
+          <Link to={`/profile/${loggedinUser?.id || ''}`} style={{ textDecoration: 'none' }}>
             <S.Menu>My Page</S.Menu>
           </Link>
         </S.RightSection>

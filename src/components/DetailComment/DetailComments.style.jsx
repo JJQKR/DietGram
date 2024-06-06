@@ -54,4 +54,5 @@ export const CommentButton = styled.button`
   border: none;
   cursor: pointer;
   color: gray;
+  display: ${(props) => (props.$hidden ? 'block' : 'none')};
 `;

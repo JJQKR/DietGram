@@ -1,26 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
-import { supabase } from "../../supabase/supabase";
-import { checkLengthValidation, checkEqualValidation } from "./signUpValidation";
-import * as S from "./SignUpForm.styled";
-import { changeUserInfo, changeValue, initFormData } from "../../redux/slices/form.slice";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
+import React, { useEffect, useRef, useState } from 'react';
+import { supabase } from '../../supabase/supabase';
+import { checkLengthValidation, checkEqualValidation } from './signUpValidation';
+import * as S from './SignUpForm.styled';
+import { changeUserInfo, changeValue, initFormData } from '../../redux/slices/form.slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const navigator = useNavigate();
-  const formData = useSelector(state => state.formData);
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const formData = useSelector((state) => state.formData);
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const emailRef = useRef();
   const spanRef = useRef([]);
 
   useEffect(() => {
     emailRef.current.focus();
-    spanRef.current[0].style.display = "none";
-    spanRef.current[1].style.display = "none";
-    spanRef.current[2].style.display = "none";
-    spanRef.current[3].style.display = "none";
+    spanRef.current[0].style.display = 'none';
+    spanRef.current[1].style.display = 'none';
+    spanRef.current[2].style.display = 'none';
+    spanRef.current[3].style.display = 'none';
   }, []);
 
   const handleSubmitSignUpForm = async (event) => {
@@ -46,7 +45,6 @@ const SignUpForm = () => {
 
     try {
       const { data, error } = await supabase.login.signUp(email, password, nickName);
-      console.log(data);
       if (error) {
         console.error(error);
       } else {
