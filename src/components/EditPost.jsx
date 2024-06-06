@@ -119,6 +119,8 @@ export default function EditPost() {
   const [postImage, setPostImage] = useState('');
   const posts = useSelector((state) => state.posts.postList);
   const formData = useSelector((state) => state.formData);
+  const userId = useSelector((state) => state.user.currentUser);
+  console.log(userId);
   const filteredPost = posts.find((post) => post.id === +editId);
 
   useEffect(() => {
@@ -159,7 +161,7 @@ export default function EditPost() {
       if (error) {
         console.error(error);
       } else {
-        navigate('/mypost');
+        navigate(`/mypost/${userId}`);
         const posts = await supabase.post.getPosts();
         dispatch(initPostList(posts));
         dispatch(initFormData()); // 폼초기화
