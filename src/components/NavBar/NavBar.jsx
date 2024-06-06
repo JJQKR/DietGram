@@ -61,7 +61,7 @@ const NavBar = () => {
           <S.Title>살과 칼로리의 행방불명</S.Title>
         </Link>
         <S.RightSection>
-          <Link to="/mypost" style={{ textDecoration: 'none' }}>
+          <Link to={`/mypost/${loggedinUser?.id}`} style={{ textDecoration: 'none' }}>
             <S.Menu onClick={handleMypostsClick}>My Posts</S.Menu>
           </Link>
           <Link to={`/profile/${loggedinUser?.id || ''}`} style={{ textDecoration: 'none' }}>
