@@ -16,8 +16,8 @@ const postsSlice = createSlice({
     },
 
     deletePost: (state, action) => {
-      const idx = state.postList.find((item) => item.id === action.payload.id);
-      state.postList.splice(idx, 1);
+      const filteredPost = state.postList.filter((item) => item.id !== action.payload.id);
+      state.postList = filteredPost;
     },
     updatePost: (state, action) => {
       const index = state.postList.findIndex((item) => item.id === action.payload.id);
