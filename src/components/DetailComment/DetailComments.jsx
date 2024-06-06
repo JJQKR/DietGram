@@ -17,7 +17,7 @@ const DetailComments = () => {
   const dispatch = useDispatch();
   const commentList = useSelector((state) => state.comments.commentList);
   const curPostId = useSelector((state) => state.posts.currentPostId);
-  const currentUser = useSelector((state) => state.user.currentUser?.user_metadata);
+  // const currentUser = useSelector((state) => state.user.currentUser?.user_metadata);
   const curComments = commentList.filter((comments) => comments.post_id === curPostId);
 
   const commentEdit = async (id) => {
