@@ -65,7 +65,8 @@ class Post {
         kcal: formData.kcal,
         raiting: formData.rating,
         price: formData.price,
-        place: formData.place
+        place: formData.place,
+        img_url: formData.imageUrl
       })
       .eq('id', id)
       .select('*');
