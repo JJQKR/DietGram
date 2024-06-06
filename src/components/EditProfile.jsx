@@ -75,6 +75,7 @@ const ImageButton = styled.button`
   border-radius: 4px;
   margin-top: 10px;
   align-items: center;
+
   &:hover {
     background-color: gray;
     color: white;
@@ -91,6 +92,7 @@ const ButtonContainer = styled.div`
   align-items: center;
   gap: 30px;
 `;
+
 const ButtonBox = styled.div`
   display: flex;
   flex-direction: row;
@@ -104,13 +106,17 @@ const H3 = styled.h3`
   font-weight: 600;
   margin-top: 20px;
 `;
+
 const FileInputWrapper = styled.div`
   display: inline-block;
   position: relative;
 `;
+
+
 const HiddenFileInput = styled.input`
   display: none;
 `;
+
 const CustomButton = styled.button`
   width: 130px;
   background-color: #d9d9d9;
@@ -121,11 +127,13 @@ const CustomButton = styled.button`
   font-size: 16px;
   border-radius: 4px;
   margin-top: 10px;
+
   &:hover {
     background-color: gray;
     color: white;
   }
 `;
+
 const Input = styled.input`
   width: 260px;
   height: 30px;
@@ -166,10 +174,14 @@ export default function EditProfile() {
       setNewPostImage(reader.result);
     };
   };
+
   const fileInputRef = useRef(null);
+
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
+
+
   console.log();
   return (
     <>
@@ -206,6 +218,7 @@ export default function EditProfile() {
                     dispatch(action);
                   }}
                 />
+
                 <ButtonBox>
                   <Button type="submit">완료</Button>
                   <Button onClick={() => navigate('/')}>취소</Button>

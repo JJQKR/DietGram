@@ -2,24 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { changePost, deletePost } from '../redux/slices/postsSlice';
-import { Boxes } from './GlobalStyle';
 import { supabase } from '../supabase/supabase';
 import { changeValue, initFormData } from '../redux/slices/form.slice';
+import { initPostList } from '../redux/slices/posts.slice';
 
 export const Button = styled.button`
   border: none;
   border-radius: 10px;
   background-color: green;
 `;
-// export const Section = styled.section`
-//   display: flex;
-//   justify-content: space-between;
-//   margin: 20%;
-//   border: black 1px solid;
-//   border-radius: 10%;
-//   background-color: pink;
-// `;
 
 export const ImageLabel = styled.label`
   margin: 5px 0 20px 0;
@@ -127,8 +118,6 @@ export default function EditPost() {
   const { editId } = useParams();
   const posts = useSelector((state) => state.posts.postList);
   const formData = useSelector((state) => state.formData);
-
-  //console.log(posts);
   const filteredPost = posts.find((post) => post.id === +editId);
 
   useEffect(() => {
@@ -136,48 +125,25 @@ export default function EditPost() {
     dispatch(changeValue({ type: 'content', content: filteredPost.content }));
     dispatch(changeValue({ type: 'date', content: filteredPost.date }));
     dispatch(changeValue({ type: 'kcal', content: filteredPost.kcal }));
+    dispatch(changeValue({ type: 'rating', content: filteredPost.price }));
     dispatch(changeValue({ type: 'price', content: filteredPost.price }));
     dispatch(changeValue({ type: 'place', content: filteredPost.place }));
   }, []);
 
-  //const selectedPost = posts.find((element) => element.id === id);
-  //근데 selectedPost를 정하는 게, 상세페이지에서 넘어올 때도 필요한가?
-
-  // const [postImage, setPostImage] = useState(selectedPost.postImage);
-  // const [menu, setMenu] = useState(selectedPost.menu);
-  // const [description, setDescription] = useState(selectedPost.description);
-  // const [date, setDate] = useState(selectedPost.date);
-  // const [calories, setCalories] = useState(selectedPost.calories);
-  // const [rate, setRate] = useState(selectedPost.rate);
-  // const [price, setPrice] = useState(selectedPost.price);
-  // const [place, setPlace] = useState(selectedPost.place);
-
   const handleChangePost = async (event) => {
-    // const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-    // if (!datePattern.test(date)) {
-    //   alert('날짜를 YYYY-MM-DD 형식으로 입력해주세요.');
-    //   return;
-    // }
-    // if (!menu || price <= 0) {
-    //   //근데 0원일 수도 있지 않나??
-    //   alert('유효한 항목과 금액을 입력해주세요.');
-    //   return;
-    // }
-    // const newPost = {
-    //   id,
-    //   // postImage,
-    //   menu,
-    //   description,
-    //   date,
-    //   calories,
-    //   rate,
-    //   price,
-    //   place
-    // };
-
-    // dispatch(changePost(newPost));
-    // navigate('/detail'); //페이지명 변경 필요
     event.preventDefault();
+
+    // 유효성 검사
+    const { menu, content, date, kcal, rating, price, place } = formData;
+    console.log(typeof rating);
+
+    if (!menu.trim()) return alert('메뉴를 입력해주세요!');
+    if (!content.trim()) return alert('내용을 입력해주세요!');
+    if (!date.trim()) return alert('날짜를 입력해주세요!');
+    if (+kcal < 0) return alert('유효한 칼로리를 입력해주세요!');
+    if (+rating < 0 || +rating > 5) return alert('평점을 0점 이상, 5점 이하로 입력해주세요!');
+    if (+price < 0) return alert('유효한 금액을 입력해주세요!');
+    if (!place.trim()) return alert('장소를 입력해주세요!');
 
     try {
       const { data, error } = await supabase.post.updateServerPost(editId, formData);
@@ -185,15 +151,14 @@ export default function EditPost() {
         console.error(error);
       } else {
         console.log(data);
+        navigate('/mypost');
+        const posts = await supabase.post.getPosts();
+        dispatch(initPostList(posts));
+        dispatch(initFormData()); // 폼초기화
       }
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const handleDeletePost = () => {
-    dispatch(deletePost({ id }));
-    navigate('/');
   };
 
   const [imageFile, setImageFile] = useState(); //이미지 파일 미리보기에 사용
