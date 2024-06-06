@@ -116,22 +116,32 @@ export default function EditPost() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { editId } = useParams();
+  const [postImage, setPostImage] = useState('');
   const posts = useSelector((state) => state.posts.postList);
   const formData = useSelector((state) => state.formData);
   const filteredPost = posts.find((post) => post.id === +editId);
 
   useEffect(() => {
+    // 불러오기~
     dispatch(changeValue({ type: 'menu', content: filteredPost.menu }));
     dispatch(changeValue({ type: 'content', content: filteredPost.content }));
     dispatch(changeValue({ type: 'date', content: filteredPost.date }));
     dispatch(changeValue({ type: 'kcal', content: filteredPost.kcal }));
-    dispatch(changeValue({ type: 'rating', content: filteredPost.price }));
+    dispatch(changeValue({ type: 'rating', content: filteredPost.rating }));
     dispatch(changeValue({ type: 'price', content: filteredPost.price }));
     dispatch(changeValue({ type: 'place', content: filteredPost.place }));
+    dispatch(changeValue({ type: 'imageUrl', content: filteredPost.img_url }));
   }, []);
+
+  const [newImageFile, setNewImageFile] = useState(filteredPost.img_url);
 
   const handleChangePost = async (event) => {
     event.preventDefault();
+
+    const postImageUrl = await uploadImageFileToStorage(postImage);
+    console.log('postImageUrl => ', postImageUrl);
+    dispatch(changeValue({ type: 'imageUrl', content: postImageUrl }));
+    const instantFormData = { ...formData, imageUrl: postImageUrl };
 
     // 유효성 검사
     const { menu, content, date, kcal, rating, price, place } = formData;
@@ -145,7 +155,7 @@ export default function EditPost() {
     if (!place.trim()) return alert('장소를 입력해주세요!');
 
     try {
-      const { data, error } = await supabase.post.updateServerPost(editId, formData);
+      const { data, error } = await supabase.post.updateServerPost(editId, instantFormData);
       if (error) {
         console.error(error);
       } else {
@@ -159,20 +169,28 @@ export default function EditPost() {
     }
   };
 
-  const [imageFile, setImageFile] = useState(); //이미지 파일 미리보기에 사용
-  const imageRef = useRef(); //이미지 파일 미리보기에 사용
-
-  //이미지 업로드 input의 onChange
-  const saveImageFile = () => {
-    const file = imageRef.current.file[0];
-    reader.ReadAsDataURL(file);
-    reader.onloadene = () => {
-      setImageFile(reader.result);
-    };
+  const uploadImageFileToStorage = async (file) => {
+    if (!file) {
+      return filteredPost.img_url;
+    }
+    const imageUrl = await supabase.post.uploadServerImage(file);
+    try {
+      return imageUrl;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  //업로드된 이미지 미리보기
-  <img src={imageFile ? imageFile : `/images/icon/user.png`} alt="포스트 이미지" />;
+  const handleImageFile = async (event) => {
+    const { files } = event.target;
+    const uploadedFile = files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(uploadedFile);
+    reader.onloadend = () => {
+      setNewImageFile(reader.result);
+    };
+    setPostImage(uploadedFile);
+  };
 
   return (
     <>
@@ -180,11 +198,17 @@ export default function EditPost() {
         <form onSubmit={handleChangePost}>
           <InnerContainer>
             <Left>
-              <Img />
+              <Img src={newImageFile} />
               <label htmlFor="fileTest">
                 <FileSpan>파일 업로드하기</FileSpan>
               </label>
-              <input id="fileTest" type="file" style={{ display: 'none' }} accept="image/*"></input>
+              <input
+                id="fileTest"
+                type="file"
+                style={{ display: 'none' }}
+                accept="image/*"
+                onChange={handleImageFile}
+              ></input>
 
               <Label htmlFor="postMenu">메뉴</Label>
               <Input

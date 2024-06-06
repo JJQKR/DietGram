@@ -31,7 +31,7 @@ export const Boxes = styled.div`
 
 export const Post = styled.div`
   width: 350px;
-  height: 510px;
+  height: 460px;
   border-radius: 20px;
   background-color: #f4f4f4;
   box-shadow: 0px 0px 5px #b5b5b5;
@@ -55,14 +55,15 @@ export const ProfileImage = styled.img`
 `;
 
 export const Nickname = styled.p`
-  text-indent: 10px;
-  font-size: 18px;
-  //font-weight: 600;
+  text-indent: 20px;
+  font-size: 20px;
+  font-weight: 600;
 `;
 
 export const FoodFile = styled.img`
   width: 350px;
   height: 350px;
+  object-fit: cover;
   border-bottom: 1px solid #e5e5e5;
 `;
 
