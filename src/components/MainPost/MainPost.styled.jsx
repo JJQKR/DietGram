@@ -6,9 +6,10 @@ export const Post = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #d9d9d9;
   padding: 15px;
-  border-radius: 10px;
+  border-radius: 20px;
+  background-color: #f4f4f4;
+  box-shadow: 0px 0px 5px #b5b5b5;
 `;
 
 export const PostList = styled.div`
@@ -51,7 +52,9 @@ export const UserName = styled.p`
 export const PostImage = styled.img`
   width: 100%;
   height: 300px;
+  border-radius: 10px;
   background-size: cover;
   background-position: center;
+  box-shadow: 0px 0px 2px #b5b5b5;
   cursor: pointer;
 `;
