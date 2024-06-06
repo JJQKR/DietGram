@@ -25,21 +25,20 @@ const InnerContainer = styled.div`
   align-items: center;
 `;
 const Left = styled.div`
-  margin: 3rem 0 30px 30px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  width: 35%;
+  justify-content: center;
+  width: 50%;
   align-items: center;
 `;
 const Right = styled.div`
   margin: 5% 5% 5% 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  align-items: left;
-  width: 35%;
-  height: 50%;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  height: 100%;
 `;
 const Button = styled.button`
   color: #343434;
@@ -59,10 +58,8 @@ const Button = styled.button`
   }
 `;
 const Image = styled.img`
-  display: flex;
-  padding: 10rem 1rem;
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
 `;
 const ImageButton = styled.button`
@@ -90,14 +87,17 @@ const ImageButton = styled.button`
 `;
 const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: right;
+  margin-top: 20px;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
   gap: 30px;
 `;
 const H3 = styled.h3`
   font-size: 25px;
   font-weight: 600;
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 const FileInputWrapper = styled.div`
@@ -131,6 +131,12 @@ const Input = styled.input`
   height: 30px;
   font-size: 25px;
   margin-top: 20px;
+`;
+
+const Form = styled.form`
+  width: 70%;
+  display: flex;
+  flex-direction: column;
 `;
 export default function EditProfile() {
   const navigate = useNavigate();
@@ -170,44 +176,38 @@ export default function EditProfile() {
     fileInputRef.current.click();
   };
 
+  console.log('currentUser?.user_metadata.avatarUrl', currentUser?.user_metadata.avatarUrl);
+
   return (
     <>
       <Container>
-        <label>
-          <Image className="profileImage" src={newPostImage} img="img/" />
-        </label>
         <InnerContainer>
           <Left>
-            <div>
-              <img src={currentUser?.user_metadata.avatarUrl} alt="" width="200px" />
-            </div>
+            <Image className="profileImage" src={`${currentUser?.user_metadata.avatarUrl}`} img="img/" />
             <ButtonContainer>
               <ImageButton>이미지 제거</ImageButton>
               <input type="file" accept="image/*" onChange={handleSaveImageFile} />
             </ButtonContainer>
           </Left>
           <Right>
-            <>
-              <form onSubmit={handleSubmit}>
-                <p>현재 닉네임</p>
-                <H3>{currentUser?.user_metadata.nickName}</H3>
-                <label htmlFor="nicknameInput"></label>
-                <input
-                  className="nicknameInput"
-                  type="text"
-                  value={sliceNickname}
-                  onChange={(event) => {
-                    const action = changeValue({ type: 'nickName', content: event.target.value });
-                    dispatch(action);
-                  }}
-                />
+            <Form onSubmit={handleSubmit}>
+              <p>현재 닉네임</p>
+              <H3>{currentUser?.user_metadata.nickName}</H3>
+              <input
+                className="nicknameInput"
+                type="text"
+                value={sliceNickname}
+                onChange={(event) => {
+                  const action = changeValue({ type: 'nickName', content: event.target.value });
+                  dispatch(action);
+                }}
+              />
 
-                <ButtonContainer>
-                  <Button type="submit">완료</Button>
-                </ButtonContainer>
-              </form>
-              <Button onClick={() => navigate('/')}>취소</Button>
-            </>
+              <ButtonContainer>
+                <Button type="submit">완료</Button>
+                <Button onClick={() => navigate('/')}>취소</Button>
+              </ButtonContainer>
+            </Form>
           </Right>
         </InnerContainer>
       </Container>

@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   DetailPostDataList,
   DetailPostImage,
@@ -9,27 +9,25 @@ import {
 } from './DetailPostData.style';
 
 const DetailPostData = () => {
-  const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.posts.postList);
-  const postUserId = useSelector((state) => state.posts.currentUserId);
-  const postData = userInfo.find((userPostData) => userPostData.user_id === postUserId);
-  console.log('postData', postData);
+  const postId = useSelector((state) => state.posts.currentPostId);
+  const postDataIdx = userInfo.findIndex((userPostData) => userPostData.id === postId);
 
   return (
     <>
       <DetailPostDataList>
-        <DetailPostImage src={postData?.img_url} alt="게시글 사진" />
+        <DetailPostImage src={userInfo[postDataIdx].img_url} alt="게시글 사진" />
         <DetailPostText>
           <DetailPostInformation>
-            <PostDate>{postData?.created_at.split('T')[0]}</PostDate>
-            <p>{postData?.menu}</p>
-            <p>{postData?.content}</p>
-            <p>{postData?.place}</p>
+            <PostDate>{userInfo[postDataIdx]?.created_at.split('T')[0]}</PostDate>
+            <p>{userInfo[postDataIdx]?.menu}</p>
+            <p>{userInfo[postDataIdx]?.content}</p>
+            <p>{userInfo[postDataIdx]?.place}</p>
             <p>
-              {postData?.kcal} Kcal / {postData?.price} 원
+              {userInfo[postDataIdx]?.kcal} Kcal / {userInfo[postDataIdx]?.price} 원
             </p>
           </DetailPostInformation>
-          <PostGrade>평점 {postData?.raiting}</PostGrade>
+          <PostGrade>평점 {userInfo[postDataIdx]?.raiting}</PostGrade>
         </DetailPostText>
       </DetailPostDataList>
     </>
