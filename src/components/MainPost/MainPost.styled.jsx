@@ -54,6 +54,7 @@ export const PostImage = styled.img`
   height: 300px;
   border-radius: 10px;
   background-size: cover;
+  object-fit: cover;
   background-position: center;
   box-shadow: 0px 0px 2px #b5b5b5;
   cursor: pointer;
