@@ -13,7 +13,7 @@ class Login {
         data: {
           nickName,
           avatarUrl:
-            'https://mtddrulacypyulwcwtsh.supabase.co/storage/v1/object/public/dietgram-images/default-profile.jpg'
+            'https://mtddrulacypyulwcwtsh.supabase.co/storage/v1/object/public/dietgram-images/profile-images/dafalut_image2-removebg-preview.png'
         }
       }
     });
@@ -62,13 +62,38 @@ class Login {
     }
   }
 
-  changeNickName = async (sliceNickname) => {
+  changeUserInfo = async (id, sliceNickname, avatarUrl) => {
     console.log(sliceNickname);
     const { data, error } = await this.#client.auth.updateUser({
-      data: { nickName: sliceNickname }
+      data: {
+        nickName: sliceNickname,
+        avatarUrl
+      }
     });
     console.log(data);
+    await this.#client
+      .from('users')
+      .update({
+        nickName: sliceNickname
+      })
+      .eq('user_id', id)
+      .select('*');
   };
+
+  async uploadServerProfileImage(file) {
+    const { data, error } = await this.#client.storage
+      .from('dietgram-images')
+      .upload(`profile-images/${crypto.randomUUID()}.png`, file);
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    const { data: imageData } = await this.#client.storage.from('dietgram-images').getPublicUrl(data.path);
+
+    return imageData.publicUrl;
+  }
 }
 
 export default Login;
