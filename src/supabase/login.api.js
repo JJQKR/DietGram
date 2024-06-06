@@ -13,7 +13,7 @@ class Login {
         data: {
           nickName,
           avatarUrl:
-            'https://mtddrulacypyulwcwtsh.supabase.co/storage/v1/object/public/dietgram-images/default-profile.jpg'
+            'https://mtddrulacypyulwcwtsh.supabase.co/storage/v1/object/public/dietgram-images/profile-images/dafalut_image2-removebg-preview.png'
         }
       }
     });
