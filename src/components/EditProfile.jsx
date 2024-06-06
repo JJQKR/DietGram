@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -34,18 +34,19 @@ const Left = styled.div`
 `;
 const Right = styled.div`
   margin: 5% 5% 5% 0;
-  height: 341px;
   display: flex;
-  flex-direction: row;
-  align-items: start;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: left;
   width: 35%;
   height: 50%;
 `;
 const Button = styled.button`
   color: #343434;
   background-color: #b1b1b1;
-  width: 120px;
-  height: 30px;
+
+  width: 40px;
+  height: 25px;
   border-radius: 10px;
   border: none;
   font-size: 13px;
@@ -65,20 +66,22 @@ const Image = styled.img`
   object-fit: cover;
 `;
 const ImageButton = styled.button`
-  width: 130px;
-  background-color: #d9d9d9;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 4px;
-  margin-top: 10px;
   align-items: center;
+  color: #343434;
+  background-color: #b1b1b1;
 
+  width: 100px;
+  height: 25px;
+  border-radius: 10px;
+  border: none;
+
+  font-size: 13px;
+  font-family: 'SUITE-Regular';
   &:hover {
-    background-color: gray;
     color: white;
+    background-color: #0084fd;
+    transition: 0.3s;
+    cursor: pointer;
   }
   display: flex;
   flex-direction: column;
@@ -88,17 +91,7 @@ const ImageButton = styled.button`
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-`;
-
-const ButtonBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 20px;
-  justify-content: center;
-  align-items: center;
+  justify-content: right;
   gap: 30px;
 `;
 const H3 = styled.h3`
@@ -111,7 +104,6 @@ const FileInputWrapper = styled.div`
   display: inline-block;
   position: relative;
 `;
-
 
 const HiddenFileInput = styled.input`
   display: none;
@@ -181,7 +173,6 @@ export default function EditProfile() {
     fileInputRef.current.click();
   };
 
-
   console.log();
   return (
     <>
@@ -195,12 +186,8 @@ export default function EditProfile() {
               <img src={currentUser?.user_metadata.avatarUrl} alt="" width="200px" />
             </div>
             <ButtonContainer>
-              <FileInputWrapper>
-                <CustomButton onClick={handleButtonClick}>이미지 업로드</CustomButton>
-                <HiddenFileInput type="file" accept="image/*" ref={fileInputRef} onChange={handleSaveImageFile} />
-              </FileInputWrapper>
-              {/* <input type="file" accept="image/*" onChange={handleSaveImageFile} /> */}
               <ImageButton>이미지 제거</ImageButton>
+              <input type="file" accept="image/*" onChange={handleSaveImageFile} />
             </ButtonContainer>
           </Left>
           <Right>
@@ -209,7 +196,7 @@ export default function EditProfile() {
                 <p>현재 닉네임</p>
                 <H3>{currentUser?.user_metadata.nickName}</H3>
                 <label htmlFor="nicknameInput"></label>
-                <Input
+                <input
                   className="nicknameInput"
                   type="text"
                   value={sliceNickname}
@@ -219,11 +206,11 @@ export default function EditProfile() {
                   }}
                 />
 
-                <ButtonBox>
+                <ButtonContainer>
                   <Button type="submit">완료</Button>
-                  <Button onClick={() => navigate('/')}>취소</Button>
-                </ButtonBox>
+                </ButtonContainer>
               </form>
+              <Button onClick={() => navigate('/')}>취소</Button>
             </>
           </Right>
         </InnerContainer>

@@ -1,17 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { deleteData, updateData } from '../../redux/slices/comments.slice';
+import { supabase } from '../../supabase/supabase';
 import {
-  DetailPostUserComment,
-  DetailCommentUserName,
-  DetailUserImage,
-  PostGuest,
-  PostComment,
+  CommentButton,
+  CommentButtonBox,
   CommentDate,
   DetailCommentUserBox,
-  CommentButton,
-  CommentButtonBox
+  DetailCommentUserName,
+  DetailPostUserComment,
+  DetailUserImage,
+  PostComment,
+  PostGuest
 } from './DetailComments.style';
-import { supabase } from '../../supabase/supabase';
-import { deleteData, updateData } from '../../redux/slices/comments.slice';
 
 const DetailComments = () => {
   const dispatch = useDispatch();
