@@ -7,9 +7,19 @@ import { supabase } from '../supabase/supabase';
 import { useNavigate } from 'react-router-dom';
 
 export const Button = styled.button`
+  width: 100px;
+  height: 50px;
   border: none;
-  border-radius: 10px;
-  background-color: green;
+  margin-left: 223px;
+  border-radius: 15px;
+  font-size: 20px;
+  font-family: 'SUITE-REGULAR';
+  color: white;
+  background-color: #47bd61;
+  &:hover {
+    background-color: #38974d;
+    cursor: pointer;
+  }
 `;
 
 export const ImageLabel = styled.label`
@@ -71,23 +81,25 @@ const Right = styled.div`
 `;
 
 const Img = styled.img`
-  width: 300px;
-  height: 150px;
+  width: 400px;
+  height: 200px;
   object-fit: cover;
 `;
 
 const Label = styled.label`
-  font-size: 24px;
+  font-size: 22px;
+  margin-right: ${(prop) => (prop.marginRight ? `${prop.marginRight}px` : `0px`)};
 `;
 
 const Input = styled.input`
   width: ${(prop) => (prop.width ? `${prop.width}px` : '320px')};
-  height: 55px;
+  height: 50px;
   font-size: 20px;
   text-indent: 10px;
   border: none;
   border-radius: 15px;
   box-shadow: 0px 0px 5px #b5b5b5;
+  font-family: 'SUITE-REGULAR';
   &:focus {
     outline: none;
   }
@@ -95,21 +107,23 @@ const Input = styled.input`
 
 const Textarea = styled.textarea`
   width: 440px;
-  height: 160px;
+  height: 120px;
   border: none;
   border-radius: 15px;
   font-size: 20px;
   text-indent: 10px;
   box-shadow: 0px 0px 5px #b5b5b5;
+  font-family: 'SUITE-REGULAR';
   &:focus {
     outline: none;
   }
 `;
 
 const FileSpan = styled.span`
-  border: black solid 1px;
-  border-radius: 15px;
   padding: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  margin-left: 300px;
 `;
 
 export default function UploadPost() {
@@ -186,7 +200,9 @@ export default function UploadPost() {
                 onChange={handleImageFile}
               ></input>
 
-              <Label htmlFor="postMenu">메뉴</Label>
+              <Label htmlFor="postMenu" marginRight="400">
+                메뉴
+              </Label>
               <Input
                 id="postMenu"
                 width="440"
@@ -194,14 +210,18 @@ export default function UploadPost() {
                 onChange={(e) => dispatch(changeValue({ type: 'menu', content: e.target.value }))}
               />
 
-              <Label htmlFor="postDescription">내용</Label>
+              <Label htmlFor="postDescription" marginRight="400">
+                내용
+              </Label>
               <Textarea
                 id="postDescription"
                 onChange={(e) => dispatch(changeValue({ type: 'content', content: e.target.value }))}
               ></Textarea>
               {/* 댓글에서 사용될 수도 있는 textarea와 스타일 맞추기  */}
 
-              <Label htmlFor="ateDate">날짜</Label>
+              <Label htmlFor="ateDate" marginRight="400">
+                날짜
+              </Label>
               <Input
                 id="ateDate"
                 width="440"
