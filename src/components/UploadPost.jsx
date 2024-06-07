@@ -99,6 +99,7 @@ const Input = styled.input`
   border: none;
   border-radius: 15px;
   box-shadow: 0px 0px 5px #b5b5b5;
+  font-family: 'SUITE-REGULAR';
   &:focus {
     outline: none;
   }
@@ -112,6 +113,7 @@ const Textarea = styled.textarea`
   font-size: 20px;
   text-indent: 10px;
   box-shadow: 0px 0px 5px #b5b5b5;
+  font-family: 'SUITE-REGULAR';
   &:focus {
     outline: none;
   }
