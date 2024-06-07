@@ -85,7 +85,7 @@ export default function EditProfile() {
             <Form onSubmit={handleSubmit}>
               <p>현재 닉네임</p>
               <H3>{currentUser?.user_metadata.nickName}</H3>
-              <input
+              <Input
                 className="nicknameInput"
                 type="text"
                 value={sliceNickname}
@@ -95,7 +95,7 @@ export default function EditProfile() {
                 }}
               />
 
-              <ButtonContainer>
+              <ButtonContainer marginRight="100">
                 <Button type="submit">완료</Button>
                 <Button onClick={() => navigate('/')}>취소</Button>
               </ButtonContainer>
@@ -115,32 +115,34 @@ const Container = styled.div`
   height: 100%;
 `;
 const InnerContainer = styled.div`
-  background-color: #e7e7e7;
-  width: 70%;
+  width: 1000px;
   max-width: 800px;
   height: 500px;
   margin: 5rem 1rem;
-  border: 1px black solid;
+  border: none;
   border-radius: 15px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: #f4f4f4;
+  box-shadow: 0px 0px 5px #b5b5b5;
 `;
 const Left = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 50%;
+  width: 45%;
+  margin-left: 50px;
   align-items: center;
 `;
 const Right = styled.div`
-  margin: 5% 5% 5% 0;
+  margin: 5% 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 45%;
+  width: 50%;
   height: 100%;
 `;
 const Button = styled.button`
@@ -191,7 +193,8 @@ const ImageButton = styled.button`
 const ButtonContainer = styled.div`
   display: flex;
   margin-top: 20px;
-  width: 100%;
+  margin-right: ${(prop) => (prop.marginRight ? `${prop.marginRight}px` : `0px`)};
+  width: 300px;
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
@@ -203,8 +206,9 @@ const H3 = styled.h3`
   margin-bottom: 10px;
 `;
 
+
 const Form = styled.form`
-  width: 70%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
