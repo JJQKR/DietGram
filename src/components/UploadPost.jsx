@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { initFormData, changeValue } from '../redux/slices/form.slice';
+import { changeValue, initFormData } from '../redux/slices/form.slice';
 import { initPostList } from '../redux/slices/posts.slice';
 import { supabase } from '../supabase/supabase';
-import { useNavigate } from 'react-router-dom';
 
 export const Button = styled.button`
   border: none;
@@ -124,8 +124,7 @@ export default function UploadPost() {
     event.preventDefault();
     const postImageUrl = await uploadImageFileToStorage(postImage);
     dispatch(changeValue({ type: 'imageUrl', content: postImageUrl }));
-    const instantFormData = { ...formData, imageUrl: postImageUrl };
-
+    const instantFormData = { ...formData, imageUrl: postImageUrl, profile_img_url: userId.user_metadata.avatarUrl };
     // 유효성 검사
     const { menu, content, date, kcal, rating, price, place } = formData;
 

@@ -12,7 +12,10 @@ const MainPost = () => {
   };
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const getProfileImg = (user_id) => {
+    const profileImg = userData.data.filter((item) => item.user_id === user_id)[0].profile_img;
+    return profileImg;
+  };
   const handlePostClick = (userId, postId) => {
     const selectPostAction = selectPost(postId);
     const action = selectUser(userId);
@@ -30,7 +33,7 @@ const MainPost = () => {
           <Post key={post.id}>
             <PostList>
               <UserData>
-                <UserImage src={post.userImage || defaultUserImage} alt="UserImage" />
+                <UserImage src={getProfileImg(post?.user_id) || defaultUserImage} alt="UserImage" />
                 <UserName
                   onClick={() => {
                     dispatch(selectUser(post?.user_id));

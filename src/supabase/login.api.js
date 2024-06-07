@@ -63,14 +63,12 @@ class Login {
   }
 
   changeUserInfo = async (id, sliceNickname, avatarUrl) => {
-    console.log(sliceNickname);
     const { data, error } = await this.#client.auth.updateUser({
       data: {
         nickName: sliceNickname,
         avatarUrl
       }
     });
-    console.log(data);
     await this.#client
       .from('users')
       .update({

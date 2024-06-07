@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { supabase } from '../supabase/supabase';
+import styled from 'styled-components';
 import { changeValue, initFormData } from '../redux/slices/form.slice';
 import { initPostList } from '../redux/slices/posts.slice';
+import { supabase } from '../supabase/supabase';
 
 export const Button = styled.button`
   border: none;
@@ -120,7 +120,6 @@ export default function EditPost() {
   const posts = useSelector((state) => state.posts.postList);
   const formData = useSelector((state) => state.formData);
   const userId = useSelector((state) => state.user.currentUser);
-  console.log(userId);
   const filteredPost = posts.find((post) => post.id === +editId);
 
   useEffect(() => {
@@ -141,7 +140,6 @@ export default function EditPost() {
     event.preventDefault();
 
     const postImageUrl = await uploadImageFileToStorage(postImage);
-    console.log('postImageUrl => ', postImageUrl);
     dispatch(changeValue({ type: 'imageUrl', content: postImageUrl }));
     const instantFormData = { ...formData, imageUrl: postImageUrl };
 
@@ -157,7 +155,7 @@ export default function EditPost() {
     if (!place.trim()) return alert('장소를 입력해주세요!');
 
     try {
-      const { data, error } = await supabase.post.updateServerPost(editId, instantFormData);
+      const { error } = await supabase.post.updateServerPost(editId, instantFormData);
       if (error) {
         console.error(error);
       } else {

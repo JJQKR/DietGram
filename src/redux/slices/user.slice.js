@@ -25,12 +25,6 @@ const userSlice = createSlice({
       state.totalUserInfo = action.payload;
     },
 
-    // NOTE post.api.js 의 isLike 함수의 반환값인 배열을 사용
-    // const data = await supabase.post.isLike(7);
-    // const action = setMyLikes(data);
-    // dispatch(action);
-    // console.log("selector", selector.user.myLikes);
-
     setMyLikes: (state, action) => {
       state.myLikes = action.payload.like;
     }

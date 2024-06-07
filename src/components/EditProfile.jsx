@@ -18,8 +18,8 @@ export default function EditProfile() {
   const [newImageFile, setNewImageFile] = useState(currentProfileImage);
 
   useEffect(() => {
-    dispatch(changeValue({ type: "nickName", content: currentNickName }));
-    dispatch(changeValue({ type: "imageUrl", content: currentProfileImage }));
+    dispatch(changeValue({ type: 'nickName', content: currentNickName }));
+    dispatch(changeValue({ type: 'imageUrl', content: currentProfileImage }));
   }, []);
 
   const handleSubmit = async (e) => {
@@ -31,6 +31,7 @@ export default function EditProfile() {
     };
     dispatch(getCurrentUser(userData));
     await supabase.login.changeUserInfo(currentUserId, sliceNickname, postImageUrl);
+    await supabase.post.updateServerUserProfile(currentUserId, postImageUrl);
     navigate('/');
   };
 
@@ -55,11 +56,12 @@ export default function EditProfile() {
       setNewImageFile(reader.result);
     };
     setPostImage(uploadedFile);
-    console.log(uploadedFile);
   };
 
   const handleClickRemoveImageButton = async () => {
-    setNewImageFile('https://mtddrulacypyulwcwtsh.supabase.co/storage/v1/object/public/dietgram-images/profile-images/dafalut_image2-removebg-preview.png');
+    setNewImageFile(
+      'https://mtddrulacypyulwcwtsh.supabase.co/storage/v1/object/public/dietgram-images/profile-images/dafalut_image2-removebg-preview.png'
+    );
     const userData = {
       ...currentUser,
       user_metadata: { ...currentUser.user_metadata, nickName: sliceNickname, avatarUrl: newImageFile }
@@ -199,39 +201,6 @@ const H3 = styled.h3`
   font-weight: 600;
   margin-top: 10px;
   margin-bottom: 10px;
-`;
-
-const FileInputWrapper = styled.div`
-  display: inline-block;
-  position: relative;
-`;
-
-const HiddenFileInput = styled.input`
-  display: none;
-`;
-
-const CustomButton = styled.button`
-  width: 130px;
-  background-color: #d9d9d9;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 4px;
-  margin-top: 10px;
-
-  &:hover {
-    background-color: gray;
-    color: white;
-  }
-`;
-
-const Input = styled.input`
-  width: 260px;
-  height: 30px;
-  font-size: 25px;
-  margin-top: 20px;
 `;
 
 const Form = styled.form`
