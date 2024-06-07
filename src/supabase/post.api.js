@@ -26,7 +26,8 @@ class Post {
         price: formData.price,
         place: formData.place,
         date: formData.date,
-        img_url: formData.imageUrl
+        img_url: formData.imageUrl,
+        profile_img_url: formData.profile_img_url
       })
       .select('*');
 
@@ -90,6 +91,17 @@ class Post {
       .eq('user_id', userId)
       .select();
     return updatedData.data[0];
+  }
+
+  async updateServerUserProfile(id, imgPath) {
+    const { userData } = await this.#client.from('users').update({ profile_img: imgPath }).eq('user_id', id).select();
+    const { postData } = await this.#client
+      .from('posts')
+      .update({ profile_img_url: imgPath })
+      .eq('user_id', id)
+      .select();
+
+    return { userData, postData };
   }
 }
 

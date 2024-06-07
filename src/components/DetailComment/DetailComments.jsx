@@ -37,13 +37,11 @@ const DetailComments = () => {
   return (
     <DetailPostUserComment>
       {curComments.map((comments, idx) => {
+        console.log('curComments', curComments);
         return (
           <DetailCommentUserBox key={comments.id}>
             <DetailCommentUserName>
-              <DetailUserImage
-                src="https://m.rainbow-tree.co.kr/web/product/big/rainbowtree81_2117.jpg"
-                alt="유저 사진"
-              />
+              <DetailUserImage src={comments.avatar_url} alt="유저 사진" />
               <PostGuest>
                 {comments?.nickName} <CommentDate>{comments?.created_at.split('T')[0]}</CommentDate>
                 <PostComment>{comments?.comment}</PostComment>

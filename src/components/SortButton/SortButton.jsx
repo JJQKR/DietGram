@@ -15,10 +15,6 @@ const SortButton = () => {
     dispatch(sortData());
   };
 
-  const posts = useSelector((state) => state.posts.postList);
-  const formData = useSelector((state) => state.formData.menu);
-  // get posts = App에서 useEffect로 받아서 => initialState 할당
-  // 이외 db 다루는 함수 사용 후 redux에 payload로 전달
   useEffect(() => {
     const getPosts = async () => {
       const posts = await supabase.post.getPosts();

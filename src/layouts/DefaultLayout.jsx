@@ -34,7 +34,6 @@ function DefaultLayout() {
     initPostData();
     initCommentsData();
   }, []);
-  console.log('curUserInfo', curUserInfo);
   useEffect(() => {
     const checkSignInStatus = async () => {
       const isSignIn = await supabase.login.checkSignIn();

@@ -31,6 +31,7 @@ export default function EditProfile() {
     };
     dispatch(getCurrentUser(userData));
     await supabase.login.changeUserInfo(currentUserId, sliceNickname, postImageUrl);
+    await supabase.post.updateServerUserProfile(currentUserId, postImageUrl);
     navigate('/');
   };
 
@@ -55,7 +56,6 @@ export default function EditProfile() {
       setNewImageFile(reader.result);
     };
     setPostImage(uploadedFile);
-    console.log(uploadedFile);
   };
 
   const handleClickRemoveImageButton = async () => {
@@ -206,42 +206,6 @@ const H3 = styled.h3`
   margin-bottom: 10px;
 `;
 
-const FileInputWrapper = styled.div`
-  display: inline-block;
-  position: relative;
-`;
-
-const HiddenFileInput = styled.input`
-  display: none;
-`;
-
-const CustomButton = styled.button`
-  width: 130px;
-  background-color: #d9d9d9;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 4px;
-  margin-top: 10px;
-
-  &:hover {
-    background-color: gray;
-    color: white;
-  }
-`;
-
-const Input = styled.input`
-  width: 300px;
-  height: 30px;
-  font-size: 20px;
-  margin-top: 20px;
-  border: none;
-  border-radius: 15px;
-  text-indent: 15px;
-  box-shadow: 0px 0px 5px #b5b5b5;
-`;
 
 const Form = styled.form`
   width: 100%;
