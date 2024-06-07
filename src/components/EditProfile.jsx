@@ -165,7 +165,7 @@ const Button = styled.button`
 const Image = styled.img`
   width: 200px;
   height: 200px;
-  object-fit: cover;
+  object-fit: fill;
 `;
 const ImageButton = styled.button`
   align-items: center;
@@ -205,7 +205,16 @@ const H3 = styled.h3`
   margin-top: 10px;
   margin-bottom: 10px;
 `;
-
+const Input = styled.input`
+  width: 300px;
+  height: 30px;
+  font-size: 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 15px;
+  text-indent: 15px;
+  box-shadow: 0px 0px 5px #b5b5b5;
+`;
 
 const Form = styled.form`
   width: 100%;
