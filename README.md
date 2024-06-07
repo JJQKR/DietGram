@@ -10,6 +10,13 @@
 - 24/05/31 ~ 24/06/07
 
  ---
+
+## 기술 환경 및 스택
+
+
+<img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"/> <img src="https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white"/> <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" /> <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" /> <img src="https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white" />
+
+ ---
   
 ## 🧑‍💻 역할 및 업무 분담
 
@@ -66,11 +73,7 @@
 
 ---
 
-
-
-## 페이지 구성
-
----
+## 📑 페이지 구성
 
 - 메인 페이지
 - 사용자 개인 페이지
@@ -88,26 +91,27 @@
   - 로그인 페이지
   - 회원가입 페이지
 
-## 기술 환경 및 스택
+
 
 ---
-
-- React
-- RTK
-- React-router-dom
-- Supabase
-- Vercel
-
 ## 부가 라이브러리
 
----
+
+<img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"/> 
 
 - Redux-persist
 - uuid
-- Styled-components
+
+---
 
 # Trouble Shooting
 
-개인별로 작성좀 해주세요
-
-1.
+선지원
+  1. 문제 확인 : postlist 페이지에서 사용자가 포스트 삭제 버튼을 클릭해도 삭제되지 않음
+  2. 문제 재현을 위해 다시 삭제 버튼을 클릭해보기
+  3. 어떤 에러가 발생했는지 확인하기 위해 브라우저 콘솔을 확인하기
+  4. 에러가 발생한 삭제 버튼 클릭 이벤트 핸들러와 관련된 코드 검토하기
+  5. 여러가지 가설을 설정: 클릭이벤트가 발생한 포스트의 id를 넘겨주지 않은건지 / 요청이 제대로 전송되지 않은건지
+  6. 가설 검증하기: 이벤트핸들러 콘솔에 넘겨받은 id가 잘 출력되는지 확인하기 / 네트워크 탭 확인하기
+  7. 문제 해결: 이벤트핸들러의 인자로 잘못된 id가 넘겨진 것을 확인하고, 오류 수정
+  8. 유사한 문제가 발생하지 않도록 발생했던 문제와 해결방법에 대해 잘 기록해두기(e.g 코드리뷰)
